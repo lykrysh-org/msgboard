@@ -10,6 +10,8 @@ use schema::{
 #[derive(Debug, Insertable)]
 #[table_name = "tasks"]
 pub struct NewTask {
+    pub whosent: String,
+    pub secret: String,
     pub description: String,
 }
 
@@ -17,6 +19,8 @@ pub struct NewTask {
 pub struct Task {
     pub id: i32,
     pub posted: NaiveDateTime,
+    pub whosent: String,
+    pub secret: String,
     pub completed: bool,
     pub description: String,
 }

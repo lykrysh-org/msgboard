@@ -12,6 +12,19 @@ body {
  background: rgba(0,0,0,0.6);
 }
 
+#dummy {
+ pointer-events:none; 
+ position: fixed;
+ z-index: 14;
+ height: 5rem;
+ width: 100%;
+ bottom: 4rem;
+ text-align: center;
+}
+#dummy small{
+ background: rgba(255,255,255,0.5);
+}
+
 form input[type="text"], form input[type="password"] {
  background: transparent;
  color: black;
@@ -225,7 +238,7 @@ form textarea {
  font-size: 1.375rem;
  line-height: 1.725rem;
 }
-.msgbox {
+.msgbox{
  width: 80%;
 }
 li {
@@ -237,7 +250,7 @@ li {
  font-size: 1.4375rem;
  line-height: 1.7875rem;
 }
-.msgbox {
+.msgbox{
  width: 70%;
 }
 li {
@@ -249,7 +262,7 @@ li {
  font-size: 1.5rem;
  line-height: 1.85rem;
 }
-.msgbox {
+.msgbox{
  width: 60%;
 }
 li {

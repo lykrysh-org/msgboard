@@ -43,6 +43,8 @@ impl Handler<AllTasks> for DbExecutor {
 }
 
 pub struct CreateTask {
+    pub whosent: String,
+    pub secret: String,
     pub description: String,
 }
 
@@ -55,6 +57,8 @@ impl Handler<CreateTask> for DbExecutor {
 
     fn handle(&mut self, todo: CreateTask, _: &mut Self::Context) -> Self::Result {
         let new_task = NewTask {
+            whosent: todo.whosent,
+            secret: todo.secret,
             description: todo.description,
         };
         Task::insert(new_task, self.get_conn()?.deref())

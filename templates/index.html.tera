@@ -13,19 +13,23 @@
 </head>
 <body>
 
-    <div class="logo pc n" id="logo">
-      <img src="/static/img/logo.png">
-      <small>Lykrysh</small>
-    </div>
-    <div id="dark"></div>
+  <div class="logo pc n" id="logo">
+    <img src="/static/img/logo.png">
+    <small>Lykrysh</small>
+  </div>
+  <div id="dark"></div>
+
+  <div id="dummy"><small id="bugbug">
+  {% if msg %}{{msg.1}}{% endif %}
+  </small></div>
 
   <div class="b1">
-      <div class="tbox n">
-        <small>Process Notes<br>or Just Chats</small>
-      </div>
+    <div class="tbox n">
+      <small>Process Notes<br>or Just Chats</small>
+    </div>
 
     <div id="newchunk">
-      <form action="/todo" method="post">
+      <form class="topform" action="/todo" method="post">
       <div class="bbox n">
         <div class="short l"><img src="/static/img/crossshort3.png"></div>
         <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
@@ -34,7 +38,7 @@
         <p>
           <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false"
             name="description" id="description" value="" 
-            class="description {% if msg %}field-{{msg.0}}{% endif %}">
+            class="description">
           </textarea>
         </p>
       </div>
@@ -50,24 +54,16 @@
               </div>
               <div class="rightbut">
                   <img src="/static/img/id.png">
-                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" /></small>
+                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" name="whosent" id="whosent" value="" /></small>
                   <img src="/static/img/key-icon.png">
-                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" /></small>
+                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>
               </div>
               <button type="submit" class="comment noout pc">
                   <img src="/static/img/send.png">
               </button>
           </div>
-          {% if msg %}
-            <div class="top34">
-            <p class="field-{{msg.0}}-msg">
-               {{msg.1}}
-            </p>
-            </div>
-          {% endif %}
       </div>
     </form>
-
     </div>
 
     <div id="notes">
@@ -76,6 +72,8 @@
             <li>
                 <div class="tbox one">
                   <p>{{ task.description }}</p>  
+                  <p>{{ task.posted | truncate(length=10, end="") }}</p> 
+                  <p>by {{ task.whosent }}</p> 
 
                   {% if not task.completed %}
                   <div class="footer n">
@@ -129,14 +127,14 @@
                 {% else %}
 
                 <div class="together">
-                  <form action="/todo" method="post">
+                  <form class="replyform" action="/todo" method="post">
                   <div class="bbox n top12">
                     <div class="cross l"><img src="/static/img/cross3.png"></div>
                     <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
                   </div>
                   <div class="tbox me">
                     <p>
-                    <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description" value="" class="description {% if msg %}field-{{msg.0}}{% endif %}">
+                    <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description" value="" class="description">
                     </textarea>
                     </p>
                   </div>
@@ -151,9 +149,9 @@
                       </div>
                       <div class="rightbut">
                         <img src="/static/img/id.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" /></small>
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" name="whosent" id="whosent" value="" /></small>
                         <img src="/static/img/key-icon.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" /></small>    
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>    
                       </div>
                       <button type="submit" class="comment noout pc">
                         <img src="/static/img/send.png">
@@ -167,8 +165,6 @@
           {% endfor %}
         </ul>
       </div>
-
   </div>
-
 </body>
 </html>

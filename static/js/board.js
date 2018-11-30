@@ -8,6 +8,41 @@ $(document).ready(function() {
       $(this).fadeOut();
   });
 
+  $('.topform').bind('submit',function(e){
+    var trouble = false;
+    var msg = '';
+    if ($.trim($(this).find("#description").val()) === '') { msg += 'Any text? '; trouble = true; };
+    if ($.trim($(this).find("#whosent").val()) === '') { msg += 'Your name? '; trouble = true; };
+    if ($.trim($(this).find("#secret").val()) === '') { msg += 'Secret key? '; trouble = true; };
+    if (trouble) { 
+      $('#bugbug').text(msg);
+      e.preventDefault(); 
+    };
+  });
+
+  $('.replyform').bind('submit',function(e){
+    var trouble = false;
+    var msg = '';
+    if ($.trim($(this).find("#description").val()) === '') { msg += 'Any text? '; trouble = true; };
+    if ($.trim($(this).find("#whosent").val()) === '') { msg += 'Your name? '; trouble = true; };
+    if ($.trim($(this).find("#secret").val()) === '') { msg += 'Secret key? '; trouble = true; };
+    if (trouble) { 
+      $('#bugbug').text(msg);
+      e.preventDefault(); 
+    } else {
+        var ppp = $(this).parent().parent().parent();
+        ppp.hide();
+        var one = ppp.prev(".one");
+        var choice = one.find(".count").text();
+        one.find(".count").text("n");
+        if (choice == "e") {
+          one.find(".edit").removeClass("bbk");
+        } else if (choice == "r") {
+          one.find(".reply").removeClass("bbk");
+        }
+    }
+  });
+
   $('.edit').click(function() {
     var p = $(this).parent();
     p.parent().next(".together").hide();
@@ -59,16 +94,13 @@ $(document).ready(function() {
     }
   });
 
-  $('.together .footer .comment').click(function() {
-    var ppp = $(this).parent().parent().parent();
-    ppp.hide();
-    var one = ppp.prev(".one");
-    var choice = one.find(".count").text();
-    one.find(".count").text("n");
-    if (choice == "e") {
-      one.find(".edit").removeClass("bbk");
-    } else if (choice == "r") {
-      one.find(".reply").removeClass("bbk");
+
+
+  $(document).mousemove(function(e){
+    if (! $('#bugbug').is(':empty')) {
+      setTimeout(function(){
+        $('#bugbug').text(''); 
+      }, 800);
     }
   });
 

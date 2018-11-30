@@ -48,39 +48,33 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
 
 #[derive(Deserialize)]
 pub struct CreateForm {
+    whosent: String,
+    secret: String,
     description: String,
 }
 
 pub fn create(
     (req, params): (HttpRequest<AppState>, Form<CreateForm>),
 ) -> FutureResponse<HttpResponse> {
-    if params.description.is_empty() {
-        future::lazy(move || {
-            session::set_flash(
-                &req,
-                FlashMessage::error("Description cannot be empty"),
-            )?;
-            Ok(redirect_to("/"))
-        }).responder()
-    } else {
-        req.state()
-            .db
-            .send(CreateTask {
-                description: params.description.clone(),
-            })
-            .from_err()
-            .and_then(move |res| match res {
-                Ok(_) => {
-                    session::set_flash(
-                        &req,
-                        FlashMessage::success("Task successfully added"),
-                    )?;
-                    Ok(redirect_to("/"))
-                }
-                Err(e) => Err(e),
-            })
-            .responder()
-    }
+    req.state()
+        .db
+        .send(CreateTask {
+            whosent: params.whosent.clone().trim().to_string(),
+            secret: params.secret.clone(),
+            description: params.description.clone().trim().to_string(),
+        })
+        .from_err()
+        .and_then(move |res| match res {
+            Ok(_) => {
+                session::set_flash(
+                    &req,
+                    FlashMessage::success("Message added"),
+                )?;
+                Ok(redirect_to("/"))
+            }
+            Err(e) => Err(e),
+        })
+        .responder()
 }
 
 #[derive(Deserialize)]
@@ -131,7 +125,7 @@ fn delete(
         .from_err()
         .and_then(move |res| match res {
             Ok(_) => {
-                session::set_flash(&req, FlashMessage::success("Task was deleted."))?;
+                session::set_flash(&req, FlashMessage::success("Message deleted."))?;
                 Ok(redirect_to("/"))
             }
             Err(e) => Err(e),
