@@ -11,6 +11,7 @@ extern crate log;
 extern crate serde_derive;
 #[macro_use]
 extern crate tera;
+extern crate num_cpus;
 
 use actix::prelude::SyncArbiter;
 use actix_web::middleware::session::{CookieSessionBackend, SessionStorage};
@@ -27,20 +28,20 @@ mod schema;
 mod session;
 
 static SESSION_SIGNING_KEY: &[u8] = &[0; 32];
-const NUM_DB_THREADS: usize = 3;
 
 fn main() {
     dotenv().ok();
 
-    std::env::set_var("RUST_LOG", "actix_todo=debug,actix_web=info");
+    std::env::set_var("RUST_LOG", "msgboard=debug,actix_web=info");
+    env::set_var("RUST_BACKTRACE", "1");
     env_logger::init();
 
     // Start the Actix system
-    let system = actix::System::new("todo-app");
+    let system = actix::System::new("msgboard");
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let pool = db::init_pool(&database_url).expect("Failed to create pool");
-    let addr = SyncArbiter::start(NUM_DB_THREADS, move || db::DbExecutor(pool.clone()));
+    let addr = SyncArbiter::start(num_cpus::get(), move || db::DbExecutor(pool.clone()));
 
     let app = move || {
         debug!("Constructing the App");

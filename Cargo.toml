@@ -1,7 +1,7 @@
 [package]
-authors = ["Dan Munckton <dangit@munckfish.net>"]
-name = "actix-todo"
+name = "msgboard"
 version = "0.1.0"
+authors = ["Lykrysh <lykrysh@gmail.com>"]
 
 [dependencies]
 actix = "0.7.3"
@@ -14,6 +14,7 @@ serde = "1.0.69"
 serde_derive = "1.0.69"
 serde_json = "1.0.22"
 tera = "0.11.8"
+num_cpus = "*"
 
 [dependencies.diesel]
 features = ["postgres", "r2d2"]
