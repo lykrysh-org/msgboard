@@ -12,6 +12,7 @@ extern crate serde_derive;
 #[macro_use]
 extern crate tera;
 extern crate num_cpus;
+extern crate chrono;
 
 use actix::prelude::SyncArbiter;
 use actix_web::middleware::session::{CookieSessionBackend, SessionStorage};

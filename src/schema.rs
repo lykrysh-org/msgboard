@@ -1,7 +1,8 @@
 table! {
     tasks (id) {
         id -> Int4,
-        description -> Varchar,
+        posted -> Timestamptz,
         completed -> Bool,
+        description -> Varchar,
     }
 }

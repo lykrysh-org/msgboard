@@ -1,5 +1,6 @@
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
-  description VARCHAR NOT NULL,
-  completed BOOLEAN NOT NULL DEFAULT 'f'
+  posted TIMESTAMPTZ NOT NULL default current_timestamp,
+  completed BOOLEAN NOT NULL DEFAULT 'f',
+  description VARCHAR NOT NULL
 );

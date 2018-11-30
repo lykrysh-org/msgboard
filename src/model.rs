@@ -1,6 +1,7 @@
 use diesel;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
+use chrono::prelude::{NaiveDateTime};
 
 use schema::{
     tasks, tasks::dsl::{completed as task_completed, tasks as all_tasks},
@@ -15,8 +16,9 @@ pub struct NewTask {
 #[derive(Debug, Queryable, Serialize)]
 pub struct Task {
     pub id: i32,
-    pub description: String,
+    pub posted: NaiveDateTime,
     pub completed: bool,
+    pub description: String,
 }
 
 impl Task {
