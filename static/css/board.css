@@ -1,0 +1,258 @@
+body {
+ background: #ab8f54; 
+}
+.bbk { color: #000; }
+
+#dark {
+ display: none;
+ position: fixed;
+ z-index: 14;
+ width: 100%;
+ height: 100vh;
+ background: rgba(0,0,0,0.6);
+}
+
+form input[type="text"], form input[type="password"] {
+ background: transparent;
+ color: black;
+ outline: none;
+ border: none;
+ font-family: vt;
+}
+::-webkit-input-placeholder { color: white; opacity: 0.5; }
+::-moz-placeholder { color: white; opacity: 0.5; }
+:-ms-input-placeholder { color: white; opacity: 0.5; }
+:-moz-placeholder { color: white; opacity: 0.5; }
+
+form textarea {
+ margin-bottom: -0.9rem;
+ margin-top: -0.3rem;
+ width: 100%;
+ background: transparent;
+ color: black;
+ outline: none;
+ border: none;
+ font-family: vt;
+}
+
+#newchunk {
+ margin-top: 3.4rem;
+ margin-bottom: 3.4rem;
+}
+#newchunk .me, #notes .me {
+ margin-top: 1px;
+ margin-bottom: -4px;
+ padding-top: 1.4rem;
+ padding-bottom: 1.8rem;
+ padding-left: 1.5rem;
+ padding-right: 1.5rem;
+ border: 2px dashed #fff;
+ background: none;
+ -webkit-transition: background 0.6s ease-out; 
+ transition: background 0.6s ease-out;
+}
+#newchunk .me:hover, #notes .me:hover {
+ border-left: 2px solid #fff;
+ border-right: 2px solid #fff;
+ background: rgba(188, 166, 118, 0.3);
+}
+#newchunk .post {
+ padding-top: 1.2rem;
+}
+
+#notes {
+ width: 100%;
+ text-align: center;
+ color: white;
+ margin-bottom: 32rem;
+}
+#notes ul {
+ padding: 0;
+ list-style-type: none;
+}
+#notes .together {
+ display: none;
+}
+#notes .one {
+ padding: 0rem 1.5rem;
+ text-align: left;
+ border-left: 2px dashed white;
+}
+#notes .one:hover {
+ border-left: 2px solid white;
+}
+#notes .one .pic {
+ opacity: 0.8;
+ width: 100%;
+ margin-bottom: 0.5rem;
+}
+#notes .one .pic img {
+ width: 100%;
+}
+#notes .one .bksm a {
+ color: #ab8f54;
+ background: rgba(255, 255, 51, 0.7);
+}
+#notes .one .bksm a:hover {
+ color: #ab8f54;
+ background: rgba(255, 255, 51, 1.0);
+}
+#notes .bbox .good {
+ position: absolute;
+ z-index: 3;
+ left: 0;
+}
+#notes .tbox.top12 {
+ margin-top: 1.2rem;
+}
+
+#notes .together .footer,  #notes #editable, #newchunk .footer {
+ height: 2.0rem;
+}
+
+.footer {
+ position: relative;
+ text-align: right;
+ width: calc(100% + 1.2rem);
+}
+.footer .but {
+ text-decoration: none;
+ padding: 2px 10px;
+ margin-left: 0.4rem;
+ -webkit-transition: all 0.3s ease-out; 
+ transition: all 0.3s ease-out;
+ color: #ab8f54;
+ background: #fff;
+}
+.footer .but:hover {
+ opacity: 1.0;
+}
+.footer .but.reply:hover {
+ background: #ffff33;
+}
+.footer .bbk {
+ color: black;
+}
+.footer img {
+ height: 1.8rem;
+}
+
+.footer .leftbut {
+ position: absolute;
+ z-index: 2;
+ top: 0.2rem; left: 0.4rem;
+ width: 8rem;
+ height: 4.5rem;
+ text-align: left;
+ background: none;
+}
+.footer .leftbut img {
+ opacity: 0.8;
+}
+.footer .leftbut img:hover {
+ opacity: 1.0;
+}
+
+.footer .rightbut {
+ position: absolute;
+ z-index: 3;
+ text-align: right;
+ top: 0; right: 3.4rem; height: 2rem;
+ background:none;
+}
+
+.footer .rightbut img {
+ opacity: 1.0;
+}
+
+.footer .noout {
+ border: 0; outline: none;
+ -webkit-transition: all 0.3s ease-out; 
+ transition: all 0.3s ease-out;
+}
+
+.footer .cancel {
+ position: absolute;
+ z-index: 3;
+ display: inline-block;
+ top: 0.2rem; right: 0; height: 1.8rem;
+ vertical-align: -0.1rem;
+ padding: 0px 12px; 
+ margin-right: 4.1rem;
+ color: #ab8f54;
+ background: rgba(255,255,255,0.4);
+}
+.footer .cancel:hover {
+ background: rgba(255,255,255,1.0);
+}
+
+.footer .comment {
+ position: absolute;
+ z-index: 3;
+ display: inline-block;
+ top: 0.2rem; right: 0; height: 1.9rem;
+ vertical-align: -0.1rem;
+ padding: 0px 12px; 
+ background: #e60000;
+}
+.footer .comment:hover {
+ background: #cc0000;
+}
+
+.footer .leftbut *, .footer .rightbut * {
+ display: inline-block;
+}
+
+.count { display: none; }
+
+#notes .one .room {
+ display: none;
+ margin-top: 0rem;
+ text-align: left;
+}
+
+.footer .rightbut small, #notes .one .room small {
+ vertical-align: 10px;
+ padding-left: 0.6rem;
+ padding-right: 0.4rem;
+ margin-right: 1rem;
+ border-bottom: 2px solid white;
+}
+
+
+@media screen and (min-width: 20rem)  {
+.footer small, form textarea, form input {
+ font-size: 1.375rem;
+ line-height: 1.725rem;
+}
+.msgbox {
+ width: 80%;
+}
+li {
+ margin-bottom: calc(1.625rem * 2);
+}
+}
+@media screen and (max-width: 42.5rem) and (max-width: 20rem)  {
+.footer small, form textarea, form input {
+ font-size: 1.4375rem;
+ line-height: 1.7875rem;
+}
+.msgbox {
+ width: 70%;
+}
+li {
+ margin-bottom:calc(1.6875rem * 2); 
+}
+}
+@media screen and (min-width: 42.5rem) {
+.footer small, form textarea, form input {
+ font-size: 1.5rem;
+ line-height: 1.85rem;
+}
+.msgbox {
+ width: 60%;
+}
+li {
+ margin-bottom: calc(1.75rem * 2);
+}
+}

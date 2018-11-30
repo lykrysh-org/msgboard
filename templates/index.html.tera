@@ -4,62 +4,171 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Actix Todo Example</title>
-
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/static/css/normalize.css">
-    <link rel="stylesheet" href="/static/css/skeleton.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Lykrysh</title>
+    <link rel="icon" type="image/png" href="/static/img/icon.png" />
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/board.css">
+    <script type="text/javascript" src="/static/js/j.sc"></script>
+    <script type="text/javascript" src="/static/js/board.js"></script>
 </head>
 <body>
-  <div class="container">
-    <p><!-- nothing to see here --></p>
 
-    <div class="row">
-      <h4>Actix Todo</h4>
+    <div class="logo pc n" id="logo">
+      <img src="/static/img/logo.png">
+      <small>Lykrysh</small>
+    </div>
+    <div id="dark"></div>
+
+  <div class="b1">
+      <div class="tbox n">
+        <small>Process Notes<br>or Just Chats</small>
+      </div>
+
+    <div id="newchunk">
       <form action="/todo" method="post">
-        <div class="ten columns">
-          <input type="text" placeholder="enter a task description ..."
-            name="description" id="description" value="" autofocus
-            class="u-full-width {% if msg %}field-{{msg.0}}{% endif %}" />
+      <div class="bbox n">
+        <div class="short l"><img src="/static/img/crossshort3.png"></div>
+        <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
+      </div>
+      <div class="tbox me">
+        <p>
+          <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false"
+            name="description" id="description" value="" 
+            class="description {% if msg %}field-{{msg.0}}{% endif %}">
+          </textarea>
+        </p>
+      </div>
+      <div class="bbox n">
+          <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
+          <div class="last r"><img src="/static/img/crossshort3.png"></div>
+      </div>
+
+      <div class="tbox post">
+          <div class="footer n">
+              <div class="leftbut">
+                  <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
+              </div>
+              <div class="rightbut">
+                  <img src="/static/img/id.png">
+                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" /></small>
+                  <img src="/static/img/key-icon.png">
+                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" /></small>
+              </div>
+              <button type="submit" class="comment noout pc">
+                  <img src="/static/img/send.png">
+              </button>
+          </div>
           {% if msg %}
-            <small class="field-{{msg.0}}-msg">
+            <div class="top34">
+            <p class="field-{{msg.0}}-msg">
                {{msg.1}}
-            </small>
+            </p>
+            </div>
           {% endif %}
-        </div>
-        <div class="two columns">
-          <input type="submit" value="add task">
-        </div>
-      </form>
+      </div>
+    </form>
+
     </div>
 
-    <div class="row">
-      <div class="twelve columns">
+    <div id="notes">
         <ul>
           {% for task in tasks %}
             <li>
-              {% if task.completed %}
-                <span class="completed">{{task.description}}</span>
-                <form action="/todo/{{task.id}}" class="inline" method="post">
-                  <input type="hidden" name="_method" value="put" />
-                  <button type="submit" class="small">undo</button>
-                </form>
-                <form action="/todo/{{task.id}}" method="post" class="inline">
-                  <input type="hidden" name="_method" value="delete" />
-                  <button type="submit" class="primary small">delete</button>
-                </form>
-              {% else %}
-                <form action="/todo/{{task.id}}" class="link" method="post">
-                  <input type="hidden" name="_method" value="put" />
-                  <button type="submit" class="link">{{ task.description }}</button>
-                </form>
+                <div class="tbox one">
+                  <p>{{ task.description }}</p>  
+
+                  {% if not task.completed %}
+                  <div class="footer n">
+                    <small class="but pc edit op4">Edit</small>
+                    <small class="but pc delete op4">Delete</small>
+                    <small class="but pc reply op8">Reply</small>
+                    <div class="room bbk">
+                      <form action="/todo/{{task.id}}" method="post">
+                        <input type="hidden" name="_method" value="" />
+                        <img src="/static/img/key-icon.png">
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" /></small>
+                      </form>
+                    </div>
+                    <span class="count">n</span>
+                  </div>
+                  {% endif %}
+
+                </div>
+
+                {% if task.completed %}
+                  <div class="bbox n top12">
+                    <div class="cross l"><img src="/static/img/cross3.png"></div>
+                    <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
+                  </div>
+                  <div class="tbox me bbk">
+                    <p>|<br><br><br><br></p>
+                  </div>
+                  <div class="bbox n">
+                    <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
+                    <div class="last r"><img src="/static/img/crossshort3.png"></div>
+                  </div>
+                  <div class="tbox top12">
+                    <div class="footer n" id="editable">
+                      <div class="leftbut">
+                        <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
+                      </div>
+                       <form action="/todo/{{task.id}}" method="post">
+                        <input type="hidden" name="_method" value="put" />
+                          <button type="submit" class="cancel noout pc">
+                            <small>Cancel Editing</small>
+                          </button>
+                      </form>
+                      <form action="/todo/{{task.id}}" method="post">
+                        <input type="hidden" name="_method" value="put" />
+                          <button type="submit" class="comment noout pc">
+                            <img src="/static/img/send.png">
+                          </button>
+                      </form>
+                    </div>
+                  </div>
+                {% else %}
+
+                <div class="together">
+                  <form action="/todo" method="post">
+                  <div class="bbox n top12">
+                    <div class="cross l"><img src="/static/img/cross3.png"></div>
+                    <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
+                  </div>
+                  <div class="tbox me">
+                    <p>
+                    <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description" value="" class="description {% if msg %}field-{{msg.0}}{% endif %}">
+                    </textarea>
+                    </p>
+                  </div>
+                  <div class="bbox n">
+                    <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
+                    <div class="last r"><img src="/static/img/crossshort3.png"></div>
+                  </div>
+                  <div class="tbox top12">
+                    <div class="footer n">
+                      <div class="leftbut">
+                        <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
+                      </div>
+                      <div class="rightbut">
+                        <img src="/static/img/id.png">
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" /></small>
+                        <img src="/static/img/key-icon.png">
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" /></small>    
+                      </div>
+                      <button type="submit" class="comment noout pc">
+                        <img src="/static/img/send.png">
+                      </button>
+                    </div>
+                  </div>
+                  </form>
+                </div>
               {% endif %}
             </li>
           {% endfor %}
         </ul>
       </div>
-    </div>
+
   </div>
+
 </body>
 </html>
