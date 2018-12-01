@@ -87,3 +87,4 @@ fn main() {
     // Run actix system, this method actually starts all async processes
     let _ = system.run();
 }
+

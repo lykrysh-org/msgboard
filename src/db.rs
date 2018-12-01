@@ -71,56 +71,63 @@ impl Handler<CreateTask> for DbExecutor {
     }
 }
 
-pub struct CheckTask {
-    pub id: i32,
-}
-
-impl Message for CheckTask {
-    type Result = Result<String, Error>;
-}
-
-impl Handler<CheckTask> for DbExecutor {
-    type Result = Result<String, Error>;
-
-    fn handle(&mut self, task: CheckTask, _: &mut Self::Context) -> Self::Result {
-        Task::get_secret(task.id, self.get_conn()?.deref())  
-            .map_err(|_| error::ErrorInternalServerError("Error checking secret"))
-    }
-}
-
-
 pub struct ToggleTask {
     pub id: i32,
+    pub pw: String,
 }
 
 impl Message for ToggleTask {
-    type Result = Result<(), Error>;
+    type Result = Result<usize, Error>;
 }
 
 impl Handler<ToggleTask> for DbExecutor {
-    type Result = Result<(), Error>;
+    type Result = Result<usize, Error>;
 
     fn handle(&mut self, task: ToggleTask, _: &mut Self::Context) -> Self::Result {
-        Task::toggle_with_id(task.id, self.get_conn()?.deref())
-            .map(|_| ())
-            .map_err(|_| error::ErrorInternalServerError("Error inserting task"))
+        let pw = Task::get_secret(task.id, self.get_conn()?.deref())  
+            .map_err(|_| error::ErrorInternalServerError("Error checking secret"));
+        match pw {
+            Ok(secret) => {
+                if secret == task.pw {
+                    Task::toggle_with_id(task.id, self.get_conn()?.deref())
+                        .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
+                } else {
+                    // wrong password
+                    Ok(999)
+                }
+            },
+            Err(e) => Err(e),
+        }
     }
 }
 
 pub struct DeleteTask {
     pub id: i32,
+    pub pw: String,
 }
 
 impl Message for DeleteTask {
-    type Result = Result<(), Error>;
+    type Result = Result<usize, Error>;
 }
 
 impl Handler<DeleteTask> for DbExecutor {
-    type Result = Result<(), Error>;
+    type Result = Result<usize, Error>;
 
     fn handle(&mut self, task: DeleteTask, _: &mut Self::Context) -> Self::Result {
-        Task::delete_with_id(task.id, self.get_conn()?.deref())
-            .map(|_| ())
-            .map_err(|_| error::ErrorInternalServerError("Error inserting task"))
+        let pw = Task::get_secret(task.id, self.get_conn()?.deref())  
+            .map_err(|_| error::ErrorInternalServerError("Error checking secret"));
+        match pw {
+            Ok(secret) => {
+                if secret == task.pw {
+                    Task::delete_with_id(task.id, self.get_conn()?.deref())
+                        .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
+                } else {
+                    // wrong password
+                    Ok(999)
+                }
+            },
+            Err(e) => Err(e),
+        }
     }
 }
+

@@ -2,13 +2,12 @@ use actix::prelude::Addr;
 use actix_web::middleware::Response;
 use actix_web::{
     error, fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
-    HttpResponse, Path, Responder, Result,
+    HttpResponse, Path, Responder, Result, 
 };
 use futures::{future, Future};
 use tera::{Context, Tera};
-use std::boxed::Box;
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, CheckTask};
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask};
 use session::{self, FlashMessage};
 
 pub struct AppState {
@@ -92,53 +91,30 @@ pub struct UpdateForm {
 pub fn update(
     (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<UpdateForm>),
 ) -> FutureResponse<HttpResponse> {
-
-    let yes = test(req, &params.id, form.password.clone());
-    if yes { 
-      match form._method.as_ref() {
-        "put" => toggle(req, params),
-        "delete" => delete(req, params),
+    match form._method.as_ref() {
+        "put" => toggle(req, params, &form.password),
+        "delete" => delete(req, params, &form.password),
         unsupported_method => {
             let msg = format!("Unsupported HTTP method: {}", unsupported_method);
             future::err(error::ErrorBadRequest(msg)).responder()
         }
-      } 
-    } else {
-       Box::new(future::ok(HttpResponse::Ok().finish()))
-    }   
+    }
 }
-
-fn test(req: HttpRequest<AppState>, myid: &i32, mypw: String) -> bool {
-    let mut is_correct = false;
-    req.state()
-        .db
-        .send(CheckTask{ id: *myid })
-        .from_err()
-        .and_then(move |res| match res {
-            Ok(secret) => {
-                if secret == mypw {
-                  is_correct = true;
-                } else {
-                  session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                }
-                Ok(HttpResponse::build(http::StatusCode::OK))
-            },
-            Err(e) => Err(e),
-        })
-        .responder();
-    return is_correct 
-}
-
 
 fn toggle(
     req: HttpRequest<AppState>,
     params: Path<UpdateParams>,
+    mypw: &String,
 ) -> FutureResponse<HttpResponse> {
     req.state()
         .db
-        .send(ToggleTask { id: params.id })
+        .send(ToggleTask { id: params.id, pw: mypw.to_string() })
         .from_err()
         .and_then(move |res| match res {
+            Ok(999) => {
+                session::set_flash(&req, FlashMessage::error("Wrong password."))?;
+                Ok(redirect_to("/"))
+            },
             Ok(_) => Ok(redirect_to("/")),
             Err(e) => Err(e),
         })
@@ -148,16 +124,21 @@ fn toggle(
 fn delete(
     req: HttpRequest<AppState>,
     params: Path<UpdateParams>,
+    mypw: &String,
 ) -> FutureResponse<HttpResponse> {
     req.state()
         .db
-        .send(DeleteTask { id: params.id })
+        .send(DeleteTask { id: params.id, pw: mypw.to_string() })
         .from_err()
         .and_then(move |res| match res {
+            Ok(999) => {
+                session::set_flash(&req, FlashMessage::error("Wrong password."))?;
+                Ok(redirect_to("/"))
+            },
             Ok(_) => {
                 session::set_flash(&req, FlashMessage::success("Message deleted."))?;
                 Ok(redirect_to("/"))
-            }
+            },
             Err(e) => Err(e),
         })
         .responder()
@@ -198,3 +179,4 @@ pub fn internal_server_error<S: 'static>(
         .respond_to(req)?;
     Ok(Response::Done(new_resp))
 }
+
