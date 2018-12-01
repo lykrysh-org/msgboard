@@ -71,6 +71,24 @@ impl Handler<CreateTask> for DbExecutor {
     }
 }
 
+pub struct CheckTask {
+    pub id: i32,
+}
+
+impl Message for CheckTask {
+    type Result = Result<String, Error>;
+}
+
+impl Handler<CheckTask> for DbExecutor {
+    type Result = Result<String, Error>;
+
+    fn handle(&mut self, task: CheckTask, _: &mut Self::Context) -> Self::Result {
+        Task::get_secret(task.id, self.get_conn()?.deref())  
+            .map_err(|_| error::ErrorInternalServerError("Error checking secret"))
+    }
+}
+
+
 pub struct ToggleTask {
     pub id: i32,
 }

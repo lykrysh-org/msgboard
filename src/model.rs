@@ -5,7 +5,7 @@ use chrono::prelude::{NaiveDateTime};
 
 use schema::{
     tasks, tasks::dsl::{completed as task_completed, tasks as all_tasks},
-    secrets,
+    secrets, secrets::dsl::{taskid as secret_taskid, secret as secret_secret, secrets as all_secrets},
 };
 
 #[derive(Debug, Insertable)]
@@ -58,6 +58,13 @@ impl Task {
         diesel::insert_into(secrets::table)
             .values(&key)
             .execute(conn)
+    }
+
+    pub fn get_secret(id: i32, conn: &PgConnection) -> QueryResult<String> {
+        all_secrets
+            .filter(secret_taskid.eq(id))
+            .select(secret_secret)
+            .first::<String>(conn)
     }
 
     pub fn toggle_with_id(id: i32, conn: &PgConnection) -> QueryResult<usize> {

@@ -84,7 +84,7 @@
                       <form action="/todo/{{task.id}}" method="post">
                         <input type="hidden" name="_method" value="" />
                         <img src="/static/img/key-icon.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" /></small>
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" id="password" value="" /></small>
                       </form>
                     </div>
                     <span class="count">n</span>
