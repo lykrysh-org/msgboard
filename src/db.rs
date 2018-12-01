@@ -5,7 +5,7 @@ use actix_web::{error, Error};
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool, PoolError, PooledConnection};
 
-use model::{NewTask, Task};
+use model::{NewTask, Task, NewSecret};
 
 type PgPool = Pool<ConnectionManager<PgConnection>>;
 type PgPooledConnection = PooledConnection<ConnectionManager<PgConnection>>;
@@ -43,8 +43,8 @@ impl Handler<AllTasks> for DbExecutor {
 }
 
 pub struct CreateTask {
-    pub whosent: String,
     pub secret: String,
+    pub whosent: String,
     pub description: String,
 }
 
@@ -58,12 +58,16 @@ impl Handler<CreateTask> for DbExecutor {
     fn handle(&mut self, todo: CreateTask, _: &mut Self::Context) -> Self::Result {
         let new_task = NewTask {
             whosent: todo.whosent,
-            secret: todo.secret,
             description: todo.description,
         };
-        Task::insert(new_task, self.get_conn()?.deref())
+        let tid = Task::inserttask(new_task, self.get_conn()?.deref());
+        let new_secret = NewSecret {
+            secret: todo.secret,
+            taskid: tid,
+        };
+        Task::insertsecret(new_secret, self.get_conn()?.deref())
             .map(|_| ())
-            .map_err(|_| error::ErrorInternalServerError("Error inserting task"))
+            .map_err(|_| error::ErrorInternalServerError("Error inserting secret"))     
     }
 }
 

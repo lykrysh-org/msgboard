@@ -48,8 +48,8 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
 
 #[derive(Deserialize)]
 pub struct CreateForm {
-    whosent: String,
     secret: String,
+    whosent: String,
     description: String,
 }
 
@@ -59,8 +59,8 @@ pub fn create(
     req.state()
         .db
         .send(CreateTask {
-            whosent: params.whosent.clone().trim().to_string(),
             secret: params.secret.clone(),
+            whosent: params.whosent.clone().trim().to_string(),
             description: params.description.clone().trim().to_string(),
         })
         .from_err()
