@@ -54,7 +54,7 @@
               </div>
               <div class="rightbut">
                   <img src="/static/img/id.png">
-                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" name="whosent" id="whosent" value="" /></small>
+                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" id="whosent" /></small>
                   <img src="/static/img/key-icon.png">
                   <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>
               </div>
@@ -149,7 +149,7 @@
                       </div>
                       <div class="rightbut">
                         <img src="/static/img/id.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="any*****" name="whosent" id="whosent" value="" /></small>
+                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" id="whosent" /></small>
                         <img src="/static/img/key-icon.png">
                         <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>    
                       </div>

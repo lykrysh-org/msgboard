@@ -16,6 +16,7 @@ extern crate chrono;
 
 use actix::prelude::SyncArbiter;
 use actix_web::middleware::session::{CookieSessionBackend, SessionStorage};
+use actix_web::middleware::identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::middleware::{ErrorHandlers, Logger};
 use actix_web::{dev::Resource, fs, http, server, App};
 use dotenv::dotenv;
@@ -53,6 +54,10 @@ fn main() {
             CookieSessionBackend::signed(SESSION_SIGNING_KEY).secure(false),
         );
 
+        let welcome = IdentityService::new(
+            CookieIdentityPolicy::new(SESSION_SIGNING_KEY).name("msgboard").secure(false),
+        );
+
         let error_handlers = ErrorHandlers::new()
             .handler(
                 http::StatusCode::INTERNAL_SERVER_ERROR,
@@ -72,6 +77,7 @@ fn main() {
         App::with_state(state)
             .middleware(Logger::default())
             .middleware(session_store)
+            .middleware(welcome)
             .middleware(error_handlers)
             .route("/", http::Method::GET, api::index)
             .route("/todo", http::Method::POST, api::create)

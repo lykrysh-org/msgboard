@@ -1,5 +1,6 @@
 use actix::prelude::Addr;
 use actix_web::middleware::Response;
+use actix_web::middleware::identity::RequestIdentity;
 use actix_web::{
     error, fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
     HttpResponse, Path, Responder, Result, 
@@ -32,6 +33,11 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
                     session::clear_flash(&req);
                 }
 
+                //Identity
+                if let Some(id) = req.identity() {
+                    context.insert("welcomeback", &id)
+                }
+
                 let rendered = req.state()
                     .template
                     .render("index.html.tera", &context)
@@ -56,11 +62,12 @@ pub struct CreateForm {
 pub fn create(
     (req, params): (HttpRequest<AppState>, Form<CreateForm>),
 ) -> FutureResponse<HttpResponse> {
+    let name = params.whosent.clone();
     req.state()
         .db
         .send(CreateTask {
             secret: params.secret.clone(),
-            whosent: params.whosent.clone().trim().to_string(),
+            whosent: name.to_string(),
             description: params.description.clone().trim().to_string(),
         })
         .from_err()
@@ -68,8 +75,9 @@ pub fn create(
             Ok(_) => {
                 session::set_flash(
                     &req,
-                    FlashMessage::success("Message added"),
+                    FlashMessage::success(&format!("Thanks {}!", name)),
                 )?;
+                &req.remember(name.to_owned());
                 Ok(redirect_to("/"))
             }
             Err(e) => Err(e),
@@ -136,7 +144,7 @@ fn delete(
                 Ok(redirect_to("/"))
             },
             Ok(_) => {
-                session::set_flash(&req, FlashMessage::success("Message deleted."))?;
+                session::set_flash(&req, FlashMessage::success("Deleted."))?;
                 Ok(redirect_to("/"))
             },
             Err(e) => Err(e),
