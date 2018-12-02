@@ -84,6 +84,9 @@ fn main() {
             .resource("/todo/{id}", |r: &mut Resource<_>| {
                 r.post().with(api::update)
             })
+            .resource("/todo/{id}/edit", |r: &mut Resource<_>| {
+                r.post().with(api::edit)
+            })
             .handler("/static", static_files)
     };
 

@@ -11,7 +11,7 @@ table! {
         id -> Int4,
         posted -> Timestamptz,
         whosent -> Varchar,
-        completed -> Bool,
+        editable -> Bool,
         description -> Varchar,
     }
 }

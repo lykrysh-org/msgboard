@@ -8,7 +8,7 @@ use actix_web::{
 use futures::{future, Future};
 use tera::{Context, Tera};
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask};
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, UploadTask};
 use session::{self, FlashMessage};
 
 pub struct AppState {
@@ -145,6 +145,28 @@ fn delete(
             },
             Ok(_) => {
                 session::set_flash(&req, FlashMessage::success("Deleted."))?;
+                Ok(redirect_to("/"))
+            },
+            Err(e) => Err(e),
+        })
+        .responder()
+}
+
+#[derive(Deserialize)]
+pub struct EditForm {
+    description: String,
+}
+
+pub fn edit(
+    (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<EditForm>),
+) -> FutureResponse<HttpResponse> {
+    println!("{:?}", req);
+    req.state()
+        .db
+        .send(UploadTask { id: params.id, desc: form.description.trim().to_string() })
+        .from_err()
+        .and_then(move |res| match res {
+            Ok(_) => {
                 Ok(redirect_to("/"))
             },
             Err(e) => Err(e),

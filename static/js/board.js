@@ -30,7 +30,7 @@ $(document).ready(function() {
       $('#bugbug').text(msg);
       e.preventDefault(); 
     } else {
-        var ppp = $(this).parent().parent().parent();
+        var ppp = $(this).parent();
         ppp.hide();
         var one = ppp.prev(".one");
         var choice = one.find(".count").text();
@@ -40,7 +40,13 @@ $(document).ready(function() {
         } else if (choice == "r") {
           one.find(".reply").removeClass("bbk");
         }
-    }
+    } 
+  });
+
+  $('.editform').on('reset',function(){  
+  });
+
+  $('.editform').bind('submit',function(){
   });
 
   $('.edit').click(function() {
@@ -94,8 +100,6 @@ $(document).ready(function() {
     }
   });
 
-
-
   $(document).mousemove(function(e){
     if (! $('#bugbug').is(':empty')) {
       setTimeout(function(){
@@ -104,7 +108,7 @@ $(document).ready(function() {
     }
   });
 
-  $('textarea').focus();
-  $('textarea').val('');
+  $('.topform textarea').focus().val('');
+  $('.replyform textarea').focus().val('');
 
 });

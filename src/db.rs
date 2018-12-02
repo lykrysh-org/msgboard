@@ -131,3 +131,22 @@ impl Handler<DeleteTask> for DbExecutor {
     }
 }
 
+pub struct UploadTask {
+    pub id: i32,
+    pub desc: String,
+}
+
+impl Message for UploadTask {
+    type Result = Result<usize, Error>;
+}
+
+impl Handler<UploadTask> for DbExecutor {
+    type Result = Result<usize, Error>;
+
+    fn handle(&mut self, task: UploadTask, _: &mut Self::Context) -> Self::Result {
+        let _ = Task::re_write_desc(task.id, task.desc, self.get_conn()?.deref())
+            .map_err(|_| error::ErrorInternalServerError("Error deleting task"));
+        Task::toggle_with_id(task.id, self.get_conn()?.deref())
+            .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
+    }
+}

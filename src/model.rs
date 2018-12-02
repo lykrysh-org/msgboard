@@ -4,7 +4,7 @@ use diesel::prelude::*;
 use chrono::prelude::{NaiveDateTime};
 
 use schema::{
-    tasks, tasks::dsl::{completed as task_completed, tasks as all_tasks},
+    tasks, tasks::dsl::{editable as task_editable, description as task_desc, tasks as all_tasks},
     secrets, secrets::dsl::{taskid as secret_taskid, secret as secret_secret, secrets as all_secrets},
 };
 
@@ -27,7 +27,7 @@ pub struct Task {
     pub id: i32,
     pub posted: NaiveDateTime,
     pub whosent: String,
-    pub completed: bool,
+    pub editable: bool,
     pub description: String,
 }
 
@@ -70,11 +70,10 @@ impl Task {
     pub fn toggle_with_id(id: i32, conn: &PgConnection) -> QueryResult<usize> {
         let task = all_tasks.find(id)
             .get_result::<Task>(conn)?;
-
-        let new_status = !task.completed;
+        let new_status = !task.editable;
         let updated_task = diesel::update(all_tasks.find(id));
         updated_task
-            .set(task_completed.eq(new_status))
+            .set(task_editable.eq(new_status))
             .execute(conn)
     }
 
@@ -82,5 +81,13 @@ impl Task {
         diesel::delete(all_tasks.find(id))
             .execute(conn)
     }
+
+    pub fn re_write_desc(id: i32, _desc: String, conn: &PgConnection) -> QueryResult<usize> {
+        let updated_task = diesel::update(all_tasks.find(id));
+        updated_task
+            .set(task_desc.eq(_desc))
+            .execute(conn)
+    }
+
 }
 

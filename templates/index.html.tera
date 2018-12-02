@@ -36,9 +36,7 @@
       </div>
       <div class="tbox me">
         <p>
-          <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false"
-            name="description" id="description" value="" 
-            class="description">
+          <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description" value="" class="description">
           </textarea>
         </p>
       </div>
@@ -71,11 +69,10 @@
           {% for task in tasks %}
             <li>
                 <div class="tbox one">
+                  {% if not task.editable %}
                   <p>{{ task.description }}</p>  
                   <p>{{ task.posted | truncate(length=10, end="") }}</p> 
                   <p>by {{ task.whosent }}</p> 
-
-                  {% if not task.completed %}
                   <div class="footer n">
                     <small class="but pc edit op4">Edit</small>
                     <small class="but pc delete op4">Delete</small>
@@ -90,16 +87,20 @@
                     <span class="count">n</span>
                   </div>
                   {% endif %}
-
                 </div>
 
-                {% if task.completed %}
+                {% if task.editable %}
+                <div>
+                  <form class="editform" action="/todo/{{task.id}}/edit" method="post">
                   <div class="bbox n top12">
-                    <div class="cross l"><img src="/static/img/cross3.png"></div>
+                    <div class="short l"><img src="/static/img/crossshort3.png"></div>
                     <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
                   </div>
                   <div class="tbox me bbk">
-                    <p>|<br><br><br><br></p>
+                    <p>
+                      <textarea rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description"  class="description">{{ task.description }}
+                      </textarea>
+                    </p>
                   </div>
                   <div class="bbox n">
                     <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
@@ -110,20 +111,12 @@
                       <div class="leftbut">
                         <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
                       </div>
-                       <form action="/todo/{{task.id}}" method="post">
-                        <input type="hidden" name="_method" value="put" />
-                          <button type="submit" class="cancel noout pc">
-                            <small>Cancel Editing</small>
-                          </button>
-                      </form>
-                      <form action="/todo/{{task.id}}" method="post">
-                        <input type="hidden" name="_method" value="put" />
-                          <button type="submit" class="comment noout pc">
-                            <img src="/static/img/send.png">
-                          </button>
-                      </form>
+                      <button type="reset" class="cancel noout pc"><small>Cancel Editing</small></button>
+                      <button type="submit" class="comment noout pc"><img src="/static/img/send.png"></button>
                     </div>
                   </div>
+                  </form>
+                </div>
                 {% else %}
 
                 <div class="together">
@@ -153,9 +146,7 @@
                         <img src="/static/img/key-icon.png">
                         <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>    
                       </div>
-                      <button type="submit" class="comment noout pc">
-                        <img src="/static/img/send.png">
-                      </button>
+                      <button type="submit" class="comment noout pc"><img src="/static/img/send.png"></button>
                     </div>
                   </div>
                   </form>
