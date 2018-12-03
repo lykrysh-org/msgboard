@@ -2,10 +2,14 @@ use diesel;
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
 use chrono::prelude::{NaiveDateTime};
-
 use schema::{
-    tasks, tasks::dsl::{editable as task_editable, description as task_desc, tasks as all_tasks},
-    secrets, secrets::dsl::{taskid as secret_taskid, secret as secret_secret, secrets as all_secrets},
+    tasks,
+    tasks::dsl::{
+        rootnum as task_root,
+        editable as task_editable,
+        tasks as all_tasks,
+    },
+    secrets,
 };
 
 #[derive(Debug, Insertable)]
@@ -25,6 +29,8 @@ pub struct NewSecret {
 #[derive(Debug, Queryable, Serialize)]
 pub struct Task {
     pub id: i32,
+    pub rootnum: i32,
+    pub replnum: i32,
     pub posted: NaiveDateTime,
     pub whosent: String,
     pub editable: bool,
@@ -41,8 +47,9 @@ pub struct Secret {
 
 impl Task {
     pub fn all(conn: &PgConnection) -> QueryResult<Vec<Task>> {
-        all_tasks
-            .order(tasks::id.desc())
+        use schema::tasks::dsl::*;
+        tasks
+            .order((rootnum.desc(), replnum.asc()))
             .load::<Task>(conn)
     }
 
@@ -54,38 +61,64 @@ impl Task {
         return row_inserted.id
     }
 
+    pub fn set_as_root(idd: i32, conn: &PgConnection) -> QueryResult<usize> {
+        let updated_task = diesel::update(all_tasks.find(idd));
+        updated_task
+            .set(task_root.eq(idd))
+            .execute(conn)
+    }
+
+    pub fn get_max_replnum(parentid: i32, conn: &PgConnection) -> QueryResult<i32> {
+        use schema::tasks::dsl::*;
+        tasks
+            .filter(rootnum.eq(parentid))
+            .select(replnum)
+            .order(id.desc())
+            .first::<i32>(conn)
+    }
+
+    pub fn set_as_repl(idd: i32, parentid: i32, repl: i32, conn: &PgConnection) -> QueryResult<usize> {
+        use schema::tasks::dsl::*;
+        let updated_task = diesel::update(tasks.find(idd));
+        updated_task
+            .set((rootnum.eq(parentid), replnum.eq(repl)))
+            .execute(conn)
+    }
+
     pub fn insertsecret(key: NewSecret, conn: &PgConnection) -> QueryResult<usize> {
         diesel::insert_into(secrets::table)
             .values(&key)
             .execute(conn)
     }
 
-    pub fn get_secret(id: i32, conn: &PgConnection) -> QueryResult<String> {
-        all_secrets
-            .filter(secret_taskid.eq(id))
-            .select(secret_secret)
+    pub fn get_secret(idd: i32, conn: &PgConnection) -> QueryResult<String> {
+        use schema::secrets::dsl::*;
+        secrets
+            .filter(taskid.eq(idd))
+            .select(secret)
             .first::<String>(conn)
     }
 
-    pub fn toggle_with_id(id: i32, conn: &PgConnection) -> QueryResult<usize> {
-        let task = all_tasks.find(id)
+    pub fn toggle_with_id(idd: i32, conn: &PgConnection) -> QueryResult<usize> {
+        let task = all_tasks.find(idd)
             .get_result::<Task>(conn)?;
         let new_status = !task.editable;
-        let updated_task = diesel::update(all_tasks.find(id));
+        let updated_task = diesel::update(all_tasks.find(idd));
         updated_task
             .set(task_editable.eq(new_status))
             .execute(conn)
     }
 
-    pub fn delete_with_id(id: i32, conn: &PgConnection) -> QueryResult<usize> {
-        diesel::delete(all_tasks.find(id))
+    pub fn delete_with_id(idd: i32, conn: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(all_tasks.find(idd))
             .execute(conn)
     }
 
-    pub fn re_write_desc(id: i32, _desc: String, conn: &PgConnection) -> QueryResult<usize> {
-        let updated_task = diesel::update(all_tasks.find(id));
+    pub fn re_write_desc(idd: i32, _desc: String, conn: &PgConnection) -> QueryResult<usize> {
+        use schema::tasks::dsl::*;
+        let updated_task = diesel::update(tasks.find(idd));
         updated_task
-            .set(task_desc.eq(_desc))
+            .set(description.eq(_desc))
             .execute(conn)
     }
 }

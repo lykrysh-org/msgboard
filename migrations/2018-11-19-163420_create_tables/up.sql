@@ -1,5 +1,7 @@
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
+  rootnum INT NOT NULL DEFAULT 1,
+  replnum INT NOT NULL DEFAULT 1,
   posted TIMESTAMPTZ NOT NULL default current_timestamp,
   whosent VARCHAR NOT NULL,
   editable BOOLEAN NOT NULL DEFAULT 'f',

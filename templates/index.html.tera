@@ -30,6 +30,7 @@
 
     <div id="newchunk">
       <form class="topform" action="/todo" method="post">
+      <input type="hidden" name="inheritedid" value="none" />
       <div class="bbox n">
         <div class="short l"><img src="/static/img/crossshort3.png"></div>
         <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
@@ -70,9 +71,11 @@
             <li>
                 <div class="tbox one">
                   {% if not task.editable %}
+
                   <p>{{ task.description }}</p>  
                   <p>{{ task.posted | truncate(length=10, end="") }}</p> 
-                  <p>by {{ task.whosent }}</p> 
+                  <p>by {{ task.whosent }} Root: {{ task.rootnum }} Repl: {{ task.replnum }}</p> 
+
                   <div class="footer n">
                     <small class="but pc edit op4">Edit</small>
                     <small class="but pc delete op4">Delete</small>
@@ -128,6 +131,7 @@
 
                 <div class="together">
                   <form class="replyform" action="/todo" method="post">
+                  <input type="hidden" name="inheritedid" value="{{ task.rootnum }}" />
                   <div class="bbox n top12">
                     <div class="cross l"><img src="/static/img/cross3.png"></div>
                     <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
@@ -159,6 +163,7 @@
                   </form>
                 </div>
               {% endif %}
+
             </li>
           {% endfor %}
         </ul>

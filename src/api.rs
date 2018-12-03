@@ -3,11 +3,10 @@ use actix_web::middleware::Response;
 use actix_web::middleware::identity::RequestIdentity;
 use actix_web::{
     error, fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
-    HttpResponse, Path, Responder, Result, 
+    HttpResponse, Path, Responder, Result,
 };
 use futures::{future, Future};
 use tera::{Context, Tera};
-
 use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, UploadTask, CancelTask};
 use session::{self, FlashMessage};
 
@@ -54,6 +53,7 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
 
 #[derive(Deserialize)]
 pub struct CreateForm {
+    inheritedid: String,
     secret: String,
     whosent: String,
     description: String,
@@ -62,10 +62,18 @@ pub struct CreateForm {
 pub fn create(
     (req, params): (HttpRequest<AppState>, Form<CreateForm>),
 ) -> FutureResponse<HttpResponse> {
+    let replyid: Option<i32> = match params.inheritedid.clone().as_ref() {
+        "none" => None,
+        _whatever => {
+            let i: i32 = _whatever.parse().unwrap_or(0);
+            Some(i)
+        },
+    };
     let name = params.whosent.clone();
     req.state()
         .db
         .send(CreateTask {
+            inheritedid: replyid,
             secret: params.secret.clone(),
             whosent: name.to_string(),
             description: params.description.clone().trim().to_string(),

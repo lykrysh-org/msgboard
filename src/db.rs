@@ -4,7 +4,6 @@ use actix::prelude::{Actor, Handler, Message, SyncContext};
 use actix_web::{error, Error};
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool, PoolError, PooledConnection};
-
 use model::{NewTask, Task, NewSecret};
 
 type PgPool = Pool<ConnectionManager<PgConnection>>;
@@ -43,6 +42,7 @@ impl Handler<AllTasks> for DbExecutor {
 }
 
 pub struct CreateTask {
+    pub inheritedid: Option<i32>,
     pub secret: String,
     pub whosent: String,
     pub description: String,
@@ -61,13 +61,33 @@ impl Handler<CreateTask> for DbExecutor {
             description: todo.description,
         };
         let tid = Task::inserttask(new_task, self.get_conn()?.deref());
+        let _ = match todo.inheritedid.as_ref() {
+            Some(parentid) => {
+                let replnum = Task::get_max_replnum(*parentid, self.get_conn()?.deref())
+                    .map_err(|_| error::ErrorInternalServerError("Error get_max_replynum"));
+                match replnum {
+                    Ok(num) => {
+                        let new: i32 = num + 1;
+                        let _ = Task::set_as_repl(tid, *parentid, new, self.get_conn()?.deref())
+                            .map(|_| ())
+                            .map_err(|_| error::ErrorInternalServerError("Error set_as_repl"));
+                    },
+                    Err(_) => (),
+                };
+            },
+            None => {
+                let _ = Task::set_as_root(tid, self.get_conn()?.deref())
+                    .map(|_| ())
+                    .map_err(|_| error::ErrorInternalServerError("Error set_as_root"));
+            }
+        };
         let new_secret = NewSecret {
             secret: todo.secret,
             taskid: tid,
         };
         Task::insertsecret(new_secret, self.get_conn()?.deref())
             .map(|_| ())
-            .map_err(|_| error::ErrorInternalServerError("Error inserting secret"))     
+            .map_err(|_| error::ErrorInternalServerError("Error inserting secret"))
     }
 }
 
@@ -84,7 +104,7 @@ impl Handler<ToggleTask> for DbExecutor {
     type Result = Result<usize, Error>;
 
     fn handle(&mut self, task: ToggleTask, _: &mut Self::Context) -> Self::Result {
-        let pw = Task::get_secret(task.id, self.get_conn()?.deref())  
+        let pw = Task::get_secret(task.id, self.get_conn()?.deref())
             .map_err(|_| error::ErrorInternalServerError("Error checking secret"));
         match pw {
             Ok(secret) => {
@@ -114,7 +134,7 @@ impl Handler<DeleteTask> for DbExecutor {
     type Result = Result<usize, Error>;
 
     fn handle(&mut self, task: DeleteTask, _: &mut Self::Context) -> Self::Result {
-        let pw = Task::get_secret(task.id, self.get_conn()?.deref())  
+        let pw = Task::get_secret(task.id, self.get_conn()?.deref())
             .map_err(|_| error::ErrorInternalServerError("Error checking secret"));
         match pw {
             Ok(secret) => {
@@ -168,3 +188,4 @@ impl Handler<CancelTask> for DbExecutor {
             .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
     }
 }
+

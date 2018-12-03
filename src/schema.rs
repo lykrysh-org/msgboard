@@ -9,6 +9,8 @@ table! {
 table! {
     tasks (id) {
         id -> Int4,
+        rootnum -> Int4,
+        replnum -> Int4,
         posted -> Timestamptz,
         whosent -> Varchar,
         editable -> Bool,
