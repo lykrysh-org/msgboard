@@ -158,7 +158,7 @@ p {
 }
 
 
-@media screen and (min-width: 20rem)  {
+@media screen and (max-width: 20rem)  {
 small {
  font-size: 3.2rem;
 }
@@ -184,7 +184,7 @@ p, .bksm, .logo small, .nav small {
  width: calc(80% + 4rem - 8px);
 }
 }
-@media screen and (max-width: 42.5rem) and (max-width: 20rem)  {
+@media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
 small {
  font-size: 3.4rem;
 }

@@ -81,9 +81,11 @@
                 <div class="tbox one {% if task.replnum != 1 %} space {% endif %}">
                   {% if not task.editable %}
 
-                  <p>{{ task.description }}</p>  
-                  <p>{{ task.posted | truncate(length=10, end="") }}</p> 
-                  <p>by {{ task.whosent }} Root: {{ task.rootnum }} Repl: {{ task.replnum }}</p> 
+                  <p>
+                  {{ task.description }}<br>
+                  {{ task.posted | truncate(length=10, end="") }}<br> 
+                  by {{ task.whosent }} Root: {{ task.rootnum }} Repl: {{ task.replnum }} sdlf lksdj lsldfl 
+                  </p> 
 
                   <div class="footer n">
                     <small class="but pc edit op4">Edit</small>

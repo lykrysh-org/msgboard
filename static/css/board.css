@@ -94,6 +94,9 @@ form textarea {
 #notes .one:hover {
  border-left: 2px solid white;
 }
+#notes .one p {
+ margin-bottom: 0.6rem;
+}
 #notes .one .pic {
  opacity: 0.8;
  width: 100%;
@@ -225,8 +228,6 @@ form textarea {
 
 .count { display: none; }
 
-
-
 .footer .noout, .cancelform .noout {
  border: 0; outline: none;
  -webkit-transition: all 0.3s ease-out; 
@@ -273,7 +274,7 @@ form textarea {
 }
 #notes .one.space {
  padding-top: calc(1.6875rem * 2);
-}blue
+}
 .cancelform {
  width: calc(70% - 6rem);
 }
