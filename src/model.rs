@@ -88,6 +88,5 @@ impl Task {
             .set(task_desc.eq(_desc))
             .execute(conn)
     }
-
 }
 

@@ -178,27 +178,6 @@ form textarea {
  opacity: 1.0;
 }
 
-.footer .noout {
- border: 0; outline: none;
- -webkit-transition: all 0.3s ease-out; 
- transition: all 0.3s ease-out;
-}
-
-.footer .cancel {
- position: absolute;
- z-index: 3;
- display: inline-block;
- top: 0.2rem; right: 0; height: 1.8rem;
- vertical-align: -0.1rem;
- padding: 0px 12px; 
- margin-right: 4.1rem;
- color: #ab8f54;
- background: rgba(255,255,255,0.4);
-}
-.footer .cancel:hover {
- background: rgba(255,255,255,1.0);
-}
-
 .footer .comment {
  position: absolute;
  z-index: 3;
@@ -218,6 +197,30 @@ form textarea {
 
 .count { display: none; }
 
+.cancelform {
+ position: absolute;
+ z-index: 3;
+ margin-top: -1.8rem;
+ width: 11rem;
+}
+
+.cancelform button {
+ height: 1.9rem;
+ vertical-align: -0.1rem;
+ padding: 0px 12px; 
+ color: #ab8f54;
+ background: rgba(255,255,255,0.4);
+}
+.cancelform button:hover {
+ background: rgba(255,255,255,1.0);
+}
+
+.footer .noout, .cancelform .noout {
+ border: 0; outline: none;
+ -webkit-transition: all 0.3s ease-out; 
+ transition: all 0.3s ease-out;
+}
+
 #notes .one .room {
  display: none;
  margin-top: 0rem;
@@ -234,36 +237,36 @@ form textarea {
 
 
 @media screen and (min-width: 20rem)  {
-.footer small, form textarea, form input {
+.footer small, form textarea, form input, .cancelform small {
  font-size: 1.375rem;
  line-height: 1.725rem;
 }
-.msgbox{
- width: 80%;
+.cancelform {
+ left: calc(90% - 14.2rem);
 }
 li {
  margin-bottom: calc(1.625rem * 2);
 }
 }
 @media screen and (max-width: 42.5rem) and (max-width: 20rem)  {
-.footer small, form textarea, form input {
+.footer small, form textarea, form input, .cancelform small {
  font-size: 1.4375rem;
  line-height: 1.7875rem;
 }
-.msgbox{
- width: 70%;
+.cancelform {
+ left: calc(85% - 14.2rem);
 }
 li {
  margin-bottom:calc(1.6875rem * 2); 
 }
 }
 @media screen and (min-width: 42.5rem) {
-.footer small, form textarea, form input {
+.footer small, form textarea, form input, .cancelform small {
  font-size: 1.5rem;
  line-height: 1.85rem;
 }
-.msgbox{
- width: 60%;
+.cancelform {
+ left: calc(80% - 14.2rem);
 }
 li {
  margin-bottom: calc(1.75rem * 2);

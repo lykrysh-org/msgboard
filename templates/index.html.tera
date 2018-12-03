@@ -91,6 +91,7 @@
 
                 {% if task.editable %}
                 <div>
+
                   <form class="editform" action="/todo/{{task.id}}/edit" method="post">
                   <div class="bbox n top12">
                     <div class="short l"><img src="/static/img/crossshort3.png"></div>
@@ -111,11 +112,17 @@
                       <div class="leftbut">
                         <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
                       </div>
-                      <button type="reset" class="cancel noout pc"><small>Cancel Editing</small></button>
                       <button type="submit" class="comment noout pc"><img src="/static/img/send.png"></button>
                     </div>
                   </div>
                   </form>
+
+                  <form action="/todo/{{task.id}}/cancel" method="post">
+                  <div class="cancelform">
+                      <button type="submit" class="cancel noout pc"><small>Cancel Editing</small></button>
+                  </div>
+                  </form>
+
                 </div>
                 {% else %}
 

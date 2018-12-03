@@ -8,7 +8,7 @@ use actix_web::{
 use futures::{future, Future};
 use tera::{Context, Tera};
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, UploadTask};
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, UploadTask, CancelTask};
 use session::{self, FlashMessage};
 
 pub struct AppState {
@@ -160,10 +160,25 @@ pub struct EditForm {
 pub fn edit(
     (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<EditForm>),
 ) -> FutureResponse<HttpResponse> {
-    println!("{:?}", req);
     req.state()
         .db
         .send(UploadTask { id: params.id, desc: form.description.trim().to_string() })
+        .from_err()
+        .and_then(move |res| match res {
+            Ok(_) => {
+                Ok(redirect_to("/"))
+            },
+            Err(e) => Err(e),
+        })
+        .responder()
+}
+
+pub fn cancel(
+    (req, params): (HttpRequest<AppState>, Path<UpdateParams>),
+) -> FutureResponse<HttpResponse> {
+    req.state()
+        .db
+        .send(CancelTask { id: params.id })
         .from_err()
         .and_then(move |res| match res {
             Ok(_) => {

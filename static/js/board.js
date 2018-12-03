@@ -43,12 +43,6 @@ $(document).ready(function() {
     } 
   });
 
-  $('.editform').on('reset',function(){  
-  });
-
-  $('.editform').bind('submit',function(){
-  });
-
   $('.edit').click(function() {
     var p = $(this).parent();
     p.parent().next(".together").hide();

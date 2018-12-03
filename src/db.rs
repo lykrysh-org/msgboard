@@ -150,3 +150,21 @@ impl Handler<UploadTask> for DbExecutor {
             .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
     }
 }
+
+pub struct CancelTask {
+    pub id: i32,
+}
+
+impl Message for CancelTask {
+    type Result = Result<(), Error>;
+}
+
+impl Handler<CancelTask> for DbExecutor {
+    type Result = Result<(), Error>;
+
+    fn handle(&mut self, task: CancelTask, _: &mut Self::Context) -> Self::Result {
+        Task::toggle_with_id(task.id, self.get_conn()?.deref())
+            .map(|_| ())
+            .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
+    }
+}
