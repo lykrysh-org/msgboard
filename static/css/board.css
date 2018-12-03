@@ -50,7 +50,7 @@ form textarea {
 
 #newchunk {
  margin-top: 3.4rem;
- margin-bottom: 3.4rem;
+ margin-bottom: 0rem;
 }
 #newchunk .me, #notes .me {
  margin-top: 1px;
@@ -114,6 +114,14 @@ form textarea {
  position: absolute;
  z-index: 3;
  left: 0;
+}
+#notes .bbox .reply {
+ top: -3px; 
+ height: 58px; 
+}
+#notes .bbox .reply img {
+ width: 32px;
+ height: 58px;
 }
 #notes .tbox.top12 {
  margin-top: 1.2rem;
@@ -244,8 +252,11 @@ form textarea {
 .cancelform {
  left: calc(90% - 14.2rem);
 }
-li {
- margin-bottom: calc(1.625rem * 2);
+.lone {
+ height: calc(1.625rem * 3);
+}
+#notes .one.space {
+ padding-top: calc(1.625rem * 2);
 }
 }
 @media screen and (max-width: 42.5rem) and (max-width: 20rem)  {
@@ -256,8 +267,11 @@ li {
 .cancelform {
  left: calc(85% - 14.2rem);
 }
-li {
- margin-bottom:calc(1.6875rem * 2); 
+.lone {
+ height:calc(1.6875rem * 3); 
+}
+#notes .one.space {
+ padding-top: calc(1.6875rem * 2);
 }
 }
 @media screen and (min-width: 42.5rem) {
@@ -268,7 +282,10 @@ li {
 .cancelform {
  left: calc(80% - 14.2rem);
 }
-li {
- margin-bottom: calc(1.75rem * 2);
+.lone {
+ height: calc(1.75rem * 3);
+}
+#notes .one.space {
+ padding-top: calc(1.75rem * 2);
 }
 }

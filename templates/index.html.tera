@@ -69,7 +69,16 @@
         <ul>
           {% for task in tasks %}
             <li>
-                <div class="tbox one">
+
+                {% if task.replnum != 1 %}
+                  <div class="bbox n">
+                    <div class="reply l"><img src="/static/img/crossone3.png"></div>
+                  </div>
+                {% else %}
+                  <div class="lone"></div>
+                {% endif %}
+
+                <div class="tbox one {% if task.replnum != 1 %} space {% endif %}">
                   {% if not task.editable %}
 
                   <p>{{ task.description }}</p>  
@@ -96,7 +105,7 @@
                 <div>
 
                   <form class="editform" action="/todo/{{task.id}}/edit" method="post">
-                  <div class="bbox n top12">
+                  <div class="bbox n">
                     <div class="short l"><img src="/static/img/crossshort3.png"></div>
                     <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
                   </div>
