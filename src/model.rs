@@ -73,7 +73,7 @@ impl Task {
         tasks
             .filter(rootnum.eq(parentid))
             .select(replnum)
-            .order(id.desc())
+            .order(replnum.desc())
             .first::<i32>(conn)
     }
 
