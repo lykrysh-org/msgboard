@@ -127,6 +127,26 @@ form textarea {
  margin-top: 1.2rem;
 }
 
+.cancelform {
+ position: relative;
+ z-index: 3;
+ top: -1.8rem;
+ max-width: calc(32rem + 8px);
+ margin: 0 auto;
+ text-align: right;
+}
+
+.cancelform button {
+ height: 1.9rem;
+ vertical-align: -0.1rem;
+ padding: 0px 12px; 
+ color: #ab8f54;
+ background: rgba(255,255,255,0.4);
+}
+.cancelform button:hover {
+ background: rgba(255,255,255,1.0);
+}
+
 #notes .together .footer,  #notes #editable, #newchunk .footer {
  height: 2.0rem;
 }
@@ -205,23 +225,7 @@ form textarea {
 
 .count { display: none; }
 
-.cancelform {
- position: absolute;
- z-index: 3;
- margin-top: -1.8rem;
- width: 11rem;
-}
 
-.cancelform button {
- height: 1.9rem;
- vertical-align: -0.1rem;
- padding: 0px 12px; 
- color: #ab8f54;
- background: rgba(255,255,255,0.4);
-}
-.cancelform button:hover {
- background: rgba(255,255,255,1.0);
-}
 
 .footer .noout, .cancelform .noout {
  border: 0; outline: none;
@@ -244,13 +248,10 @@ form textarea {
 }
 
 
-@media screen and (min-width: 20rem)  {
+@media screen and (max-width: 20rem)  {
 .footer small, form textarea, form input, .cancelform small {
  font-size: 1.375rem;
  line-height: 1.725rem;
-}
-.cancelform {
- left: calc(90% - 14.2rem);
 }
 .lone {
  height: calc(1.625rem * 3);
@@ -258,20 +259,23 @@ form textarea {
 #notes .one.space {
  padding-top: calc(1.625rem * 2);
 }
+.cancelform {
+ width: calc(80% - 6rem);
 }
-@media screen and (max-width: 42.5rem) and (max-width: 20rem)  {
+}
+@media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
 .footer small, form textarea, form input, .cancelform small {
  font-size: 1.4375rem;
  line-height: 1.7875rem;
-}
-.cancelform {
- left: calc(85% - 14.2rem);
 }
 .lone {
  height:calc(1.6875rem * 3); 
 }
 #notes .one.space {
  padding-top: calc(1.6875rem * 2);
+}blue
+.cancelform {
+ width: calc(70% - 6rem);
 }
 }
 @media screen and (min-width: 42.5rem) {
@@ -279,13 +283,13 @@ form textarea {
  font-size: 1.5rem;
  line-height: 1.85rem;
 }
-.cancelform {
- left: calc(80% - 14.2rem);
-}
 .lone {
  height: calc(1.75rem * 3);
 }
 #notes .one.space {
  padding-top: calc(1.75rem * 2);
+}
+.cancelform {
+ width: calc(60% - 6rem);
 }
 }
