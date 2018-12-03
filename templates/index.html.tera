@@ -66,27 +66,30 @@
     </div>
 
     <div id="notes">
+        {% set_global ROOT = 0 %}
+        {% set_global NEW = true %}
         <ul>
           {% for task in tasks %}
             <li>
-
-                {% if task.replnum != 1 %}
+                {% if task.rootnum != ROOT %}
+                  {% set_global NEW = true %}
+                  {% set_global ROOT = task.rootnum %}
+                  <div class="lone"></div>
+                {% else %}
+                  {% set_global NEW = false %}
                   <div class="bbox n">
                     <div class="reply l"><img src="/static/img/crossone3.png"></div>
                   </div>
-                {% else %}
-                  <div class="lone"></div>
                 {% endif %}
 
-                <div class="tbox one {% if task.replnum != 1 %} space {% endif %}">
-                  {% if not task.editable %}
+                <div class="tbox one {% if NEW == false %} space {% endif %}">
 
+                  {% if not task.editable %}
                   <p>
                   {{ task.description }}<br>
                   {{ task.posted | truncate(length=10, end="") }}<br> 
-                  by {{ task.whosent }} Root: {{ task.rootnum }} Repl: {{ task.replnum }} sdlf lksdj lsldfl 
+                  by {{ task.whosent }} Root: {{ ROOT }} Repl: {{ task.replnum }} sdlf lksdj lsldfl 
                   </p> 
-
                   <div class="footer n">
                     <small class="but pc edit op4">Edit</small>
                     <small class="but pc delete op4">Delete</small>
@@ -142,7 +145,7 @@
 
                 <div class="together">
                   <form class="replyform" action="/todo" method="post">
-                  <input type="hidden" name="inheritedid" value="{{ task.rootnum }}" />
+                  <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
                   <div class="bbox n top12">
                     <div class="cross l"><img src="/static/img/cross3.png"></div>
                     <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
