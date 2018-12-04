@@ -1,5 +1,21 @@
 $(document).ready(function() {
 
+  gety();
+
+  function sety() {
+    var st = $(document).scrollTop();
+    document.cookie = "y" + "=" + st;
+  };
+
+  function gety() {
+    var toppos = document.cookie.substring(2);
+    window.scrollTo(0,toppos);
+  };
+
+  $(window).scroll(function() {
+    sety();
+  });
+
   $('.leftbut .uploadpic').click(function() {
       $('#dark').fadeIn();
   });
@@ -57,6 +73,7 @@ $(document).ready(function() {
       p.children(".room").show();
       p.children(".count").text("e");
       $(this).addClass("bbk");
+      sety();
     }
     $(this).siblings(".room").find("input:hidden[name=_method]").val("put");
   });
@@ -76,6 +93,7 @@ $(document).ready(function() {
       p.children(".count").text("d");
       $(this).addClass("bbk");
       $(this).siblings(".room").find("input:hidden[name=_method]").val("delete");
+      sety();
     }
   });
 
@@ -91,6 +109,7 @@ $(document).ready(function() {
       p.parent().next(".together").show();
       p.children(".count").text("r");
       $(this).addClass("bbk");
+      sety();
     }
   });
 
