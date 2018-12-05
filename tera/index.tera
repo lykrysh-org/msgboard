@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lykrysh</title>
-    <link rel="icon" type="image/png" href="/static/img/icon.png" />
-    <link rel="stylesheet" href="/static/css/common.css">
-    <link rel="stylesheet" href="/static/css/board.css">
-    <script type="text/javascript" defer src="/static/js/j.js"></script>
-    <script type="text/javascript" defer src="/static/js/board.js"></script>
+    <link rel="icon" type="image/png" href="/static/pics/icon.png" />
+    <link rel="stylesheet" href="/static/style/common.css">
+    <link rel="stylesheet" href="/static/style/board.css">
+    <script type="text/javascript" defer src="/static/scrpt/j.scrpt"></script>
+    <script type="text/javascript" defer src="/static/scrpt/board.scrpt"></script>
 </head>
 <body>
 
   <div class="logo pc n" id="logo">
-    <img src="/static/img/logo.png">
+    <img src="/static/pics/logo.png">
     <small>Lykrysh</small>
   </div>
   <div id="dark"></div>
@@ -32,8 +32,8 @@
       <form class="topform" action="/todo" method="post">
       <input type="hidden" name="inheritedid" value="none" />
       <div class="bbox n">
-        <div class="short l"><img src="/static/img/crossshort3.png"></div>
-        <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
+        <div class="short l"><img src="/static/pics/a1.png"></div>
+        <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
       </div>
       <div class="tbox me">
         <p>
@@ -42,23 +42,23 @@
         </p>
       </div>
       <div class="bbox n">
-          <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
-          <div class="last r"><img src="/static/img/crossshort3.png"></div>
+          <div class="last l lftbm"><img src="/static/pics/a1.png"></div>
+          <div class="last r"><img src="/static/pics/a1.png"></div>
       </div>
 
       <div class="tbox post">
           <div class="footer n">
               <div class="leftbut">
-                  <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
+                  <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
               </div>
               <div class="rightbut">
-                  <img src="/static/img/id.png">
+                  <img src="/static/pics/id.png">
                   <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" id="whosent" /></small>
-                  <img src="/static/img/key-icon.png">
+                  <img src="/static/pics/key.png">
                   <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>
               </div>
               <button type="submit" class="comment noout pc">
-                  <img src="/static/img/send.png">
+                  <img src="/static/pics/send.png">
               </button>
           </div>
       </div>
@@ -78,7 +78,7 @@
                 {% else %}
                   {% set_global NEW = false %}
                   <div class="bbox n">
-                    <div class="reply l"><img src="/static/img/crossone3.png"></div>
+                    <div class="reply l"><img src="/static/pics/a2.png"></div>
                   </div>
                 {% endif %}
 
@@ -97,7 +97,7 @@
                     <div class="room bbk">
                       <form action="/todo/{{task.id}}" method="post">
                         <input type="hidden" name="_method" value="" />
-                        <img src="/static/img/key-icon.png">
+                        <img src="/static/pics/key-icon.png">
                         <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" id="password" value="" /></small>
                       </form>
                     </div>
@@ -111,8 +111,8 @@
 
                   <form class="editform" action="/todo/{{task.id}}/edit" method="post">
                   <div class="bbox n">
-                    <div class="short l"><img src="/static/img/crossshort3.png"></div>
-                    <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
+                    <div class="short l"><img src="/static/pics/a1.png"></div>
+                    <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
                   </div>
                   <div class="tbox me bbk">
                     <p>
@@ -121,15 +121,15 @@
                     </p>
                   </div>
                   <div class="bbox n">
-                    <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
-                    <div class="last r"><img src="/static/img/crossshort3.png"></div>
+                    <div class="last l lftbm"><img src="/static/pics/a1.png"></div>
+                    <div class="last r"><img src="/static/pics/a1.png"></div>
                   </div>
                   <div class="tbox top12">
                     <div class="footer n" id="editable">
                       <div class="leftbut">
-                        <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
+                        <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
                       </div>
-                      <button type="submit" class="comment noout pc"><img src="/static/img/send.png"></button>
+                      <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
                     </div>
                   </div>
                   </form>
@@ -147,8 +147,8 @@
                   <form class="replyform" action="/todo" method="post">
                   <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
                   <div class="bbox n top12">
-                    <div class="cross l"><img src="/static/img/cross3.png"></div>
-                    <div class="short r rgttp"><img src="/static/img/crossshort3.png"></div>
+                    <div class="cross l"><img src="/static/pics/a3.png"></div>
+                    <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
                   </div>
                   <div class="tbox me">
                     <p>
@@ -157,21 +157,21 @@
                     </p>
                   </div>
                   <div class="bbox n">
-                    <div class="last l lftbm"><img src="/static/img/crossshort3.png"></div>
-                    <div class="last r"><img src="/static/img/crossshort3.png"></div>
+                    <div class="last l lftbm"><img src="/static/pics/a1.png"></div>
+                    <div class="last r"><img src="/static/pics/a1.png"></div>
                   </div>
                   <div class="tbox top12">
                     <div class="footer n">
                       <div class="leftbut">
-                        <div class="uploadpic pc"><img src="/static/img/pic.png"></div>
+                        <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
                       </div>
                       <div class="rightbut">
-                        <img src="/static/img/id.png">
+                        <img src="/static/pics/id.png">
                         <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" id="whosent" /></small>
-                        <img src="/static/img/key-icon.png">
+                        <img src="/static/pics/key-icon.png">
                         <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>    
                       </div>
-                      <button type="submit" class="comment noout pc"><img src="/static/img/send.png"></button>
+                      <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
                     </div>
                   </div>
                   </form>

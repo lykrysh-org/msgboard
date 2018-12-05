@@ -38,7 +38,7 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
 
                 let rendered = req.state()
                     .template
-                    .render("index.html.tera", &context)
+                    .render("index.tera", &context)
                     .map_err(|e| {
                         error::ErrorInternalServerError(e.description().to_owned())
                     })?;

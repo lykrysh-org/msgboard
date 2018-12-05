@@ -1,5 +1,5 @@
-@font-face {font-family: 'pd';  font-weight: 700; src: url('PlayfairDisplay-Bold.ttf')}
 @font-face {font-family: 'vt';  font-weight: 400; src: url('VT323-Regular.ttf')}
+
 #debug {
  position: fixed;
  z-index: 100;

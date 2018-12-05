@@ -48,7 +48,7 @@ fn main() {
     let app = move || {
         debug!("Constructing the App");
 
-        let templates: Tera = compile_templates!("templates/**/*");
+        let templates: Tera = compile_templates!("tera/**/*");
 
         let session_store = SessionStorage::new(
             CookieSessionBackend::signed(SESSION_SIGNING_KEY).secure(false),
