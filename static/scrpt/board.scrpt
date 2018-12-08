@@ -24,24 +24,26 @@ $(document).ready(function() {
       $(this).fadeOut();
   });
 
-  $('.topform').bind('submit',function(e){
+  // top form
+  $('.f10').bind('submit',function(e){
     var trouble = false;
     var msg = '';
-    if ($.trim($(this).find("#description").val()) === '') { msg += 'Any text? '; trouble = true; };
-    if ($.trim($(this).find("#whosent").val()) === '') { msg += 'Your name? '; trouble = true; };
-    if ($.trim($(this).find("#secret").val()) === '') { msg += 'Secret key? '; trouble = true; };
+    if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+    if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+    if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
     if (trouble) { 
       $('#bugbug').text(msg);
       e.preventDefault(); 
     };
   });
 
-  $('.replyform').bind('submit',function(e){
+  // reply form
+  $('.f30').bind('submit',function(e){
     var trouble = false;
     var msg = '';
-    if ($.trim($(this).find("#description").val()) === '') { msg += 'Any text? '; trouble = true; };
-    if ($.trim($(this).find("#whosent").val()) === '') { msg += 'Your name? '; trouble = true; };
-    if ($.trim($(this).find("#secret").val()) === '') { msg += 'Secret key? '; trouble = true; };
+    if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+    if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+    if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
     if (trouble) { 
       $('#bugbug').text(msg);
       e.preventDefault(); 
@@ -121,7 +123,7 @@ $(document).ready(function() {
     }
   });
 
-  $('.topform textarea').focus().val('');
-  $('.replyform textarea').focus().val('');
+  $('.f10 textarea').focus().val('');
+  $('.f30 textarea').focus().val('');
 
 });

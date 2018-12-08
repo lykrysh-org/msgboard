@@ -29,7 +29,7 @@
     </div>
 
     <div id="newchunk">
-      <form class="topform" action="/todo" method="post">
+      <form class="f10 xx" action="/todo" method="post">
       <input type="hidden" name="inheritedid" value="none" />
       <div class="bbox n">
         <div class="short l"><img src="/static/pics/a1.png"></div>
@@ -37,7 +37,7 @@
       </div>
       <div class="tbox me">
         <p>
-          <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description" value="" class="description">
+          <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="">
           </textarea>
         </p>
       </div>
@@ -53,9 +53,9 @@
               </div>
               <div class="rightbut">
                   <img src="/static/pics/id.png">
-                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" id="whosent" /></small>
+                  <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
                   <img src="/static/pics/key.png">
-                  <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>
+                  <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
               </div>
               <button type="submit" class="comment noout pc">
                   <img src="/static/pics/send.png">
@@ -97,8 +97,8 @@
                     <div class="room bbk">
                       <form action="/todo/{{task.id}}" method="post">
                         <input type="hidden" name="_method" value="" />
-                        <img src="/static/pics/key-icon.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" id="password" value="" /></small>
+                        <img src="/static/pics/key.png">
+                        <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
                       </form>
                     </div>
                     <span class="count">n</span>
@@ -109,14 +109,14 @@
                 {% if task.editable %}
                 <div>
 
-                  <form class="editform" action="/todo/{{task.id}}/edit" method="post">
+                  <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
                   <div class="bbox n">
                     <div class="short l"><img src="/static/pics/a1.png"></div>
                     <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
                   </div>
                   <div class="tbox me bbk">
                     <p>
-                      <textarea rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description"  class="description">{{ task.description }}
+                      <textarea class="dsc" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description">{{ task.description }}
                       </textarea>
                     </p>
                   </div>
@@ -144,7 +144,7 @@
                 {% else %}
 
                 <div class="together">
-                  <form class="replyform" action="/todo" method="post">
+                  <form class="f30 xx" action="/todo" method="post">
                   <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
                   <div class="bbox n top12">
                     <div class="cross l"><img src="/static/pics/a3.png"></div>
@@ -152,7 +152,7 @@
                   </div>
                   <div class="tbox me">
                     <p>
-                    <textarea autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" id="description" value="" class="description">
+                    <textarea  class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="">
                     </textarea>
                     </p>
                   </div>
@@ -167,9 +167,9 @@
                       </div>
                       <div class="rightbut">
                         <img src="/static/pics/id.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" id="whosent" /></small>
-                        <img src="/static/pics/key-icon.png">
-                        <small><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" id="secret" value="" /></small>    
+                        <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
+                        <img src="/static/pics/key.png">
+                        <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>    
                       </div>
                       <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
                     </div>
