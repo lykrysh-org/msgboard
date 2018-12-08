@@ -16,6 +16,7 @@ use schema::{
 #[table_name = "tasks"]
 pub struct NewTask {
     pub whosent: String,
+    pub attached: Option<String>,
     pub description: String,
 }
 
@@ -33,6 +34,7 @@ pub struct Task {
     pub replnum: i32,
     pub posted: NaiveDateTime,
     pub whosent: String,
+    pub attached: Option<String>,
     pub editable: bool,
     pub description: String,
 }

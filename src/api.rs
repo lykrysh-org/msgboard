@@ -74,12 +74,19 @@ pub struct CreateForm {
     hasimg: String,
     secret: String,
     whosent: String,
+    linky: Option<String>,
     description: String,
 }
 
 pub fn create(
     (req, params): (HttpRequest<AppState>, Form<CreateForm>),
 ) -> FutureResponse<HttpResponse> {
+    let lnk: Option<String> = match params.hasimg.parse().unwrap_or(0) {
+        1 => Some("uploaded".to_string()),
+        2 => params.linky.clone(),
+        _ => None,
+    };
+
     let replyid: Option<i32> = match params.inheritedid.clone().as_ref() {
         "none" => None,
         _whatever => {
@@ -94,6 +101,7 @@ pub fn create(
             inheritedid: replyid,
             secret: params.secret.clone(),
             whosent: name.to_string(),
+            linky: lnk,
             description: params.description.clone().trim().to_string(),
         })
         .from_err()

@@ -4,6 +4,7 @@ CREATE TABLE tasks (
   replnum INT NOT NULL DEFAULT 1,
   posted TIMESTAMPTZ NOT NULL default current_timestamp,
   whosent VARCHAR NOT NULL,
+  attached VARCHAR DEFAULT NULL,
   editable BOOLEAN NOT NULL DEFAULT 'f',
   description VARCHAR NOT NULL
 );

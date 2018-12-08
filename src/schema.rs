@@ -13,6 +13,7 @@ table! {
         replnum -> Int4,
         posted -> Timestamptz,
         whosent -> Varchar,
+        attached -> Nullable<Varchar>,
         editable -> Bool,
         description -> Varchar,
     }

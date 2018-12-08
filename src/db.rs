@@ -45,6 +45,7 @@ pub struct CreateTask {
     pub inheritedid: Option<i32>,
     pub secret: String,
     pub whosent: String,
+    pub linky: Option<String>,
     pub description: String,
 }
 
@@ -58,6 +59,7 @@ impl Handler<CreateTask> for DbExecutor {
     fn handle(&mut self, todo: CreateTask, _: &mut Self::Context) -> Self::Result {
         let new_task = NewTask {
             whosent: todo.whosent,
+            attached: todo.linky,
             description: todo.description,
         };
         let tid = Task::inserttask(new_task, self.get_conn()?.deref());
