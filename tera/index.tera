@@ -13,175 +13,127 @@
 </head>
 <body>
 
-  <div class="logo pc n" id="logo">
-    <img src="/static/pics/logo.png">
-    <small>Lykrysh</small>
-  </div>
+  <div class="logo pc n" id="logo"><img src="/static/pics/logo.png"><small>Lykrysh</small></div>
   <div id="dark"></div>
-
-  <div id="dummy"><small id="bugbug">
-  {% if msg %}{{msg.1}}{% endif %}
-  </small></div>
+  <div id="dummy"><small id="bugbug">{% if msg %}{{msg.1}}{% endif %}</small></div>
 
   <div class="b1">
-    <div class="tbox n">
-      <small>Process Notes<br>or Just Chats</small>
-    </div>
+    <div class="tbox n"><small>Process Notes<br>or Just Chats</small></div>
 
     <div id="newchunk">
       <form class="f10 xx" action="/todo" method="post">
-      <input type="hidden" name="inheritedid" value="none" />
-      <div class="bbox n">
-        <div class="short l"><img src="/static/pics/a1.png"></div>
-        <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
-      </div>
-      <div class="tbox me">
-        <p>
-          <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="">
-          </textarea>
-        </p>
-      </div>
-      <div class="bbox n">
-          <div class="last l lftbm"><img src="/static/pics/a1.png"></div>
-          <div class="last r"><img src="/static/pics/a1.png"></div>
-      </div>
+        <input type="hidden" name="inheritedid" value="none" />
 
-      <div class="tbox post">
+        <div class="bbox n"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+        <div class="tbox me">
+          <p>
+            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value=""></textarea>
+          </p>
+        </div>
+
+        <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+        <div class="tbox post">
           <div class="footer n">
-              <div class="leftbut">
-                  <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
-              </div>
-              <div class="rightbut">
-                  <img src="/static/pics/id.png">
-                  <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
-                  <img src="/static/pics/key.png">
-                  <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
-              </div>
-              <button type="submit" class="comment noout pc">
-                  <img src="/static/pics/send.png">
-              </button>
+            <div class="leftbut">
+              <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+            </div>
+            <div class="rightbut">
+              <img src="/static/pics/id.png">
+              <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
+              <img src="/static/pics/key.png">
+              <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
+            </div>
+
+            <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
           </div>
-      </div>
-    </form>
+        </div>
+      </form>
     </div>
 
-    <div id="notes">
-        {% set_global ROOT = 0 %}
-        {% set_global NEW = true %}
-        <ul>
-          {% for task in tasks %}
-            <li>
-                {% if task.rootnum != ROOT %}
-                  {% set_global NEW = true %}
-                  {% set_global ROOT = task.rootnum %}
-                  <div class="lone"></div>
-                {% else %}
-                  {% set_global NEW = false %}
-                  <div class="bbox n">
-                    <div class="reply l"><img src="/static/pics/a2.png"></div>
-                  </div>
-                {% endif %}
+    <div id="notes">{% set_global ROOT = 0 %}{% set_global NEW = true %}
+      <ul>{% for task in tasks %}
+        <li>{% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
+          <div class="lone"></div>{% else %}{% set_global NEW = false %}
+            <div class="bbox n"><div class="reply l"><img src="/static/pics/a2.png"></div></div>{% endif %}
+            <div class="tbox one {% if NEW == false %} space {% endif %}">
 
-                <div class="tbox one {% if NEW == false %} space {% endif %}">
-
-                  {% if not task.editable %}
-                  <p>
-                  {{ task.description }}<br>
-                  {{ task.posted | truncate(length=10, end="") }}<br> 
-                  by {{ task.whosent }} Root: {{ ROOT }} Repl: {{ task.replnum }} sdlf lksdj lsldfl 
-                  </p> 
-                  <div class="footer n">
-                    <small class="but pc edit op4">Edit</small>
-                    <small class="but pc delete op4">Delete</small>
-                    <small class="but pc reply op8">Reply</small>
-                    <div class="room bbk">
-                      <form action="/todo/{{task.id}}" method="post">
-                        <input type="hidden" name="_method" value="" />
-                        <img src="/static/pics/key.png">
-                        <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
-                      </form>
-                    </div>
-                    <span class="count">n</span>
-                  </div>
-                  {% endif %}
-                </div>
-
-                {% if task.editable %}
-                <div>
-
-                  <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
-                  <div class="bbox n">
-                    <div class="short l"><img src="/static/pics/a1.png"></div>
-                    <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
-                  </div>
-                  <div class="tbox me bbk">
-                    <p>
-                      <textarea class="dsc" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description">{{ task.description }}
-                      </textarea>
-                    </p>
-                  </div>
-                  <div class="bbox n">
-                    <div class="last l lftbm"><img src="/static/pics/a1.png"></div>
-                    <div class="last r"><img src="/static/pics/a1.png"></div>
-                  </div>
-                  <div class="tbox top12">
-                    <div class="footer n" id="editable">
-                      <div class="leftbut">
-                        <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
-                      </div>
-                      <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
-                    </div>
-                  </div>
-                  </form>
-
-                  <form action="/todo/{{task.id}}/cancel" method="post">
-                  <div class="cancelform">
-                      <button type="submit" class="cancel noout pc"><small>Cancel Editing</small></button>
-                  </div>
-                  </form>
-
-                </div>
-                {% else %}
-
-                <div class="together">
-                  <form class="f30 xx" action="/todo" method="post">
-                  <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
-                  <div class="bbox n top12">
-                    <div class="cross l"><img src="/static/pics/a3.png"></div>
-                    <div class="short r rgttp"><img src="/static/pics/a1.png"></div>
-                  </div>
-                  <div class="tbox me">
-                    <p>
-                    <textarea  class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="">
-                    </textarea>
-                    </p>
-                  </div>
-                  <div class="bbox n">
-                    <div class="last l lftbm"><img src="/static/pics/a1.png"></div>
-                    <div class="last r"><img src="/static/pics/a1.png"></div>
-                  </div>
-                  <div class="tbox top12">
-                    <div class="footer n">
-                      <div class="leftbut">
-                        <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
-                      </div>
-                      <div class="rightbut">
-                        <img src="/static/pics/id.png">
-                        <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
-                        <img src="/static/pics/key.png">
-                        <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>    
-                      </div>
-                      <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
-                    </div>
-                  </div>
+              {% if not task.editable %}
+              <p>{{ task.description }}<br>{{ task.posted | truncate(length=10, end="") }}<br>by {{ task.whosent }} Root: {{ ROOT }} Repl: {{ task.replnum }} sdlf lksdj lsldfl </p>
+              <div class="footer n">
+                <small class="but pc edit op4">Edit</small>
+                <small class="but pc delete op4">Delete</small>
+                <small class="but pc reply op8">Reply</small>
+                <div class="room bbk">
+                  <form action="/todo/{{task.id}}" method="post">
+                    <input type="hidden" name="_method" value="" />
+                    <img src="/static/pics/key.png">
+                    <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
                   </form>
                 </div>
+                <span class="count">n</span>
+              </div>
               {% endif %}
+            </div>
 
-            </li>
+            {% if task.editable %}
+            <div>
+              <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
+                <div class="bbox n"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+                <div class="tbox me bbk">
+                  <p>
+                    <textarea class="dsc" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description">{{ task.description }}</textarea>
+                  </p>
+                </div>
+                <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+                <div class="tbox top12">
+                  <div class="footer n" id="editable">
+                    <div class="leftbut">
+                      <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+                    </div>
+                    <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
+                  </div>
+                </div>
+              </form>
+
+              <form action="/todo/{{task.id}}/cancel" method="post">
+                <div class="cancelform"><button type="submit" class="cancel noout pc"><small>Cancel Editing</small></button></div>
+              </form>
+            </div>
+
+            {% else %}
+            <div class="together">
+              <form class="f30 xx" action="/todo" method="post">
+                <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
+                <div class="bbox n top12"><div class="cross l"><img src="/static/pics/a3.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+                <div class="tbox me">
+                  <p>
+                    <textarea  class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value=""></textarea>
+                  </p>
+                </div>
+                <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+                <div class="tbox top12">
+                  <div class="footer n">
+                    <div class="leftbut">
+                      <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+                    </div>
+                    <div class="rightbut">
+                      <img src="/static/pics/id.png">
+                      <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
+                      <img src="/static/pics/key.png">
+                      <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>    
+                    </div>
+
+                    <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            {% endif %}
+
+          </li>
           {% endfor %}
         </ul>
       </div>
-  </div>
-</body>
+    </div>
+  </body>
 </html>
