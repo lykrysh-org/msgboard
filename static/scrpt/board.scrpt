@@ -105,19 +105,19 @@ $(document).ready(function() {
       var addr = $(this).val();
       var xx = $(this).parent().parent().parent();
 
-      // TODO: something weird.
+
       // Check if this img link exists
       objImg = new Image();
       objImg.src = addr;
-      if(objImg.width == 0) {
-        alert("error");
-      } else {
-        objImg.remove();
+      objImg.onload = function() { 
+        $(this).remove();
         xx.children("input[name=hasimg]").val("2");
-      }
+      };
+      objImg.onerror = function() { 
+        alert("error");
+      };
 
       var full = "url('" + addr + "')";
-      $(this).val("");
       var ox = xx.children(".busy").find(".ox");
       ox.children(".wrap").css('background-image', full);
       ox.show();
