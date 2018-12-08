@@ -51,7 +51,7 @@ $(document).ready(function() {
 
   // the file input button
 
-  $(".leftbut .yup .chs").change(function(){
+  $(".yy .chs").change(function(){
 
     function makeThumbnail(input, place) {
       var reader = new FileReader();
@@ -68,7 +68,8 @@ $(document).ready(function() {
         if (size > 500000) { // detect big file
           alert("wow");
         } else {
-          var ox = $(this).parent().siblings(".ox");
+          var bs = $(this).parent().siblings(".xx").children(".busy");
+          var ox = bs.children(".footer").children(".leftbut").children(".ox");
           makeThumbnail(this, ox.children(".wrap"));
           ox.show();
         }
@@ -78,11 +79,12 @@ $(document).ready(function() {
 
   $('.leftbut .ox .x').click(function() {
     $(this).parent().hide();
-    var dark = $(this).parent().parent().parent().parent().siblings(".dark");
+    var f = $(this).parent().parent().parent().parent();
+    var dark = f.siblings(".dark");
     if (dark.is(':visible')) { // link
       dark.children(".linkinput").children("input").val("");
     } else { // upload: flush FileReader
-      $(this).parent().siblings(".yup").children(".chs").val("");
+      f.siblings(".yy").children(".chs").val("");
     }
   });
 
@@ -114,7 +116,11 @@ $(document).ready(function() {
     if (trouble) { 
       $('#bugbug').text(msg);
       e.preventDefault(); 
-    };
+    } else {
+      // check file input
+      var v = $(this).siblings(".yy").children("input[name=file]").val();
+      alert(v);
+    }
   });
 
   // reply form

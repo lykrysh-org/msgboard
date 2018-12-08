@@ -81,6 +81,7 @@ fn main() {
             .middleware(error_handlers)
             .route("/", http::Method::GET, api::index)
             .route("/todo", http::Method::POST, api::create)
+            .route("/todo/save", http::Method::POST, api::save)
             .resource("/todo/{id}", |r: &mut Resource<_>| { r.post().with(api::update) })
             .resource("/todo/{id}/edit", |r: &mut Resource<_>| { r.post().with(api::edit) })
             .resource("/todo/{id}/cancel", |r: &mut Resource<_>| { r.post().with(api::cancel) })
