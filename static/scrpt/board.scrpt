@@ -118,8 +118,12 @@ $(document).ready(function() {
       e.preventDefault(); 
     } else {
       // check file input
-      var v = $(this).siblings(".yy").children("input[name=file]").val();
-      alert(v);
+      //var v = $(this).siblings(".yy").children("input[name=file]").val();
+      //alert(v);
+
+      // (1) Send pic first (without sending fields)
+      $(this).siblings(".yy").submit();
+      e.preventDefault(); 
     }
   });
 
@@ -145,7 +149,19 @@ $(document).ready(function() {
       } else if (choice == "r") {
         one.find(".reply").removeClass("bbk");
       }
+
+      // (1) Send pic first (without sending fields)
+      $(this).siblings(".yy").submit();
+      e.preventDefault();
     } 
+  });
+
+  // edit form
+
+  $('.f20').bind('submit',function(e){
+      // (1) Send pic first (without sending fields)
+      $(this).siblings(".yy").submit();
+      e.preventDefault();
   });
 
   $('.edit').click(function() {

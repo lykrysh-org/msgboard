@@ -12,7 +12,7 @@
     <script type="text/javascript" defer src="/static/scrpt/board.scrpt"></script>
 </head>
 <body>
-
+  <IFRAME style="display:none" name="hiddenform"></IFRAME> 
   <div class="logo pc n" id="logo"><img src="/static/pics/logo.png"><small>Lykrysh</small></div>
   <div id="dummy"><small id="bugbug">{% if msg %}{{msg.1}}{% endif %}</small></div>
 
@@ -65,7 +65,7 @@
 
       </form>
 
-      <form class="f11 yy"  action="/todo/save" method="post" enctype="multipart/form-data">
+      <form class="f11 yy"  action="/todo/save" target="hiddenform" method="post" enctype="multipart/form-data">
          <input id="chs0" class="chs" type="file" name="file" accept="image/*, video/*" />
        </form>
     </div>
@@ -142,7 +142,7 @@
                 <div class="cancelform"><button type="submit" class="cancel noout pc"><small>Cancel Editing</small></button></div>
               </form>
 
-              <form class="f21 yy"  action="/todo/save" method="post" enctype="multipart/form-data">
+              <form class="f21 yy"  action="/todo/save" target="hiddenform" method="post" enctype="multipart/form-data">
                 <input id="chs{{task.id}}e" class="chs" type="file" name="file" accept="image/*, video/*" />
               </form>
 
@@ -195,7 +195,7 @@
 
               </form>
 
-              <form class="f31 yy"  action="/todo/save" method="post" enctype="multipart/form-data">
+              <form class="f31 yy"  action="/todo/save" target="hiddenform"  method="post" enctype="multipart/form-data">
                 <input id="chs{{task.id}}" class="chs" type="file" name="file" accept="image/*, video/*" />
               </form>
 

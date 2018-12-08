@@ -28,6 +28,7 @@ mod db;
 mod model;
 mod schema;
 mod session;
+mod multipart;
 
 static SESSION_SIGNING_KEY: &[u8] = &[0; 32];
 
