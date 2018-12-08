@@ -3,13 +3,31 @@ body {
 }
 .bbk { color: #000; }
 
-#dark {
+.dark {
  display: none;
- position: fixed;
- z-index: 14;
- width: 100%;
- height: 100vh;
- background: rgba(0,0,0,0.6);
+ max-width: 42rem;
+ width: calc(80% + 4rem - 8px);
+ height: 2.4rem; 
+ margin: 0 auto;
+ margin-top: 0.1rem;
+ text-align: left;
+ background: none;
+}
+.dark .link1 {
+ height: 1.8rem;
+ margin-left: 8.8rem;
+ margin-top: 0.1rem;
+ display: inline;
+}
+.dark .link1 img {
+ width: 1.6rem; height: 1.6rem;
+ margin: 0.1rem;
+}
+.dark .linkinput {
+ display: inline;
+}
+.dark .linky {
+ width: 50%;
 }
 
 #dummy {
@@ -130,17 +148,22 @@ form textarea {
  margin-top: 1.2rem;
 }
 
-.cancelform {
+.relative {
  position: relative;
- z-index: 3;
- top: -1.8rem;
- max-width: calc(32rem + 8px);
- margin: 0 auto;
+}
+
+.cancelform {
+ position: absolute;
+ z-index: 1;
+ top: 9.7rem; left: 50%;
+ max-width: 16.4rem;
+ width: calc(40% - 3rem);
  text-align: right;
+ background: none;
 }
 
 .cancelform button {
- height: 1.9rem;
+ height: 1.8rem;
  vertical-align: -0.1rem;
  padding: 0px 12px; 
  color: #ab8f54;
@@ -149,6 +172,7 @@ form textarea {
 .cancelform button:hover {
  background: rgba(255,255,255,1.0);
 }
+
 
 #notes .together .footer,  #notes #editable, #newchunk .footer {
  height: 2.0rem;
@@ -184,17 +208,57 @@ form textarea {
 .footer .leftbut {
  position: absolute;
  z-index: 2;
- top: 0.2rem; left: 0.4rem;
- width: 8rem;
- height: 4.5rem;
+ top: 0.3rem; left: 0.4rem;
+ width: 8.8rem;
+ height: 4.3rem;
  text-align: left;
  background: none;
 }
-.footer .leftbut img {
+.footer .leftbut .uploadpic {
+ position: absolute;
+ top: 0; left: 0;
  opacity: 0.8;
 }
-.footer .leftbut img:hover {
+.footer .leftbut .uploadpic:hover {
  opacity: 1.0;
+}
+.footer .leftbut .yup {
+ display: none;
+ position: absolute;
+ z-index: 3;
+ left: 2rem; 
+}
+.footer .leftbut .yup .zero {
+ opacity: 0.0;
+}
+.footer .leftbut .ox {
+ display: none;
+}
+.footer .leftbut .yup .chs {
+ display: none;
+}
+.footer .leftbut .ox .wrap {
+ position: absolute;
+ z-index: 4;
+ width: 6.2rem; left: 0; top: 0;
+ height: 100%;
+ background-repeat: no-repeat;
+ background-position: center;
+ background-size: cover;
+ background-color: #c0ab7f;
+ background-image: url("");
+}
+.footer .leftbut .ox .x {
+ position: absolute;
+ z-index: 4;
+ width: 1.5rem; left: 6.2rem; top: 0;
+ height: 1.5rem;
+ background: black;
+}
+.footer .leftbut .ox .x img {
+ width: 1.1rem; 
+ height: 1.1rem;
+ margin: 0.2rem;
 }
 
 .footer .rightbut {
@@ -240,7 +304,7 @@ form textarea {
  text-align: left;
 }
 
-.footer .rightbut small, #notes .one .room small {
+.footer .rightbut small, #notes .one .room small, .dark small {
  vertical-align: 10px;
  padding-left: 0.6rem;
  padding-right: 0.4rem;
@@ -248,6 +312,9 @@ form textarea {
  border-bottom: 2px solid white;
 }
 
+.dark small {
+ line-height: 1.0rem;
+}
 
 @media screen and (max-width: 20rem)  {
 .footer small, form textarea, form input, .cancelform small {
@@ -260,10 +327,8 @@ form textarea {
 #notes .one.space {
  padding-top: calc(1.625rem * 2);
 }
-.cancelform {
- width: calc(80% - 6rem);
 }
-}
+
 @media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
 .footer small, form textarea, form input, .cancelform small {
  font-size: 1.4375rem;
@@ -275,10 +340,8 @@ form textarea {
 #notes .one.space {
  padding-top: calc(1.6875rem * 2);
 }
-.cancelform {
- width: calc(70% - 6rem);
 }
-}
+
 @media screen and (min-width: 42.5rem) {
 .footer small, form textarea, form input, .cancelform small {
  font-size: 1.5rem;
@@ -289,8 +352,5 @@ form textarea {
 }
 #notes .one.space {
  padding-top: calc(1.75rem * 2);
-}
-.cancelform {
- width: calc(60% - 6rem);
 }
 }

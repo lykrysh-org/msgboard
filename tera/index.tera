@@ -14,7 +14,6 @@
 <body>
 
   <div class="logo pc n" id="logo"><img src="/static/pics/logo.png"><small>Lykrysh</small></div>
-  <div id="dark"></div>
   <div id="dummy"><small id="bugbug">{% if msg %}{{msg.1}}{% endif %}</small></div>
 
   <div class="b1">
@@ -32,11 +31,24 @@
         </div>
 
         <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
-        <div class="tbox post">
+
+        <div class="busy tbox post">
           <div class="footer n">
+
             <div class="leftbut">
+              <div class="ox">
+                <div class="wrap"></div>
+                <div class="x pc"><img src="/static/pics/x.png"></div>
+              </div>
               <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+              <div class="yup">
+                <label for="chs0"><small class="upup but pc op4">Upload</small></label>
+                <input id="chs0" class="chs" type="file" name="file" accept="image/*, video/*" />
+                <br>
+                <small class="link but pc op4">Link</small>
+              </div>
             </div>
+
             <div class="rightbut">
               <img src="/static/pics/id.png">
               <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
@@ -47,6 +59,12 @@
             <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
           </div>
         </div>
+
+        <div class="dark">
+          <div class="link1"><img src="/static/pics/link1.png"></div>
+          <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://" name="linky" value="" onkeypress="return noenter()" /></small>
+        </div>
+
       </form>
     </div>
 
@@ -59,24 +77,30 @@
 
               {% if not task.editable %}
               <p>{{ task.description }}<br>{{ task.posted | truncate(length=10, end="") }}<br>by {{ task.whosent }} Root: {{ ROOT }} Repl: {{ task.replnum }} sdlf lksdj lsldfl </p>
+
               <div class="footer n">
                 <small class="but pc edit op4">Edit</small>
                 <small class="but pc delete op4">Delete</small>
                 <small class="but pc reply op8">Reply</small>
                 <div class="room bbk">
+
                   <form action="/todo/{{task.id}}" method="post">
                     <input type="hidden" name="_method" value="" />
                     <img src="/static/pics/key.png">
                     <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
                   </form>
+
                 </div>
                 <span class="count">n</span>
               </div>
+
               {% endif %}
             </div>
 
             {% if task.editable %}
-            <div>
+            <!-- EDIT form -->
+
+            <div class="relative">
               <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
                 <div class="bbox n"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
                 <div class="tbox me bbk">
@@ -85,22 +109,44 @@
                   </p>
                 </div>
                 <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
-                <div class="tbox top12">
+
+                <div class="busy tbox top12">
                   <div class="footer n" id="editable">
+
                     <div class="leftbut">
+                      <div class="ox">
+                        <div class="wrap"></div>
+                        <div class="x pc"><img src="/static/pics/x.png"></div>
+                      </div>
                       <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+                      <div class="yup">
+                        <label for="chs{{task.id}}e"><small class="upup but pc op4">Upload</small></label>
+                        <input id="chs{{task.id}}e" class="chs" type="file" name="file" accept="image/*, video/*" />
+                        <br>
+                        <small class="link but pc op4">Link</small>
+                      </div>
                     </div>
+
                     <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
                   </div>
                 </div>
+
+                <div class="dark">
+                  <div class="link1"><img src="/static/pics/link1.png"></div>
+                  <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://" name="linky" value="" onkeypress="return noenter()" /></small>
+                </div>
+
               </form>
 
               <form action="/todo/{{task.id}}/cancel" method="post">
                 <div class="cancelform"><button type="submit" class="cancel noout pc"><small>Cancel Editing</small></button></div>
               </form>
+
             </div>
 
             {% else %}
+            <!-- REPLY form -->
+
             <div class="together">
               <form class="f30 xx" action="/todo" method="post">
                 <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
@@ -111,11 +157,24 @@
                   </p>
                 </div>
                 <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
-                <div class="tbox top12">
+
+                <div class="busy tbox top12">
                   <div class="footer n">
+
                     <div class="leftbut">
+                      <div class="ox">
+                        <div class="wrap"></div>
+                        <div class="x pc"><img src="/static/pics/x.png"></div>
+                      </div>
                       <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+                      <div class="yup">
+                        <label for="chs{{task.id}}"><small class="upup but pc op4">Upload</small></label>
+                        <input id="chs{{task.id}}" class="chs" type="file" name="file" accept="image/*, video/*" />
+                        <br>
+                        <small class="link but pc op4">Link</small>
+                      </div>
                     </div>
+
                     <div class="rightbut">
                       <img src="/static/pics/id.png">
                       <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
@@ -126,6 +185,12 @@
                     <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
                   </div>
                 </div>
+
+                <div class="dark">
+                  <div class="link1"><img src="/static/pics/link1.png"></div>
+                  <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://" name="linky" value="" onkeypress="return noenter()" /></small>
+                </div>
+
               </form>
             </div>
             {% endif %}

@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  // browser cookie to keep y-pos
+
   gety();
 
   function sety() {
@@ -16,15 +18,93 @@ $(document).ready(function() {
     sety();
   });
 
+  // file uploading and linking
+
   $('.leftbut .uploadpic').click(function() {
-      $('#dark').fadeIn();
+    var dark = $(this).parent().parent().parent().parent().children(".dark");
+    var yup = $(this).siblings(".yup");
+    if (dark.is(':visible')) {
+      dark.children(".linkinput").children("input").val("");
+      dark.hide();
+    } else {
+      yup.children("label").children(".upup").removeClass("zero");
+      yup.css('pointer-events', 'auto');
+    }
+    yup.toggle();
   });
 
-  $('#dark').click(function() {
-      $(this).fadeOut();
+  $('.leftbut .yup .link').click(function() {
+    var dark = $(this).parent().parent().parent().parent().parent().children(".dark");
+    if (dark.is(':visible')) {
+      // not implemented
+    } else {
+      $(this).siblings("label").children(".upup").addClass("zero");
+      $(this).parent().css('pointer-events', 'none');
+      dark.fadeIn();
+    }
   });
+
+  $('.leftbut .yup label .upup').click(function() {
+    var pp = $(this).parent().parent();
+    pp.hide();
+  });
+
+  // the file input button
+
+  $(".leftbut .yup .chs").change(function(){
+
+    function makeThumbnail(input, place) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var url = "url('" + e.target.result + "')";
+        place.css('background-image', url);
+      };
+      reader.readAsDataURL(input.files[0]);
+    };
+
+    if (this.files && this.files[0]) {
+      if (typeof FileReader !== "undefined") {
+        var size = this.files[0].size;
+        if (size > 500000) { // detect big file
+          alert("wow");
+        } else {
+          var ox = $(this).parent().siblings(".ox");
+          makeThumbnail(this, ox.children(".wrap"));
+          ox.show();
+        }
+      }
+    }
+  });
+
+  $('.leftbut .ox .x').click(function() {
+    $(this).parent().hide();
+    var dark = $(this).parent().parent().parent().parent().siblings(".dark");
+    if (dark.is(':visible')) { // link
+      dark.children(".linkinput").children("input").val("");
+    } else { // upload: flush FileReader
+      $(this).parent().siblings(".yup").children(".chs").val("");
+    }
+  });
+
+  // the input field to link addr
+
+  $('.linkinput input').keypress(function(event) {
+    if ( event.which == 13 ) {
+      var addr = $(this).val();
+      var full = "url('" + addr + "')";
+      var ox = $(this).parent().parent().siblings(".busy").find(".ox");
+      ox.children(".wrap").css('background-image', full);
+      ox.show();
+      event.preventDefault();
+    }
+  });
+
+
+
+  // main buttons - edit, delete, reply
 
   // top form
+
   $('.f10').bind('submit',function(e){
     var trouble = false;
     var msg = '';
@@ -38,6 +118,7 @@ $(document).ready(function() {
   });
 
   // reply form
+
   $('.f30').bind('submit',function(e){
     var trouble = false;
     var msg = '';
@@ -48,16 +129,16 @@ $(document).ready(function() {
       $('#bugbug').text(msg);
       e.preventDefault(); 
     } else {
-        var ppp = $(this).parent();
-        ppp.hide();
-        var one = ppp.prev(".one");
-        var choice = one.find(".count").text();
-        one.find(".count").text("n");
-        if (choice == "e") {
-          one.find(".edit").removeClass("bbk");
-        } else if (choice == "r") {
-          one.find(".reply").removeClass("bbk");
-        }
+      var p = $(this).parent();
+      p.hide();
+      var one = p.prev(".one");
+      var choice = one.find(".count").text();
+      one.find(".count").text("n");
+      if (choice == "e") {
+        one.find(".edit").removeClass("bbk");
+      } else if (choice == "r") {
+        one.find(".reply").removeClass("bbk");
+      }
     } 
   });
 
@@ -127,3 +208,9 @@ $(document).ready(function() {
   $('.f30 textarea').focus().val('');
 
 });
+
+// Prevent input[text] from submitting
+
+function noenter() {
+  return !(window.event && window.event.keyCode == 13);
+}
