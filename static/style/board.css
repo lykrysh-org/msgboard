@@ -246,7 +246,7 @@ form textarea {
  background-position: center;
  background-size: cover;
  background-color: #c0ab7f;
- background-image: url("");
+ background-image: none;
 }
 .footer .leftbut .ox .x {
  position: absolute;

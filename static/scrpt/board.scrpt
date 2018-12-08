@@ -49,13 +49,23 @@ $(document).ready(function() {
     pp.hide();
   });
 
-  // the file input button
+  // the file input button to UPLOAD
 
   $(".yy .chs").change(function(){
 
-    function makeThumbnail(input, place) {
+    function makeThumbnail(input, place, hi) {
       var reader = new FileReader();
       reader.onload = function (e) {
+        // Check if this img link exists
+        objImg = new Image();
+        objImg.src = e.target.result;
+        objImg.onload = function() { 
+          $(this).remove(); // preventing mem leak
+          hi.val("1");
+        };
+        objImg.onerror = function() { 
+          alert("error");
+        };
         var url = "url('" + e.target.result + "')";
         place.css('background-image', url);
       };
@@ -68,9 +78,9 @@ $(document).ready(function() {
         if (size > 500000) { // detect big file
           alert("wow");
         } else {
-          var bs = $(this).parent().siblings(".xx").children(".busy");
-          var ox = bs.children(".footer").children(".leftbut").children(".ox");
-          makeThumbnail(this, ox.children(".wrap"));
+          var xx = $(this).parent().siblings(".xx");
+          var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
+          makeThumbnail(this, ox.children(".wrap"), xx.children("input[name=hasimg]"));
           ox.show();
         }
       }
@@ -88,26 +98,39 @@ $(document).ready(function() {
     }
   });
 
-  // the input field to link addr
+  // the input field to LINK addr
 
   $('.linkinput input').keypress(function(event) {
     if ( event.which == 13 ) {
       var addr = $(this).val();
+      var xx = $(this).parent().parent().parent();
+
+      // TODO: something weird.
+      // Check if this img link exists
+      objImg = new Image();
+      objImg.src = addr;
+      if(objImg.width == 0) {
+        alert("error");
+      } else {
+        objImg.remove();
+        xx.children("input[name=hasimg]").val("2");
+      }
+
       var full = "url('" + addr + "')";
-      var ox = $(this).parent().parent().siblings(".busy").find(".ox");
+      $(this).val("");
+      var ox = xx.children(".busy").find(".ox");
       ox.children(".wrap").css('background-image', full);
       ox.show();
-      event.preventDefault();
+      event.preventDefault(); // don't submit the entire form
     }
   });
-
-
 
   // main buttons - edit, delete, reply
 
   // top form
 
   $('.f10').bind('submit',function(e){
+    var hi = Number($(this).children("input[name=hasimg]").val());
     var trouble = false;
     var msg = '';
     if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
@@ -116,14 +139,22 @@ $(document).ready(function() {
     if (trouble) { 
       $('#bugbug').text(msg);
       e.preventDefault(); 
-    } else {
-      // check file input
-      //var v = $(this).siblings(".yy").children("input[name=file]").val();
-      //alert(v);
+    } else if (hi > 0) {
+      // Flush the thumbnail
+      var ox = $(this).children(".busy").children(".footer").children(".leftbut").children(".ox");
+      ox.children(".wrap").css('background-image', 'none');
+      ox.hide();
 
-      // (1) Send pic first (without sending fields)
-      $(this).siblings(".yy").submit();
-      e.preventDefault(); 
+      if (hi == 1) {
+        var yy = $(this).siblings(".yy");
+        yy.submit();
+
+        // Flush the file input
+        yy.children("input[name=file]").val(null);
+
+        // Don't submit the fields yet
+        e.preventDefault(); 
+      }
     }
   });
 
@@ -150,69 +181,109 @@ $(document).ready(function() {
         one.find(".reply").removeClass("bbk");
       }
 
-      // (1) Send pic first (without sending fields)
-      $(this).siblings(".yy").submit();
-      e.preventDefault();
+      var hi = Number($(this).children("input[name=hasimg]").val());
+      if (hi > 0) {
+        // Flush the thumbnail
+        var ox = $(this).children(".busy").children(".footer").children(".leftbut").children(".ox");
+        ox.children(".wrap").css('background-image', 'none');
+        ox.hide();
+
+        if (hi == 1) {
+          var yy = $(this).siblings(".yy");
+          yy.submit();
+
+          // Flush the file input
+          yy.children("input[name=file]").val(null);
+
+          // Don't submit the fields yet
+          // TODO: this gives browser error "Uncaught..."
+          e.preventDefault(); 
+        } 
+      }
+
     } 
   });
 
   // edit form
 
   $('.f20').bind('submit',function(e){
-      // (1) Send pic first (without sending fields)
-      $(this).siblings(".yy").submit();
-      e.preventDefault();
+    var hi = Number($(this).children("input[name=hasimg]").val());
+    if (hi > 0) {
+      // Flush the thumbnail
+      var ox = $(this).children(".busy").children(".footer").children(".leftbut").children(".ox");
+      ox.children(".wrap").css('background-image', 'none');
+      ox.hide();
+
+      if (hi == 1) {
+        var yy = $(this).siblings(".yy");
+        yy.submit();
+
+        // Flush the file input
+        yy.children("input[name=file]").val(null);
+
+        // Don't submit the fields yet
+        e.preventDefault(); 
+      }
+    } 
   });
 
   $('.edit').click(function() {
     var p = $(this).parent();
+    var r = p.children(".room");
+    var c = p.children(".count");
     p.parent().next(".together").hide();
-    if( p.children(".count").text() == "e" ) {
-      p.children(".room").hide();
-      p.children(".count").text("n");
+    if( c.text() == "e" ) {
+      r.hide();
+      c.text("n");
       $(this).removeClass("bbk");
     } else {
       $(this).siblings(".but").each(function() {
         $(this).removeClass("bbk");
       });
-      p.children(".room").show();
-      p.children(".count").text("e");
+      r.show();
+      r.find("input[name=password]")[0].focus();
+      c.text("e");
       $(this).addClass("bbk");
       sety();
     }
-    $(this).siblings(".room").find("input:hidden[name=_method]").val("put");
+    r.find("input:hidden[name=_method]").val("put");
   });
 
   $('.delete').click(function() {
     var p = $(this).parent();
+    var r = p.children(".room");
+    var c = p.children(".count");
     p.parent().next(".together").hide();
-    if( p.children(".count").text() == "d" ) {
-      p.children(".room").hide();
-      p.children(".count").text("n");
+    if( c.text() == "d" ) {
+      r.hide();
+      c.text("n");
       $(this).removeClass("bbk");
     } else {
       $(this).siblings(".but").each(function() {
         $(this).removeClass("bbk");
       });
-      p.children(".room").show();
-      p.children(".count").text("d");
+      r.show();
+      r.find("input[name=password]")[0].focus();
+      c.text("d");
       $(this).addClass("bbk");
-      $(this).siblings(".room").find("input:hidden[name=_method]").val("delete");
+      r.find("input:hidden[name=_method]").val("delete");
       sety();
     }
   });
 
   $('.reply').click(function() {
     var p = $(this).parent();
-    p.children(".room").hide();
-    if( p.children(".count").text() == "r" ) {
+    var r = p.children(".room");
+    var c = p.children(".count");
+    r.hide();
+    if( c.text() == "r" ) {
       p.parent().next(".together").hide();
-      p.children(".count").text("n");
+      c.text("n");
       $(this).removeClass("bbk");
     } else {
       $(this).siblings(".but").each(function() { $(this).removeClass("bbk"); });
       p.parent().next(".together").show();
-      p.children(".count").text("r");
+      c.text("r");
       $(this).addClass("bbk");
       sety();
     }

@@ -71,6 +71,7 @@ pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
 #[derive(Deserialize)]
 pub struct CreateForm {
     inheritedid: String,
+    hasimg: String,
     secret: String,
     whosent: String,
     description: String,
