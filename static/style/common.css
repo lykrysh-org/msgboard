@@ -78,6 +78,7 @@ p {
  display:block;
  max-width: calc(38rem + 8px);
  margin: 0 auto;
+ width: 80%;
 }
 .tbox small {
   line-height: 3.0rem;
@@ -114,6 +115,7 @@ p {
  display:block;
  max-width: 42rem;
  margin: 0 auto; 
+ width: calc(80% + 4rem - 8px);
 }
 .bbox.top12 {
  margin-top: 1.2rem;
@@ -176,13 +178,6 @@ p, .bksm, .logo small, .nav small {
 .logo small {
  height: 1.725rem;
 }
-.tbox {
- display:block;
- width: 80%;
-}
-.bbox {
- width: calc(80% + 4rem - 8px);
-}
 }
 @media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
 small {
@@ -202,13 +197,6 @@ p, .bksm, .logo small, .nav small {
 .logo small {
  height: 1.7875rem;
 }
-.tbox {
- display:block;
- width: 70%;
-}
-.bbox {
- width: calc(70% + 4rem - 8px);
-}
 }
 @media screen and (min-width: 42.5rem) {
 small {
@@ -227,12 +215,5 @@ p, .bksm, .logo small, .nav small {
 }
 .logo small {
  height: 1.85rem;
-}
-.tbox {
- display:block;
- width: 60%;
-}
-.bbox {
- width: calc(60% + 4rem - 8px);
 }
 }

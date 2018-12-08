@@ -201,7 +201,7 @@ form textarea {
  position: absolute;
  z-index: 3;
  text-align: right;
- top: 0; right: 3.4rem; height: 2rem;
+ top: -0.2rem; right: 3.4rem; height: 2rem;
  background:none;
 }
 
@@ -213,7 +213,7 @@ form textarea {
  position: absolute;
  z-index: 3;
  display: inline-block;
- top: 0.2rem; right: 0; height: 1.9rem;
+ top: 0.2rem; right: 0; height: 1.8rem;
  vertical-align: -0.1rem;
  padding: 0px 12px; 
  background: #e60000;
