@@ -3,9 +3,10 @@ use actix_web::middleware::session::RequestSession;
 use actix_web::HttpRequest;
 
 const FLASH_KEY: &str = "flash";
+const UPLOADED: &str = "uploaded";
 
-pub fn set_flash<T>(request: &HttpRequest<T>, flash: FlashMessage) -> Result<()> {
-    request.session().set(FLASH_KEY, flash)
+pub fn set_flash<T>(req: &HttpRequest<T>, flash: FlashMessage) -> Result<()> {
+    req.session().set(FLASH_KEY, flash)
 }
 
 pub fn get_flash<T>(req: &HttpRequest<T>) -> Result<Option<FlashMessage>> {
@@ -34,6 +35,40 @@ impl FlashMessage {
         Self {
             kind: "error".to_owned(),
             message: message.to_owned(),
+        }
+    }
+}
+
+pub fn set_uploaded<T>(req: &HttpRequest<T>, uploaded: UpLoaded) -> Result<()> {
+    req.session().set(UPLOADED, uploaded)
+}
+
+pub fn get_uploaded<T>(req: &HttpRequest<T>) -> Result<Option<UpLoaded>> {
+    req.session().get::<UpLoaded>(UPLOADED)
+}
+
+pub fn clear_uploaded<T>(req: &HttpRequest<T>) {
+    req.session().remove(UPLOADED);
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct UpLoaded {
+    pub kind: String,
+    pub uploaded: String,
+}
+
+impl UpLoaded {
+    pub fn success(uploaded: &str) -> Self {
+        Self {
+            kind: "success".to_owned(),
+            uploaded: uploaded.to_owned(),
+        }
+    }
+
+    pub fn error(uploaded: &str) -> Self {
+        Self {
+            kind: "error".to_owned(),
+            uploaded: uploaded.to_owned(),
         }
     }
 }

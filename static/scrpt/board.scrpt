@@ -61,7 +61,7 @@ $(document).ready(function() {
         objImg.src = e.target.result;
         objImg.onload = function() { 
           $(this).remove(); // preventing mem leak
-          hi.val("1");
+          hi.val("3");
         };
         objImg.onerror = function() { 
           alert("error");
@@ -130,30 +130,42 @@ $(document).ready(function() {
   // top form
 
   $('.f10').bind('submit',function(e){
-    var hi = Number($(this).children("input[name=hasimg]").val());
-    var trouble = false;
-    var msg = '';
-    if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
-    if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
-    if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
-    if (trouble) { 
-      $('#bugbug').text(msg);
-      e.preventDefault(); 
-    } else if (hi > 0) {
-      // Flush the thumbnail
-      var ox = $(this).children(".busy").children(".footer").children(".leftbut").children(".ox");
-      ox.children(".wrap").css('background-image', 'none');
-      ox.hide();
+    var hi = $(this).children("input[name=hasimg]");
+    var hinum = Number(hi.val());
 
-      if (hi == 1) {
+    if (hinum != 1) {
+      var trouble = false;
+      var msg = '';
+      if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+      if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
+      if (trouble) { 
+        $('#bugbug').text(msg);
+        e.preventDefault(); 
+      }
+
+      if (hinum == 3) { // there is img to upload
         var yy = $(this).siblings(".yy");
-        yy.submit();
-
+        var dataObject = new FormData(yy[0]);
+        $.ajax({
+          url: "/todo/save",
+          data : dataObject,
+          type : "POST",
+          contentType: false,
+          processData: false,
+          success: function(data){
+            hi.val("1");
+            yy.siblings(".xx").submit(); 
+          },
+          error: function(e){
+            alert(e);
+          }
+        });
         // Flush the file input
         yy.children("input[name=file]").val(null);
-
-        // Don't submit the fields yet
+        // Don't submit the fields
         e.preventDefault(); 
+        return false;
       }
     }
   });
@@ -161,70 +173,86 @@ $(document).ready(function() {
   // reply form
 
   $('.f30').bind('submit',function(e){
-    var trouble = false;
-    var msg = '';
-    if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
-    if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
-    if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
-    if (trouble) { 
-      $('#bugbug').text(msg);
-      e.preventDefault(); 
-    } else {
-      var p = $(this).parent();
-      p.hide();
-      var one = p.prev(".one");
-      var choice = one.find(".count").text();
-      one.find(".count").text("n");
-      if (choice == "e") {
-        one.find(".edit").removeClass("bbk");
-      } else if (choice == "r") {
-        one.find(".reply").removeClass("bbk");
+    var hi = $(this).children("input[name=hasimg]");
+    var hinum = Number(hi.val());
+
+    if (hinum != 1) {
+      var trouble = false;
+      var msg = '';
+      if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+      if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
+      if (trouble) { 
+        $('#bugbug').text(msg);
+        e.preventDefault(); 
+      } else {
+        var p = $(this).parent();
+        p.hide();
+        var one = p.prev(".one");
+        var choice = one.find(".count").text();
+        one.find(".count").text("n");
+        if (choice == "e") {
+          one.find(".edit").removeClass("bbk");
+        } else if (choice == "r") {
+          one.find(".reply").removeClass("bbk");
+        }
       }
 
-      var hi = Number($(this).children("input[name=hasimg]").val());
-      if (hi > 0) {
-        // Flush the thumbnail
-        var ox = $(this).children(".busy").children(".footer").children(".leftbut").children(".ox");
-        ox.children(".wrap").css('background-image', 'none');
-        ox.hide();
-
-        if (hi == 1) {
-          var yy = $(this).siblings(".yy");
-          yy.submit();
-
-          // Flush the file input
-          yy.children("input[name=file]").val(null);
-
-          // Don't submit the fields yet
-          // TODO: this gives browser error "Uncaught..."
-          e.preventDefault(); 
-        } 
+      if (hinum == 3) { // there is img to upload
+        var yy = $(this).siblings(".yy");
+        var dataObject = new FormData(yy[0]);
+        $.ajax({
+          url: "/todo/save",
+          data : dataObject,
+          type : "POST",
+          contentType: false,
+          processData: false,
+          success: function(data){
+            hi.val("1");
+            yy.siblings(".xx").submit(); 
+          },
+          error: function(e){
+            alert(e);
+          }
+        });
+        // Flush the file input
+        yy.children("input[name=file]").val(null);
+        // Don't submit the fields
+        e.preventDefault(); 
+        return false;
       }
-
     } 
   });
 
   // edit form
 
   $('.f20').bind('submit',function(e){
-    var hi = Number($(this).children("input[name=hasimg]").val());
-    if (hi > 0) {
-      // Flush the thumbnail
-      var ox = $(this).children(".busy").children(".footer").children(".leftbut").children(".ox");
-      ox.children(".wrap").css('background-image', 'none');
-      ox.hide();
+    var hi = $(this).children("input[name=hasimg]");
+    var hinum = Number(hi.val());
 
-      if (hi == 1) {
+      if (hinum == 3) { // there is img to upload
         var yy = $(this).siblings(".yy");
-        yy.submit();
-
+        var dataObject = new FormData(yy[0]);
+        $.ajax({
+          url: "/todo/save",
+          data : dataObject,
+          type : "POST",
+          contentType: false,
+          processData: false,
+          success: function(data){
+            hi.val("1");
+            yy.siblings(".xx").submit(); 
+          },
+          error: function(e){
+            alert(e);
+          }
+        });
         // Flush the file input
         yy.children("input[name=file]").val(null);
-
-        // Don't submit the fields yet
+        // Don't submit the fields
         e.preventDefault(); 
+        return false;
       }
-    } 
   });
 
   $('.edit').click(function() {

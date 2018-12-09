@@ -9,7 +9,7 @@ use futures::{future, Future, Stream};
 use tera::{Context, Tera};
 
 use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, UploadTask, CancelTask};
-use session::{self, FlashMessage};
+use session::{self, FlashMessage, UpLoaded};
 use multipart::*;
 
 pub struct AppState {
@@ -31,6 +31,11 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
                 if let Some(flash) = session::get_flash(&req)? {
                     context.insert("msg", &(flash.kind, flash.message));
                     session::clear_flash(&req);
+                }
+ 
+                if let Some(uploaded) = session::get_uploaded(&req)? {
+                    context.insert("upload", &(uploaded.kind, uploaded.uploaded));
+                    session::clear_uploaded(&req);
                 }
 
                 //Identity
@@ -60,8 +65,12 @@ pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
             .map(handle_multipart_item)
             .flatten()
             .collect()
-            .map(|name| {
-                println!("{}", name[0]);
+            .map(move |name| {
+                println!("{}", &name[0]);
+                session::set_uploaded(
+                    &req,
+                    UpLoaded::success(&name[0]),
+                );
                 HttpResponse::Ok().finish()
             })
             .map_err(|e| {
@@ -85,7 +94,13 @@ pub fn create(
     (req, params): (HttpRequest<AppState>, Form<CreateForm>),
 ) -> FutureResponse<HttpResponse> {
     let lnk: Option<String> = match params.hasimg.parse().unwrap_or(0) {
-        1 => Some("uploaded".to_string()),
+        1 => {
+                let up = match session::get_uploaded(&req).unwrap() {
+                    Some(up) => Some(up.uploaded),
+                    None => None
+                };
+                up           
+             },
         2 => params.linky.clone(),
         _ => None,
     };
