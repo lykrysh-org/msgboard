@@ -2,16 +2,20 @@ use actix_web::{
     dev, Error, multipart,
     error, 
 };
-use futures::{future, Future, Stream};
+use futures::{future, Future, Stream,};
 use std::{fs as sfs};
 use std::io::Write;
+use chrono::prelude::{Utc};
 
 pub fn handle_multipart_item(
     item: multipart::MultipartItem<dev::Payload>,
-) -> Box<Stream<Item = i64, Error = Error>> {
+) -> Box<Stream<Item = String, Error = Error>> {
     match item {
         multipart::MultipartItem::Field(field) => { 
-            Box::new(save_file(field).into_stream())
+            let mut store: String = "store/".to_owned();
+            let now = Utc::now().timestamp_millis().to_string().to_owned();
+            store.push_str(&now);
+            Box::new(save_file(field, store).into_stream())
         }
         multipart::MultipartItem::Nested(mp) => Box::new(
             mp.map_err(error::ErrorInternalServerError)
@@ -23,10 +27,9 @@ pub fn handle_multipart_item(
 
 fn save_file(
     field: multipart::Field<dev::Payload>,
-) -> Box<Future<Item = i64, Error = Error>> {
-
-    let file_path_string = "TEST.file";
-    let mut file = match sfs::File::create(file_path_string) {
+    fname: String,
+) -> Box<Future<Item = String, Error = Error>> {
+    let mut file = match sfs::File::create(&*fname) {
         Ok(file) => file,
         Err(e) => return Box::new(future::err(error::ErrorInternalServerError(e))),
     };
@@ -42,6 +45,7 @@ fn save_file(
                     });
                 future::result(rt)
             })
+            .map(|_| fname)
             .map_err(|e| {
                 println!("save_file failed, {:?}", e);
                 error::ErrorInternalServerError(e)

@@ -60,7 +60,10 @@ pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
             .map(handle_multipart_item)
             .flatten()
             .collect()
-            .map(|_| HttpResponse::Ok().finish())
+            .map(|name| {
+                println!("{}", name[0]);
+                HttpResponse::Ok().finish()
+            })
             .map_err(|e| {
                 println!("failed multipart: {}", e);
                 e
