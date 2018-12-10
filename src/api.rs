@@ -206,15 +206,34 @@ fn delete(
 
 #[derive(Deserialize)]
 pub struct EditForm {
+    hasimg: String,
+    linky: Option<String>,
     description: String,
 }
 
 pub fn edit(
     (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<EditForm>),
 ) -> FutureResponse<HttpResponse> {
+
+    let lnk: Option<String> = match form.hasimg.parse().unwrap_or(0) {
+        1 => {
+                let up = match session::get_uploaded(&req).unwrap() {
+                    Some(up) => Some(up.uploaded),
+                    None => None
+                };
+                up           
+             },
+        2 => form.linky.clone(),
+        _ => None,
+    };
+
     req.state()
         .db
-        .send(UploadTask { id: params.id, desc: form.description.trim().to_string() })
+        .send(UploadTask {
+            id: params.id,
+            linky: lnk,
+            desc: form.description.trim().to_string(),
+        })
         .from_err()
         .and_then(move |res| match res {
             Ok(_) => {

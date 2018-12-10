@@ -116,11 +116,11 @@ impl Task {
             .execute(conn)
     }
 
-    pub fn re_write_desc(idd: i32, _desc: String, conn: &PgConnection) -> QueryResult<usize> {
+    pub fn re_write_desc(idd: i32, _desc: String, _attc: Option<String>, conn: &PgConnection) -> QueryResult<usize> {
         use schema::tasks::dsl::*;
         let updated_task = diesel::update(tasks.find(idd));
         updated_task
-            .set(description.eq(_desc))
+            .set((description.eq(_desc), attached.eq(_attc)))
             .execute(conn)
     }
 }
