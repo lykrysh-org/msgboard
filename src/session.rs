@@ -53,21 +53,12 @@ pub fn clear_uploaded<T>(req: &HttpRequest<T>) {
 
 #[derive(Deserialize, Serialize)]
 pub struct UpLoaded {
-    pub kind: String,
     pub uploaded: String,
 }
 
 impl UpLoaded {
-    pub fn success(uploaded: &str) -> Self {
+    pub fn add(uploaded: &str) -> Self {
         Self {
-            kind: "success".to_owned(),
-            uploaded: uploaded.to_owned(),
-        }
-    }
-
-    pub fn error(uploaded: &str) -> Self {
-        Self {
-            kind: "error".to_owned(),
             uploaded: uploaded.to_owned(),
         }
     }

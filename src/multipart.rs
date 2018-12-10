@@ -12,7 +12,7 @@ pub fn handle_multipart_item(
 ) -> Box<Stream<Item = String, Error = Error>> {
     match item {
         multipart::MultipartItem::Field(field) => { 
-            let mut store: String = "store/".to_owned();
+            let mut store: String = "bin/".to_owned();
             let now = Utc::now().timestamp_millis().to_string().to_owned();
             store.push_str(&now);
             Box::new(save_file(field, store).into_stream())

@@ -4,7 +4,7 @@ use actix::prelude::{Actor, Handler, Message, SyncContext};
 use actix_web::{error, Error};
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool, PoolError, PooledConnection};
-use model::{NewTask, Task, NewSecret};
+use model::{NewTask, Task, NewSecret, EditTask};
 
 type PgPool = Pool<ConnectionManager<PgConnection>>;
 type PgPooledConnection = PooledConnection<ConnectionManager<PgConnection>>;
@@ -153,21 +153,16 @@ impl Handler<DeleteTask> for DbExecutor {
     }
 }
 
-pub struct UploadTask {
-    pub id: i32,
-    pub linky: Option<String>,
-    pub desc: String,
-}
 
-impl Message for UploadTask {
+impl Message for EditTask {
     type Result = Result<usize, Error>;
 }
 
-impl Handler<UploadTask> for DbExecutor {
+impl Handler<EditTask> for DbExecutor {
     type Result = Result<usize, Error>;
 
-    fn handle(&mut self, task: UploadTask, _: &mut Self::Context) -> Self::Result {
-        let _ = Task::re_write_desc(task.id, task.desc, task.linky, self.get_conn()?.deref())
+    fn handle(&mut self, task: EditTask, _: &mut Self::Context) -> Self::Result {
+        let _ = Task::re_write_desc(&task, self.get_conn()?.deref())
             .map_err(|_| error::ErrorInternalServerError("Error deleting task"));
         Task::toggle_with_id(task.id, self.get_conn()?.deref())
             .map_err(|_| error::ErrorInternalServerError("Error deleting task"))

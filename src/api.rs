@@ -8,7 +8,8 @@ use actix_web::{
 use futures::{future, Future, Stream};
 use tera::{Context, Tera};
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, UploadTask, CancelTask};
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, CancelTask};
+use model::{EditTask};
 use session::{self, FlashMessage, UpLoaded};
 use multipart::*;
 
@@ -31,11 +32,6 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
                 if let Some(flash) = session::get_flash(&req)? {
                     context.insert("msg", &(flash.kind, flash.message));
                     session::clear_flash(&req);
-                }
- 
-                if let Some(uploaded) = session::get_uploaded(&req)? {
-                    context.insert("upload", &(uploaded.kind, uploaded.uploaded));
-                    session::clear_uploaded(&req);
                 }
 
                 //Identity
@@ -67,9 +63,9 @@ pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
             .collect()
             .map(move |name| {
                 println!("{}", &name[0]);
-                session::set_uploaded(
+                let _ = session::set_uploaded(
                     &req,
-                    UpLoaded::success(&name[0]),
+                    UpLoaded::add(&name[0]),
                 );
                 HttpResponse::Ok().finish()
             })
@@ -99,6 +95,7 @@ pub fn create(
                     Some(up) => Some(up.uploaded),
                     None => None
                 };
+                session::clear_uploaded(&req);
                 up           
              },
         2 => params.linky.clone(),
@@ -214,34 +211,54 @@ pub struct EditForm {
 pub fn edit(
     (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<EditForm>),
 ) -> FutureResponse<HttpResponse> {
-
-    let lnk: Option<String> = match form.hasimg.parse().unwrap_or(0) {
+    let hinum = form.hasimg.parse().unwrap_or(0);
+    let lnk: Option<String> = match hinum {
         1 => {
                 let up = match session::get_uploaded(&req).unwrap() {
                     Some(up) => Some(up.uploaded),
                     None => None
                 };
-                up           
+                session::clear_uploaded(&req);
+                up
              },
         2 => form.linky.clone(),
         _ => None,
     };
-
-    req.state()
-        .db
-        .send(UploadTask {
-            id: params.id,
-            linky: lnk,
-            desc: form.description.trim().to_string(),
-        })
-        .from_err()
-        .and_then(move |res| match res {
-            Ok(_) => {
-                Ok(redirect_to("/"))
-            },
-            Err(e) => Err(e),
-        })
-        .responder()
+    if hinum == 4 {
+        req.state()
+            .db
+            .send(EditTask {
+                id: params.id,
+                linky: lnk,
+                desc: form.description.trim().to_string(),
+                sameimg: true,
+            })
+            .from_err()
+            .and_then(move |res| match res {
+                Ok(_) => {
+                    Ok(redirect_to("/"))
+                },
+                Err(e) => Err(e),
+            })
+            .responder()
+    } else {
+        req.state()
+            .db
+            .send(EditTask {
+                id: params.id,
+                linky: lnk,
+                desc: form.description.trim().to_string(),
+                sameimg: false,
+            })
+            .from_err()
+            .and_then(move |res| match res {
+                Ok(_) => {
+                    Ok(redirect_to("/"))
+                },
+                Err(e) => Err(e),
+            })
+            .responder()
+    }
 }
 
 pub fn cancel(

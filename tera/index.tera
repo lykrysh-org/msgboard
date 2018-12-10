@@ -78,7 +78,9 @@
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
               {% if not task.editable %}
-              <p>{{ task.description }}<br>{{ task.posted | truncate(length=10, end="") }}<br>by {{ task.whosent }} Root: {{ ROOT }} Repl: {{ task.replnum }} sdlf lksdj lsldfl </p>
+              <p>{{ task.description }}<br>{{ task.posted | truncate(length=10, end="") }}<br>by {{ task.whosent }}</p>
+              <!-- <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p> -->
+              {% if task.attached %}<div class="pic"><img src="{{ task.attached }}"></div>{% endif %}
 
               <div class="footer n">
                 <small class="but pc edit op4">Edit</small>
@@ -104,7 +106,7 @@
 
             <div class="relative">
               <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
-                <input type="hidden" name="hasimg" value="0" />
+                <input type="hidden" name="hasimg" value="{% if task.attached %}4{% endif %}" />
                 <div class="bbox n"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
                 <div class="tbox me bbk">
                   <p>
@@ -117,8 +119,8 @@
                   <div class="footer n" id="editable">
 
                     <div class="leftbut">
-                      <div class="ox">
-                        <div class="wrap"></div>
+                      <div class="ox" {% if task.attached %}style="display: block"{% endif %}>
+                        <div class="wrap" {% if task.editable %}style="background-image: url({{ task.attached }})"{% endif %}></div>
                         <div class="x pc"><img src="/static/pics/x.png"></div>
                       </div>
                       <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>

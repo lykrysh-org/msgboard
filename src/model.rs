@@ -47,6 +47,13 @@ pub struct Secret {
     pub taskid: i32,
 }
 
+pub struct EditTask {
+    pub id: i32,
+    pub linky: Option<String>,
+    pub desc: String,
+    pub sameimg: bool,
+}
+
 impl Task {
     pub fn all(conn: &PgConnection) -> QueryResult<Vec<Task>> {
         use schema::tasks::dsl::*;
@@ -116,12 +123,18 @@ impl Task {
             .execute(conn)
     }
 
-    pub fn re_write_desc(idd: i32, _desc: String, _attc: Option<String>, conn: &PgConnection) -> QueryResult<usize> {
+    pub fn re_write_desc(t: &EditTask, conn: &PgConnection) -> QueryResult<usize> {
         use schema::tasks::dsl::*;
-        let updated_task = diesel::update(tasks.find(idd));
-        updated_task
-            .set((description.eq(_desc), attached.eq(_attc)))
-            .execute(conn)
+        let updated_task = diesel::update(tasks.find(t.id));
+        if t.sameimg {
+            updated_task
+                .set(description.eq(t.desc.clone()))
+                .execute(conn)
+        } else {
+            updated_task
+                .set((description.eq(t.desc.clone()), attached.eq(t.linky.clone())))
+                .execute(conn)
+        }
     }
 }
 

@@ -115,13 +115,14 @@ form textarea {
 #notes .one p {
  margin-bottom: 0.6rem;
 }
+#notes .one .footer {
+  margin-top: 0.5rem;
+}
 #notes .one .pic {
- opacity: 0.8;
  width: 100%;
- margin-bottom: 0.5rem;
 }
 #notes .one .pic img {
- width: 100%;
+ max-height: 360px;
 }
 #notes .one .bksm a {
  color: #ab8f54;

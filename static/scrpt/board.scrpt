@@ -89,12 +89,15 @@ $(document).ready(function() {
 
   $('.leftbut .ox .x').click(function() {
     $(this).parent().hide();
-    var f = $(this).parent().parent().parent().parent();
-    var dark = f.siblings(".dark");
-    if (dark.is(':visible')) { // link
-      dark.children(".linkinput").children("input").val("");
-    } else { // upload: flush FileReader
-      f.siblings(".yy").children(".chs").val("");
+    var f = $(this).parent().parent().parent().parent().parent();
+    var dark = f.children(".dark");
+    if (dark.is(':visible')) {
+      dark.children(".linkinput").children("input").val(""); // link
+    } else { 
+      f.siblings(".yy").children(".chs").val(""); // upload: flush FileReader
+    };
+    if (f.hasClass("f20")) {
+      f.children("input[name=hasimg]").val("0");
     }
   });
 
@@ -122,6 +125,12 @@ $(document).ready(function() {
       ox.children(".wrap").css('background-image', full);
       ox.show();
       event.preventDefault(); // don't submit the entire form
+    }
+  });
+
+  $('input[name=password]').keypress(function(event) {
+    if ( event.which == 13 ) {
+      gety();
     }
   });
 
@@ -230,7 +239,7 @@ $(document).ready(function() {
     var hi = $(this).children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
-      if (hinum == 3) { // there is img to upload
+      if (hinum == 3) { // there is new img to upload
         var yy = $(this).siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({

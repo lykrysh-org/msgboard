@@ -70,6 +70,9 @@ fn main() {
         let static_files = fs::StaticFiles::new("static/")
             .expect("failed constructing static files handler");
 
+        let bin = fs::StaticFiles::new("bin/")
+            .expect("failed constructing bin handler");
+
         let state = api::AppState {
             template: templates,
             db: addr.clone(),
@@ -87,6 +90,7 @@ fn main() {
             .resource("/todo/{id}/edit", |r: &mut Resource<_>| { r.post().with(api::edit) })
             .resource("/todo/{id}/cancel", |r: &mut Resource<_>| { r.post().with(api::cancel) })
             .handler("/static", static_files)
+            .handler("/bin", bin)
     };
 
     debug!("Starting server");
