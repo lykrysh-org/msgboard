@@ -119,10 +119,12 @@ form textarea {
   margin-top: 0.5rem;
 }
 #notes .one .pic {
- width: 100%;
+ width: calc(100% + 1.2rem);
+
 }
 #notes .one .pic img {
- max-height: 360px;
+ max-width: 100%;
+ max-height: 320px;
 }
 #notes .one .bksm a {
  color: #ab8f54;

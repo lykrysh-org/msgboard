@@ -128,12 +128,6 @@ $(document).ready(function() {
     }
   });
 
-  $('input[name=password]').keypress(function(event) {
-    if ( event.which == 13 ) {
-      gety();
-    }
-  });
-
   // main buttons - edit, delete, reply
 
   // top form

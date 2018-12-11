@@ -78,7 +78,7 @@
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
               {% if not task.editable %}
-              <p>{{ task.description }}<br>{{ task.posted | truncate(length=10, end="") }}<br>by {{ task.whosent }}</p>
+              <p>{{ task.description }} | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
               <!-- <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p> -->
               {% if task.attached %}<div class="pic"><img src="{{ task.attached }}"></div>{% endif %}
 
