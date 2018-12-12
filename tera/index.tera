@@ -19,9 +19,9 @@
     <div class="logo pc n" id="logo">
       <img src="/static/pics/logo.png">
     </div>
-    <div class="n" id="nav">
+    <div class="lykryshbar n" id="nav">
       <small>
-        <div class="but pc" id="openvol">Volumes</div>
+        <div class="but pc" id="openvol">Issues</div>
         <div class="but pc">About</div>
         <a href="contact.html"><div class="but pc">Contact</div></a>
       </small>
@@ -46,7 +46,7 @@
         <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
         <div class="tbox me">
           <p>
-            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="Chats"></textarea>
+            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="Blah Blah"></textarea>
           </p>
         </div>
 

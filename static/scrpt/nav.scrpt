@@ -11,4 +11,10 @@ $(document).ready(function() {
     $('#vol').toggle();
   });
 
+  $('#very').click(function(){
+    if ($('#nav').is(':visible')) {
+      $('#nav').hide();
+    }
+  });
+
 });

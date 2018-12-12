@@ -47,7 +47,7 @@ p {
  width: 100%;
  text-align: center;
  padding-top: 9.2rem;
- min-height: calc(100vh - 9.2rem);
+ min-height: 100vh;
 }
 
 .tbox {
@@ -140,7 +140,7 @@ p {
 small {
  font-size: 3.2rem;
 }
-p, #nav small, .footer small {
+p, .lykryshbar small, .footer small {
  font-size: 1.375rem;
  line-height: 1.725rem;
 }
@@ -153,7 +153,7 @@ p, #nav small, .footer small {
 small {
  font-size: 3.4rem;
 }
-p, #nav small, .footer small {
+p, .lykryshbar small, .footer small {
  font-size: 1.4375rem;
  line-height: 1.7875rem;
 }
@@ -166,7 +166,7 @@ p, #nav small, .footer small {
 small {
  font-size: 3.6rem;
 }
-p, #nav small, .footer small {
+p, .lykryshbar small, .footer small {
  font-size: 1.5rem;
  line-height: 1.85rem;
 }

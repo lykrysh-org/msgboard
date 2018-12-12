@@ -1,5 +1,5 @@
 body {
- background: #ab8f54; 
+ background: #8a7b5c; 
 }
 .bbk { color: #000; }
 
@@ -80,7 +80,7 @@ form textarea {
 }
 
 #newchunk {
- margin-top: 1.2rem;
+ margin-top: 0.2rem;
  margin-bottom: -0.5rem;
 }
 #newchunk .me, #notes .me {
@@ -119,7 +119,7 @@ form textarea {
  padding: 0rem 1.5rem;
  text-align: left;
  border-left: 2px dashed white;
- border-right: 2px solid #ab8f54;
+ border-right: 2px solid #8a7b5c;
 }
 #notes .one p {
  margin-bottom: 0.6rem;
@@ -136,11 +136,11 @@ form textarea {
  max-height: 320px;
 }
 #notes .one .bksm a {
- color: #ab8f54;
+ color: #8a7b5c;
  background: rgba(255, 255, 51, 0.7);
 }
 #notes .one .bksm a:hover {
- color: #ab8f54;
+ color: #8a7b5c;
  background: rgba(255, 255, 51, 1.0);
 }
 #notes .bbox .good {
@@ -181,7 +181,7 @@ form textarea {
  height: 1.8rem;
  vertical-align: -0.1rem;
  padding: 0px 12px; 
- color: #ab8f54;
+ color: #8a7b5c;
  background: rgba(255,255,255,0.4);
 }
 .cancelform button:hover {
@@ -204,7 +204,7 @@ form textarea {
  margin-left: 0.4rem;
  -webkit-transition: all 0.3s ease-out; 
  transition: all 0.3s ease-out;
- color: #ab8f54;
+ color: #8a7b5c;
  background: #fff;
 }
 .footer .but:hover {

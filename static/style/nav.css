@@ -12,15 +12,23 @@
   opacity: 0.9;
 }
 .logo:hover img{
-
   opacity: 1.0;
+}
+
+.lykryshbar {
+ position: fixed;
+ top: 0;
+ padding-top: 2.2rem;
+}
+
+#titl {
+ z-index: 998;
+ left:7.0rem;
 }
 #nav {
  display: none;
- position: fixed;
  z-index: 999;
- top: 0; left:3rem;
- padding-top: 2.2rem;
+ left:3rem;
  -webkit-animation: slide 0.5s forwards;
  animation: slide 0.5s forwards;
 }
@@ -32,8 +40,11 @@
  -webkit-transition: all 0.3s ease-out; 
  transition: all 0.3s ease-out;
 }
-#nav .but, #nav .notbut {
+.lykryshbar .but, .lykryshbar .notbut {
  display: inline-block;
+}
+.lykryshbar .disappr {
+ opacity: 0;
 }
 #vol .but, #vol .notbut {
  display: block;
