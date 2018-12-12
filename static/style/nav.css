@@ -1,0 +1,71 @@
+.logo {
+ position: fixed;
+ z-index: 1000;
+ width: 6.4rem;
+ top: 0; left: 0;
+ text-align: right;
+}
+.logo img {
+ width: 5.4rem;
+ height: 5.4rem;
+ margin-top: 0.4rem;
+  opacity: 0.9;
+}
+.logo:hover img{
+
+  opacity: 1.0;
+}
+#nav {
+ display: none;
+ position: fixed;
+ z-index: 999;
+ top: 0; left:3rem;
+ padding-top: 2.2rem;
+ -webkit-animation: slide 0.5s forwards;
+ animation: slide 0.5s forwards;
+}
+.but, .notbut {
+ padding: 2px 12px;
+ margin-left: 0.2rem;
+}
+.but {
+ -webkit-transition: all 0.3s ease-out; 
+ transition: all 0.3s ease-out;
+}
+#nav .but, #nav .notbut {
+ display: inline-block;
+}
+#vol .but, #vol .notbut {
+ display: block;
+}
+
+@-webkit-keyframes slide {
+    100% { left: 7.0rem; }
+}
+@keyframes slide {
+    100% { left: 7.0rem; }
+}
+
+#vol {
+ display: none;
+ position: fixed;
+ z-index: 998;
+ left: 7.0rem; top: 4.0rem;
+ padding-top: 0.8rem;
+}
+
+@media screen and (max-width: 20rem)  {
+#nav small {
+ font-size: 1.375rem;
+}
+}
+@media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
+#nav small {
+ font-size: 1.4375rem;
+}
+}
+@media screen and (min-width: 42.5rem) {
+#nav small {
+ font-size: 1.5rem;
+}
+}

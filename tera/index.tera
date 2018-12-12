@@ -7,30 +7,50 @@
     <title>Lykrysh</title>
     <link rel="icon" type="image/png" href="/static/pics/icon.png" />
     <link rel="stylesheet" href="/static/style/common.css">
+    <link rel="stylesheet" href="/static/style/nav.css">
     <link rel="stylesheet" href="/static/style/board.css">
     <script type="text/javascript" defer src="/static/scrpt/j.scrpt"></script>
+    <script type="text/javascript" defer src="/static/scrpt/nav.scrpt"></script>
     <script type="text/javascript" defer src="/static/scrpt/board.scrpt"></script>
 </head>
 <body>
   <IFRAME style="display:none" name="hiddenform"></IFRAME> 
-  <div class="logo pc n" id="logo"><img src="/static/pics/logo.png"><small>Lykrysh</small></div>
+
+    <div class="logo pc n" id="logo">
+      <img src="/static/pics/logo.png">
+    </div>
+    <div class="n" id="nav">
+      <small>
+        <div class="but pc" id="openvol">Volumes</div>
+        <div class="but pc">About</div>
+        <a href="contact.html"><div class="but pc">Contact</div></a>
+      </small>
+    </div>
+    <div class="n" id="vol">
+      <small>
+        <div class="but pc">#3</div>
+        <div class="but pc">#2</div>
+        <div class="but pc">#1</div>
+      </small>
+    </div>
+
   <div id="dummy"><small id="bugbug">{% if msg %}{{msg.1}}{% endif %}</small></div>
 
   <div class="b1">
-    <div class="tbox n"><small>Process Notes<br>or Just Chats</small></div>
 
     <div id="newchunk">
       <form class="f10 xx" action="/todo" method="post">
         <input type="hidden" name="inheritedid" value="none" />
         <input type="hidden" name="hasimg" value="0" />
-        <div class="bbox n"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+
+        <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
         <div class="tbox me">
           <p>
-            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value=""></textarea>
+            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="Chats"></textarea>
           </p>
         </div>
 
-        <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+        <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
 
         <div class="busy tbox post">
           <div class="footer n">
@@ -107,13 +127,13 @@
             <div class="relative">
               <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
                 <input type="hidden" name="hasimg" value="{% if task.attached %}4{% endif %}" />
-                <div class="bbox n"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+                <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
                 <div class="tbox me bbk">
                   <p>
                     <textarea class="dsc" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description">{{ task.description }}</textarea>
                   </p>
                 </div>
-                <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+                <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
 
                 <div class="busy tbox top12">
                   <div class="footer n" id="editable">
@@ -158,13 +178,13 @@
               <form class="f30 xx" action="/todo" method="post">
                 <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
                 <input type="hidden" name="hasimg" value="0" />
-                <div class="bbox n top12"><div class="cross l"><img src="/static/pics/a3.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
-                <div class="tbox me">
+                <div class="bbox n abv top06"><div class="cross l"><img src="/static/pics/a3.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+                <div class="tbox me top06">
                   <p>
                     <textarea  class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value=""></textarea>
                   </p>
                 </div>
-                <div class="bbox n"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+                <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
 
                 <div class="busy tbox top12">
                   <div class="footer n">

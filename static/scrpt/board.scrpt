@@ -18,6 +18,14 @@ $(document).ready(function() {
     sety();
   });
 
+  $('.me').hover(function() {
+    $(this).prev(".abv").css('display', 'block'); 
+    $(this).next(".btm").css('display', 'block'); 
+  }, function() {
+    $(this).prev(".abv").css('display', 'none'); 
+    $(this).next(".btm").css('display', 'none'); 
+  });
+
   // file uploading and linking
 
   $('.leftbut .uploadpic').click(function() {

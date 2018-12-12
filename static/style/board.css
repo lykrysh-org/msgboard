@@ -3,6 +3,15 @@ body {
 }
 .bbk { color: #000; }
 
+#nav .but, #vol .but {
+ color: #ffff33;
+ background: #e60000;
+}
+#nav .but:hover, #vol .but:hover {
+ background: #cc0000;
+}
+
+
 .dark {
  display: none;
  max-width: 42rem;
@@ -66,9 +75,13 @@ form textarea {
  font-family: vt;
 }
 
+.abv, .btm {
+ display: none;
+}
+
 #newchunk {
- margin-top: 3.4rem;
- margin-bottom: 0rem;
+ margin-top: 1.2rem;
+ margin-bottom: -0.5rem;
 }
 #newchunk .me, #notes .me {
  margin-top: 1px;
@@ -83,8 +96,6 @@ form textarea {
  transition: background 0.6s ease-out;
 }
 #newchunk .me:hover, #notes .me:hover {
- border-left: 2px solid #fff;
- border-right: 2px solid #fff;
  background: rgba(188, 166, 118, 0.3);
 }
 #newchunk .post {
@@ -108,9 +119,7 @@ form textarea {
  padding: 0rem 1.5rem;
  text-align: left;
  border-left: 2px dashed white;
-}
-#notes .one:hover {
- border-left: 2px solid white;
+ border-right: 2px solid #ab8f54;
 }
 #notes .one p {
  margin-bottom: 0.6rem;
@@ -149,6 +158,9 @@ form textarea {
 }
 #notes .tbox.top12 {
  margin-top: 1.2rem;
+}
+#notes .tbox.top06 {
+ margin-top: 0.6rem;
 }
 
 .relative {
