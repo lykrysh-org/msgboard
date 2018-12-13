@@ -334,7 +334,7 @@ $(document).ready(function() {
   $(document).mousemove(function(e){
     if (! $('#bugbug').is(':empty')) {
       setTimeout(function(){
-        $('#bugbug').text(''); 
+        $('#bugbug').text('');
       }, 800);
     }
   });

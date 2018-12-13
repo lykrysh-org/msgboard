@@ -34,7 +34,11 @@
       </small>
     </div>
 
-  <div id="dummy"><small id="bugbug">{% if msg %}{{msg.1}}{% endif %}</small></div>
+  <div id="dummy">
+    <p id="bugbug">
+    {% if msg %}{{ msg.1 }}{% endif %}
+    </p>
+  </div>
 
   <div class="b1">
 
