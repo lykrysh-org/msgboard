@@ -49,6 +49,7 @@ $(document).ready(function() {
       $(this).siblings("label").children(".upup").addClass("zero");
       $(this).parent().css('pointer-events', 'none');
       dark.fadeIn();
+      dark.find("input[name=linky]")[0].focus();
     }
   });
 

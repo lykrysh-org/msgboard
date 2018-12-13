@@ -6,7 +6,6 @@ use schema::{
     tasks,
     tasks::dsl::{
         rootnum as task_root,
-        editable as task_editable,
         tasks as all_tasks,
     },
     secrets,
@@ -35,7 +34,6 @@ pub struct Task {
     pub posted: NaiveDateTime,
     pub whosent: String,
     pub attached: Option<String>,
-    pub editable: bool,
     pub description: String,
 }
 
@@ -106,16 +104,6 @@ impl Task {
             .filter(taskid.eq(idd))
             .select(secret)
             .first::<String>(conn)
-    }
-
-    pub fn toggle_with_id(idd: i32, conn: &PgConnection) -> QueryResult<usize> {
-        let task = all_tasks.find(idd)
-            .get_result::<Task>(conn)?;
-        let new_status = !task.editable;
-        let updated_task = diesel::update(all_tasks.find(idd));
-        updated_task
-            .set(task_editable.eq(new_status))
-            .execute(conn)
     }
 
     pub fn delete_with_id(idd: i32, conn: &PgConnection) -> QueryResult<usize> {

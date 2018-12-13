@@ -8,9 +8,9 @@ use actix_web::{
 use futures::{future, Future, Stream};
 use tera::{Context, Tera};
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, CancelTask};
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask };
 use model::{EditTask};
-use session::{self, FlashMessage, UpLoaded};
+use session::{self, FlashMessage, UpLoaded, PowerTo};
 use multipart::*;
 
 pub struct AppState {
@@ -28,10 +28,13 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
                 let mut context = Context::new();
                 context.insert("tasks", &tasks);
 
-                //Session
+                //Sessions
                 if let Some(flash) = session::get_flash(&req)? {
                     context.insert("msg", &(flash.kind, flash.message));
                     session::clear_flash(&req);
+                }
+                if let Some(pt) = session::get_powerto(&req)? {
+                    context.insert("powerto", &pt.powerto)
                 }
 
                 //Identity
@@ -168,11 +171,14 @@ fn toggle(
         .send(ToggleTask { id: params.id, pw: mypw.to_string() })
         .from_err()
         .and_then(move |res| match res {
-            Ok(999) => {
+            Ok(0) => {
                 session::set_flash(&req, FlashMessage::error("Wrong password."))?;
                 Ok(redirect_to("/"))
             },
-            Ok(_) => Ok(redirect_to("/")),
+            Ok(taskid) => {
+                session::set_powerto(&req, PowerTo::add(taskid))?;
+                Ok(redirect_to("/"))
+            }
             Err(e) => Err(e),
         })
         .responder()
@@ -188,7 +194,7 @@ fn delete(
         .send(DeleteTask { id: params.id, pw: mypw.to_string() })
         .from_err()
         .and_then(move |res| match res {
-            Ok(999) => {
+            Ok(0) => {
                 session::set_flash(&req, FlashMessage::error("Wrong password."))?;
                 Ok(redirect_to("/"))
             },
@@ -236,6 +242,9 @@ pub fn edit(
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
+                    if let Some(_) = session::get_powerto(&req).unwrap() {
+                        session::clear_powerto(&req)
+                    };
                     Ok(redirect_to("/"))
                 },
                 Err(e) => Err(e),
@@ -253,6 +262,9 @@ pub fn edit(
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
+                    if let Some(_) = session::get_powerto(&req).unwrap() {
+                        session::clear_powerto(&req)
+                    };
                     Ok(redirect_to("/"))
                 },
                 Err(e) => Err(e),
@@ -261,19 +273,11 @@ pub fn edit(
     }
 }
 
-pub fn cancel(
-    (req, params): (HttpRequest<AppState>, Path<UpdateParams>),
-) -> FutureResponse<HttpResponse> {
-    req.state()
-        .db
-        .send(CancelTask { id: params.id })
-        .from_err()
-        .and_then(move |res| match res {
-            Ok(_) => {
-                Ok(redirect_to("/"))
-            },
-            Err(e) => Err(e),
-        })
+pub fn cancel(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
+    if let Some(_) = session::get_powerto(&req).unwrap() {
+        session::clear_powerto(&req)
+    };
+    future::ok(redirect_to("/"))
         .responder()
 }
 

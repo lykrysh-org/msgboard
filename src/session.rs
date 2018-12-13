@@ -4,6 +4,7 @@ use actix_web::HttpRequest;
 
 const FLASH_KEY: &str = "flash";
 const UPLOADED: &str = "uploaded";
+const POWERTO: &str = "powerto";
 
 pub fn set_flash<T>(req: &HttpRequest<T>, flash: FlashMessage) -> Result<()> {
     req.session().set(FLASH_KEY, flash)
@@ -60,6 +61,31 @@ impl UpLoaded {
     pub fn add(uploaded: &str) -> Self {
         Self {
             uploaded: uploaded.to_owned(),
+        }
+    }
+}
+
+pub fn set_powerto<T>(req: &HttpRequest<T>, powerto: PowerTo) -> Result<()> {
+    req.session().set(POWERTO, powerto)
+}
+
+pub fn get_powerto<T>(req: &HttpRequest<T>) -> Result<Option<PowerTo>> {
+    req.session().get::<PowerTo>(POWERTO)
+}
+
+pub fn clear_powerto<T>(req: &HttpRequest<T>) {
+    req.session().remove(POWERTO);
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct PowerTo {
+    pub powerto: i32,
+}
+
+impl PowerTo {
+    pub fn add(powerto: i32) -> Self {
+        Self {
+            powerto: powerto,
         }
     }
 }

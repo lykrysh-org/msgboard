@@ -14,7 +14,6 @@ table! {
         posted -> Timestamptz,
         whosent -> Varchar,
         attached -> Nullable<Varchar>,
-        editable -> Bool,
         description -> Varchar,
     }
 }

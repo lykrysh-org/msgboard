@@ -99,11 +99,11 @@ pub struct ToggleTask {
 }
 
 impl Message for ToggleTask {
-    type Result = Result<usize, Error>;
+    type Result = Result<i32, Error>;
 }
 
 impl Handler<ToggleTask> for DbExecutor {
-    type Result = Result<usize, Error>;
+    type Result = Result<i32, Error>;
 
     fn handle(&mut self, task: ToggleTask, _: &mut Self::Context) -> Self::Result {
         let pw = Task::get_secret(task.id, self.get_conn()?.deref())
@@ -111,11 +111,10 @@ impl Handler<ToggleTask> for DbExecutor {
         match pw {
             Ok(secret) => {
                 if secret == task.pw {
-                    Task::toggle_with_id(task.id, self.get_conn()?.deref())
-                        .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
+                    Ok(task.id)
                 } else {
                     // wrong password
-                    Ok(999)
+                    Ok(0)
                 }
             },
             Err(e) => Err(e),
@@ -145,7 +144,7 @@ impl Handler<DeleteTask> for DbExecutor {
                         .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
                 } else {
                     // wrong password
-                    Ok(999)
+                    Ok(0)
                 }
             },
             Err(e) => Err(e),
@@ -162,27 +161,7 @@ impl Handler<EditTask> for DbExecutor {
     type Result = Result<usize, Error>;
 
     fn handle(&mut self, task: EditTask, _: &mut Self::Context) -> Self::Result {
-        let _ = Task::re_write_desc(&task, self.get_conn()?.deref())
-            .map_err(|_| error::ErrorInternalServerError("Error deleting task"));
-        Task::toggle_with_id(task.id, self.get_conn()?.deref())
-            .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
-    }
-}
-
-pub struct CancelTask {
-    pub id: i32,
-}
-
-impl Message for CancelTask {
-    type Result = Result<(), Error>;
-}
-
-impl Handler<CancelTask> for DbExecutor {
-    type Result = Result<(), Error>;
-
-    fn handle(&mut self, task: CancelTask, _: &mut Self::Context) -> Self::Result {
-        Task::toggle_with_id(task.id, self.get_conn()?.deref())
-            .map(|_| ())
+        Task::re_write_desc(&task, self.get_conn()?.deref())
             .map_err(|_| error::ErrorInternalServerError("Error deleting task"))
     }
 }
