@@ -17,7 +17,7 @@
   <IFRAME style="display:none" name="hiddenform"></IFRAME> 
 
     <div class="logo pc n" id="logo">
-      <img src="/static/pics/logo.png">
+      <img src="/static/pics/logoblue.png">
     </div>
     <div class="lykryshbar n" id="nav">
       <small>
@@ -46,7 +46,7 @@
         <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
         <div class="tbox me">
           <p>
-            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="Blah Blah"></textarea>
+            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="BSOD"></textarea>
           </p>
         </div>
 
@@ -74,7 +74,7 @@
               <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
             </div>
 
-            <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
+            <button type="submit" class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
           </div>
         </div>
 
@@ -153,7 +153,7 @@
                       </div>
                     </div>
 
-                    <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
+                    <button type="submit" class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
                   </div>
                 </div>
 
@@ -211,7 +211,7 @@
                       <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>    
                     </div>
 
-                    <button type="submit" class="comment noout pc"><img src="/static/pics/send.png"></button>
+                    <button type="submit" class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
                   </div>
                 </div>
 

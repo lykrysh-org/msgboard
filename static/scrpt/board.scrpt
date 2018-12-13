@@ -73,7 +73,8 @@ $(document).ready(function() {
           hi.val("3");
         };
         objImg.onerror = function() { 
-          alert("error");
+          // alert("error");
+          // just black .wrap
         };
         var url = "url('" + e.target.result + "')";
         place.css('background-image', url);
@@ -126,7 +127,8 @@ $(document).ready(function() {
         xx.children("input[name=hasimg]").val("2");
       };
       objImg.onerror = function() { 
-        alert("error");
+        //alert("error");
+        // just black .wrap
       };
 
       var full = "url('" + addr + "')";

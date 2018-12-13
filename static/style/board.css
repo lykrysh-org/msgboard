@@ -1,14 +1,14 @@
 body {
- background: #8a7b5c; 
+ background: #001b58; 
 }
 .bbk { color: #000; }
 
 #nav .but, #vol .but {
- color: #ffff33;
- background: #e60000;
+ color: #001b58;
+ background: #8c98b4;
 }
 #nav .but:hover, #vol .but:hover {
- background: #cc0000;
+ background: #ccd1de;
 }
 
 
@@ -24,7 +24,7 @@ body {
 }
 .dark .link1 {
  height: 1.8rem;
- margin-left: 8.8rem;
+ margin-left: 9.0rem;
  margin-top: 0.1rem;
  display: inline;
 }
@@ -54,22 +54,22 @@ body {
 
 form input[type="text"], form input[type="password"] {
  background: transparent;
- color: black;
+ color: white;
  outline: none;
  border: none;
  font-family: vt;
 }
-::-webkit-input-placeholder { color: white; opacity: 0.5; }
-::-moz-placeholder { color: white; opacity: 0.5; }
-:-ms-input-placeholder { color: white; opacity: 0.5; }
-:-moz-placeholder { color: white; opacity: 0.5; }
+::-webkit-input-placeholder { color: black; opacity: 0.8; }
+::-moz-placeholder { color: black; opacity: 0.8; }
+:-ms-input-placeholder { color: black; opacity: 0.8; }
+:-moz-placeholder { color: black; opacity: 0.8; }
 
 form textarea {
  margin-bottom: -0.9rem;
  margin-top: -0.3rem;
  width: 100%;
  background: transparent;
- color: black;
+ color: white;
  outline: none;
  border: none;
  font-family: vt;
@@ -90,13 +90,13 @@ form textarea {
  padding-bottom: 1.8rem;
  padding-left: 1.5rem;
  padding-right: 1.5rem;
- border: 2px dashed #fff;
+ border: 2px dashed #d9dde6;
  background: none;
  -webkit-transition: background 0.6s ease-out; 
  transition: background 0.6s ease-out;
 }
 #newchunk .me:hover, #notes .me:hover {
- background: rgba(188, 166, 118, 0.3);
+ background: rgba(0, 0, 0, 0.1);
 }
 #newchunk .post {
  padding-top: 1.2rem;
@@ -118,8 +118,8 @@ form textarea {
 #notes .one {
  padding: 0rem 1.5rem;
  text-align: left;
- border-left: 2px dashed white;
- border-right: 2px solid #8a7b5c;
+ border-left: 2px dashed #d9dde6;
+ border-right: 2px solid #001b58;
 }
 #notes .one p {
  margin-bottom: 0.6rem;
@@ -136,11 +136,11 @@ form textarea {
  max-height: 320px;
 }
 #notes .one .bksm a {
- color: #8a7b5c;
+ color: #001b58;
  background: rgba(255, 255, 51, 0.7);
 }
 #notes .one .bksm a:hover {
- color: #8a7b5c;
+ color: #001b58;
  background: rgba(255, 255, 51, 1.0);
 }
 #notes .bbox .good {
@@ -181,7 +181,7 @@ form textarea {
  height: 1.8rem;
  vertical-align: -0.1rem;
  padding: 0px 12px; 
- color: #8a7b5c;
+ color: #001b58;
  background: rgba(255,255,255,0.4);
 }
 .cancelform button:hover {
@@ -204,14 +204,14 @@ form textarea {
  margin-left: 0.4rem;
  -webkit-transition: all 0.3s ease-out; 
  transition: all 0.3s ease-out;
- color: #8a7b5c;
+ color: #001b58;
  background: #fff;
 }
 .footer .but:hover {
- opacity: 1.0;
+ opacity: 0.8;
 }
 .footer .but.reply:hover {
- background: #ffff33;
+ opacity: 1.0;
 }
 .footer .bbk {
  color: black;
@@ -260,7 +260,7 @@ form textarea {
  background-repeat: no-repeat;
  background-position: center;
  background-size: cover;
- background-color: #c0ab7f;
+ background-color: black;
  background-image: none;
 }
 .footer .leftbut .ox .x {
@@ -269,11 +269,15 @@ form textarea {
  width: 1.5rem; left: 6.2rem; top: 0;
  height: 1.5rem;
  background: black;
+ opacity: 0.8;
 }
 .footer .leftbut .ox .x img {
  width: 1.1rem; 
  height: 1.1rem;
  margin: 0.2rem;
+}
+.footer .leftbut .ox .x:hover {
+ opacity: 1.0;
 }
 
 .footer .rightbut {
@@ -286,6 +290,7 @@ form textarea {
 
 .footer .rightbut img {
  opacity: 1.0;
+ margin-right:0.3rem;
 }
 
 .footer .comment {
@@ -295,10 +300,10 @@ form textarea {
  top: 0.2rem; right: 0; height: 1.8rem;
  vertical-align: -0.1rem;
  padding: 0px 12px; 
- background: #e60000;
+ background: white;
 }
 .footer .comment:hover {
- background: #cc0000;
+ background: #ffff33;
 }
 
 .footer .leftbut *, .footer .rightbut * {
@@ -318,13 +323,16 @@ form textarea {
  margin-top: 0rem;
  text-align: left;
 }
+#notes .one .room img {
+ margin-right: 0.3rem;
+}
 
 .footer .rightbut small, #notes .one .room small, .dark small {
  vertical-align: 10px;
  padding-left: 0.6rem;
  padding-right: 0.4rem;
  margin-right: 1rem;
- border-bottom: 2px solid white;
+ border-bottom: 2px solid #d9dde6;
 }
 
 .dark small {
