@@ -7,6 +7,12 @@ $(document).ready(function() {
   function sety() {
     var st = $(document).scrollTop();
     document.cookie = "y" + "=" + st;
+    
+    if (st < 200) {
+      $('#tweet').css('display', 'none');
+    } else {
+      $('#tweet').css('display', 'block');
+    }
   };
 
   function gety() {
@@ -329,6 +335,28 @@ $(document).ready(function() {
       $(this).addClass("bbk");
       sety();
     }
+  });
+
+  $('#newpost').click(function() {
+    $('#newblk').toggle();
+    $('#guard').toggle();
+    if ($('#guard').is(':visible')) {
+      $('#newpost').fadeOut("slow");
+      setTimeout(function(){$('#newpost').text('X')}, 600);
+      $('#newpost').fadeIn("slow");
+    } else {
+      $('#newpost').fadeOut("slow");
+      setTimeout(function(){$('#newpost').text('New')}, 600);
+      $('#newpost').fadeIn("slow");
+    }
+  });
+
+  $('#newblk').click(function() {
+      $("#guard").hide();
+      $('#newpost').fadeOut("slow");
+      setTimeout(function(){$('#newpost').text('New')}, 800);
+      $('#newpost').fadeIn("slow");
+      $(this).hide();
   });
 
   $(document).mousemove(function(e){

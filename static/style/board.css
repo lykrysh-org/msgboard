@@ -3,6 +3,12 @@ body {
 }
 .bbk { color: #000; }
 
+.bgscreen {
+ position: fixed;
+ width: 100%;
+ height: 100vh;
+}
+
 #nav .but, #vol .but {
  color: #001b58;
  background: #8c98b4;
@@ -11,6 +17,36 @@ body {
  background: #ccd1de;
 }
 
+#tweet {
+ display: none;
+ z-index: 990;
+ right: 2rem;
+}
+#tweet .but {
+ color: #8c98b4;
+ background: black;
+ border: 1px solid black;
+}
+#tweet .but:hover {
+ color: white;
+}
+#newblk {
+ display: none;
+ z-index: 5;
+ background: rgba(0,27,88,0.9);
+}
+#guard {
+ display: none;
+ position: fixed;
+ z-index: 6;
+ margin-top: 9.3rem;
+ padding-bottom: 7rem;
+ width: 100%;
+ background-repeat: no-repeat;
+ background-position: top;
+ background-size: 100% 100%;
+ background-image: url('../pics/blue.png');
+}
 
 .dark {
  display: none;
@@ -41,13 +77,10 @@ body {
 
 #dummy {
  pointer-events:none; 
- position: fixed;
- z-index: 14;
- height: 100vh; top: 0; left: 0;
- width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+ z-index: 995;
+ display: flex;
+ align-items: center;
+ justify-content: center;
 }
 #dummy #bugbug {
  background-repeat: no-repeat;
@@ -72,10 +105,10 @@ form input[type="text"], form input[type="password"] {
  border: none;
  font-family: vt;
 }
-::-webkit-input-placeholder { color: black; opacity: 0.8; }
-::-moz-placeholder { color: black; opacity: 0.8; }
-:-ms-input-placeholder { color: black; opacity: 0.8; }
-:-moz-placeholder { color: black; opacity: 0.8; }
+::-webkit-input-placeholder { color: black }
+::-moz-placeholder { color: black }
+:-ms-input-placeholder { color: black }
+:-moz-placeholder { color: black }
 
 form textarea {
  margin-bottom: -0.9rem;
@@ -92,11 +125,11 @@ form textarea {
  display: none;
 }
 
-#newchunk {
+.newchunk {
  margin-top: 0.2rem;
  margin-bottom: -0.5rem;
 }
-#newchunk .me, #notes .me {
+.newchunk .me, #notes .me {
  margin-top: 1px;
  margin-bottom: -4px;
  padding-top: 1.4rem;
@@ -108,10 +141,10 @@ form textarea {
  -webkit-transition: background 0.6s ease-out; 
  transition: background 0.6s ease-out;
 }
-#newchunk .me:hover, #notes .me:hover {
+.newchunk .me:hover, #notes .me:hover {
  background: rgba(0, 0, 0, 0.1);
 }
-#newchunk .post {
+.newchunk .post {
  padding-top: 1.2rem;
 }
 
@@ -182,7 +215,7 @@ form textarea {
 .cancelform {
  position: absolute;
  z-index: 1;
- top: 9.7rem; left: 50%;
+ top: 9.8rem; left: 50%;
  max-width: 16.4rem;
  width: calc(40% - 3rem);
  text-align: right;
@@ -201,7 +234,7 @@ form textarea {
 }
 
 
-#notes .together .footer,  #notes #editable, #newchunk .footer {
+#notes .together .footer,  #notes #editable, .newchunk .footer {
  height: 2.0rem;
 }
 
@@ -296,7 +329,7 @@ form textarea {
  position: absolute;
  z-index: 3;
  text-align: right;
- top: -0.2rem; right: 3.4rem; height: 2rem;
+ top: -0.2rem; right: 3.4rem; height: 2.0rem;
  background:none;
 }
 
@@ -352,7 +385,7 @@ form textarea {
 }
 
 @media screen and (max-width: 20rem)  {
-.footer small, form textarea, form input, .cancelform small {
+form textarea, form input, .cancelform small {
  font-size: 1.375rem;
  line-height: 1.725rem;
 }
@@ -365,7 +398,7 @@ form textarea {
 }
 
 @media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
-.footer small, form textarea, form input, .cancelform small {
+form textarea, form input, .cancelform small {
  font-size: 1.4375rem;
  line-height: 1.7875rem;
 }
@@ -378,7 +411,7 @@ form textarea {
 }
 
 @media screen and (min-width: 42.5rem) {
-.footer small, form textarea, form input, .cancelform small {
+form textarea, form input, .cancelform small {
  font-size: 1.5rem;
  line-height: 1.85rem;
 }
