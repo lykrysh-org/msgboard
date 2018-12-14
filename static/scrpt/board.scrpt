@@ -8,6 +8,8 @@ $(document).ready(function() {
     var st = $(document).scrollTop();
     document.cookie = "y" + "=" + st;
     
+    //$('#newpost').text(st);
+
     if (st < 200) {
       $('#tweet').css('display', 'none');
     } else {
@@ -161,7 +163,8 @@ $(document).ready(function() {
       if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
-        e.preventDefault(); 
+        e.preventDefault();
+        return false; 
       }
 
       if (hinum == 3) { // there is img to upload
@@ -204,7 +207,9 @@ $(document).ready(function() {
       if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
-        e.preventDefault(); 
+        e.preventDefault();
+        return false; 
+
       } else {
         var p = $(this).parent();
         p.hide();
@@ -250,6 +255,16 @@ $(document).ready(function() {
     var hi = $(this).children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
+    if (hinum != 1) {
+      var trouble = false;
+      var msg = '';
+      if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if (trouble) { 
+        $('#bugbug').text(msg);
+        e.preventDefault(); 
+        return false;
+      }
+
       if (hinum == 3) { // there is new img to upload
         var yy = $(this).siblings(".yy");
         var dataObject = new FormData(yy[0]);
@@ -273,6 +288,7 @@ $(document).ready(function() {
         e.preventDefault(); 
         return false;
       }
+    }
   });
 
   $('.edit').click(function() {
