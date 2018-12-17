@@ -106,6 +106,13 @@ impl Task {
             .first::<String>(conn)
     }
 
+    pub fn get_task(idd: i32, conn: &PgConnection) -> QueryResult<Task> {
+        use schema::tasks::dsl::*;
+        tasks
+            .filter(id.eq(idd))
+            .first::<Task>(conn)
+    }
+
     pub fn delete_with_id(idd: i32, conn: &PgConnection) -> QueryResult<usize> {
         diesel::delete(all_tasks.find(idd))
             .execute(conn)

@@ -158,15 +158,17 @@
     <div id="notes">{% set_global ROOT = 0 %}{% set_global NEW = true %}
       <ul>{% for task in tasks %}
 
-        <li>
+        <li class="li{{task.id}}">
           {% if powerto and powerto == task.id %}{% set editable = true %}{% else %}{% set editable = false %}{% endif %}
           {% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
-          <div class="lone"></div>{% else %}{% set_global NEW = false %}
-            <div class="bbox n"><div class="reply l"><img src="/static/pics/a2.png"></div></div>{% endif %}
+            <div class="lone"></div>
+          {% else %}{% set_global NEW = false %}
+            <div class="bbox n"><div class="reply l"><img src="/static/pics/a2.png"></div></div>
+          {% endif %}
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
               {% if not editable %}
-              <p>{{ task.description }} | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
+              <p><span class="dsc">{{ task.description }}</span> | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
               <!-- <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p> -->
               {% if task.attached %}<div class="pic"><img src="{{ task.attached }}"></div>{% endif %}
 
@@ -209,7 +211,7 @@
 
                     <div class="leftbut">
                       <div class="ox" {% if task.attached %}style="display: block"{% endif %}>
-                        <div class="wrap" {% if editable %}style="background-image: url({{ task.attached }})"{% endif %}></div>
+                        <div class="wrap" style="background-image: url({{ task.attached }})"></div>
                         <div class="x pc"><img src="/static/pics/x.png"></div>
                       </div>
                       <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>

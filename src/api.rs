@@ -2,14 +2,14 @@ use actix::prelude::Addr;
 use actix_web::middleware::Response;
 use actix_web::middleware::identity::RequestIdentity;
 use actix_web::{
-    error, fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
+    fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
     HttpResponse, Path, Responder, Result, HttpMessage, Json, Error, 
 };
 use actix_web::error::ErrorInternalServerError;
 use futures::{future, Future, Stream};
 use tera::{Context, Tera};
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask };
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, FindTask };
 use model::{EditTask};
 use session::{self, FlashMessage, UpLoaded, PowerTo};
 use multipart::*;
@@ -144,12 +144,15 @@ pub struct PassdJ {
     method: String,
     passwd: String,
 }
-#[derive(Serialize, Deserialize)]
-struct Address {
-    street: String,
-    city: String,
-}
 
+#[derive(Serialize)]
+struct OutJ {
+    state: String,
+    posted: String,
+    whosent: String,
+    attd: String,
+    desc: String,
+}
 
 pub fn passd(
     (req, j) : (HttpRequest<AppState>, Json<PassdJ>),
@@ -174,31 +177,27 @@ fn toggle(
         .from_err()
         .and_then(move |res| match res {
             Ok(0) => {
-                session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                let address = Address {
-                    street: "10 Dowing Street".to_owned(),
-                    city: "London".to_owned(),
+                let out = OutJ {
+                    state: "wrong".to_owned(),
+                    posted: "".to_owned(),
+                    whosent: "".to_owned(),
+                    attd: "".to_owned(),
+                    desc: "".to_owned(),
                 };
-                // Serialize it to a JSON string.
-                let j = serde_json::to_string(&address)?;
-                Ok(HttpResponse::Ok()
-                    .content_type("application/json")
-                    .body(j)
-                    .into())
+                let o = serde_json::to_string(&out)?;
+                Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
             },
-            Ok(taskid) => {
-                session::set_powerto(&req, PowerTo::add(taskid))?;
-                let address = Address {
-                    street: "10 Dowing Street".to_owned(),
-                    city: "London".to_owned(),
+            Ok(_taskid) => {
+                let out = OutJ {
+                    state: "correct".to_owned(),
+                    posted: "".to_owned(),
+                    whosent: "".to_owned(),
+                    attd: "".to_owned(),
+                    desc: "".to_owned(),
                 };
-                // Serialize it to a JSON string.
-                let j = serde_json::to_string(&address)?;
-                Ok(HttpResponse::Ok()
-                    .content_type("application/json")
-                    .body(j)
-                    .into())
-            }
+                let o = serde_json::to_string(&out)?;
+                Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
+            },
             Err(e) => Err(e),
         })
         .responder()
@@ -215,30 +214,26 @@ fn delete(
         .from_err()
         .and_then(move |res| match res {
             Ok(0) => {
-                session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                let address = Address {
-                    street: "10 Dowing Street".to_owned(),
-                    city: "London".to_owned(),
+                let out = OutJ {
+                    state: "wrong".to_owned(),
+                    posted: "".to_owned(),
+                    whosent: "".to_owned(),
+                    attd: "".to_owned(),
+                    desc: "".to_owned(),
                 };
-                // Serialize it to a JSON string.
-                let j = serde_json::to_string(&address)?;
-                Ok(HttpResponse::Ok()
-                    .content_type("application/json")
-                    .body(j)
-                    .into())
+                let o = serde_json::to_string(&out)?;
+                Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
             },
             Ok(_) => {
-                session::set_flash(&req, FlashMessage::success("Deleted."))?;
-                let address = Address {
-                    street: "10 Dowing Street".to_owned(),
-                    city: "London".to_owned(),
+                let out = OutJ {
+                    state: "deleted".to_owned(),
+                    posted: "".to_owned(),
+                    whosent: "".to_owned(),
+                    attd: "".to_owned(),
+                    desc: "".to_owned(),
                 };
-                // Serialize it to a JSON string.
-                let j = serde_json::to_string(&address)?;
-                Ok(HttpResponse::Ok()
-                    .content_type("application/json")
-                    .body(j)
-                    .into())
+                let o = serde_json::to_string(&out)?;
+                Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
             },
             Err(e) => Err(e),
         })

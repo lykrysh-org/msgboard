@@ -122,6 +122,24 @@ impl Handler<ToggleTask> for DbExecutor {
     }
 }
 
+pub struct FindTask {
+    pub id: i32,
+}
+
+impl Message for FindTask {
+    type Result = Result<Task, Error>;
+}
+
+impl Handler<FindTask> for DbExecutor {
+    type Result = Result<Task, Error>;
+
+    fn handle(&mut self, task: FindTask, _: &mut Self::Context) -> Self::Result {
+        Task::get_task(task.id, self.get_conn()?.deref())
+            .map_err(|_| error::ErrorInternalServerError("Error checking secret"))
+    }
+}
+
+
 pub struct DeleteTask {
     pub id: i32,
     pub pw: String,

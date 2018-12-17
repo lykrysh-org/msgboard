@@ -33,7 +33,7 @@ body {
 #newblk {
  display: none;
  z-index: 5;
- background: rgba(0,27,88,0.9);
+ background: rgba(0,27,88,0.8);
 }
 #guard {
  display: none;
@@ -86,7 +86,7 @@ body {
  background-repeat: no-repeat;
  background-position: 50% calc(50% - 130px);
  background-size: 200px 200px;
- background-color: #001b58; 
+ background-color: rgba(0,27,88,0.8);
  background-image: url('../pics/flash.png');
  -webkit-transition: background-color 0.3s ease-out; 
  transition: background-color 0.3s ease-out;
@@ -259,7 +259,7 @@ form textarea {
  opacity: 1.0;
 }
 .footer .bbk {
- color: black;
+ text-decoration: line-through;
 }
 .footer img {
  height: 1.8rem;

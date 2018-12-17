@@ -26,6 +26,11 @@ $(document).ready(function() {
     sety();
   });
 
+  $(window).on("unload", function() {
+    
+    sety();
+  });
+
   $('.me').hover(function() {
     $(this).prev(".abv").css('display', 'block'); 
     $(this).next(".btm").css('display', 'block'); 
@@ -291,13 +296,11 @@ $(document).ready(function() {
     }
   });
 
-
-
   $('.room form input[name=password]').keypress(function(event) {
     if ( event.which == 13 ) {
-      var pp = $(this).parent().parent();
-      var taskid = pp.find("input:hidden[name=taskid]").val();
-      var method = pp.find("input:hidden[name=_method]").val();
+      var r = $(this).parent().parent();
+      var taskid = r.find("input:hidden[name=taskid]").val();
+      var method = r.find("input:hidden[name=_method]").val();
       var passwd = $(this).val();
       $.ajax({
           url: "/passd/" + taskid,
@@ -310,7 +313,24 @@ $(document).ready(function() {
           contentType: "application/json",
           dataType: "json",
           success: function(response){
-            alert(response.street);
+            var state = response.state;
+            if (state == "wrong") {
+              $('#dummy #bugbug').text("Wrong Password");
+            } else if (state == "deleted") {
+              $('#dummy #bugbug').text("Deleted");
+              var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
+              ll.text("");
+            } else if (state == "correct") {
+              var one = r.parent().parent().parent();
+              var dsc = one.find(".dsc").text();
+              var pic = null;
+              if (one.find(".pic").length) { 
+                pic = one.find(".pic").children("img").attr("src");
+                //alert(pic);
+              }
+              var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
+              ll.text(dsc);
+            }
           },
           error: function(e){
             //alert(e);
@@ -408,7 +428,7 @@ $(document).ready(function() {
   $(document).mousemove(function(e){
     if (! $('#bugbug').is(':empty')) {
       setTimeout(function(){
-        $('#bugbug').text('');
+        $('#dummy #bugbug').text("");
       }, 800);
     }
   });
