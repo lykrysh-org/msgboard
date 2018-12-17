@@ -176,7 +176,8 @@
                 <small class="but pc reply op8">Reply</small>
                 <div class="room bbk">
 
-                  <form action="/todo/{{task.id}}" method="post">
+                  <form>
+                    <input type="hidden" name="taskid" value="{{ task.id }}" />
                     <input type="hidden" name="_method" value="" />
                     <img src="/static/pics/key.png">
                     <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>

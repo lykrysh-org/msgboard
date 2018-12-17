@@ -9,6 +9,8 @@ extern crate diesel;
 extern crate log;
 #[macro_use]
 extern crate serde_derive;
+extern crate serde_json;
+extern crate json;
 #[macro_use]
 extern crate tera;
 extern crate num_cpus;
@@ -86,7 +88,7 @@ fn main() {
             .route("/", http::Method::GET, api::index)
             .route("/todo", http::Method::POST, api::create)
             .route("/todo/save", http::Method::POST, api::save)
-            .resource("/todo/{id}", |r: &mut Resource<_>| { r.post().with(api::update) })
+            .resource("/passd/{id}", |r| { r.method(http::Method::POST).with(api::passd) })
             .resource("/todo/{id}/edit", |r: &mut Resource<_>| { r.post().with(api::edit) })
             .resource("/todo/{id}/cancel", |r: &mut Resource<_>| { r.post().with(api::cancel) })
             .handler("/static", static_files)

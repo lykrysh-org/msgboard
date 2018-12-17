@@ -291,6 +291,36 @@ $(document).ready(function() {
     }
   });
 
+
+
+  $('.room form input[name=password]').keypress(function(event) {
+    if ( event.which == 13 ) {
+      var pp = $(this).parent().parent();
+      var taskid = pp.find("input:hidden[name=taskid]").val();
+      var method = pp.find("input:hidden[name=_method]").val();
+      var passwd = $(this).val();
+      $.ajax({
+          url: "/passd/" + taskid,
+          data : JSON.stringify({
+            taskid: taskid,
+            method: method,
+            passwd: passwd,
+          }),
+          type : "POST",
+          contentType: "application/json",
+          processData: false,
+          success: function(s){
+            //alert(s);
+          },
+          error: function(e){
+            //alert(e);
+          }
+      });
+      event.preventDefault(); // don't submit the entire form
+      return false;
+    }
+  });
+
   $('.edit').click(function() {
     var p = $(this).parent();
     var r = p.children(".room");

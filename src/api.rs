@@ -3,7 +3,7 @@ use actix_web::middleware::Response;
 use actix_web::middleware::identity::RequestIdentity;
 use actix_web::{
     error, fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
-    HttpResponse, Path, Responder, Result, HttpMessage,
+    HttpResponse, Path, Responder, Result, HttpMessage, Json,
 };
 use futures::{future, Future, Stream};
 use tera::{Context, Tera};
@@ -137,23 +137,21 @@ pub fn create(
         .responder()
 }
 
-#[derive(Deserialize)]
-pub struct UpdateParams {
-    id: i32,
+#[derive(Debug, Deserialize)]
+pub struct PassdJ {
+    taskid: String,
+    method: String,
+    passwd: String,
 }
 
-#[derive(Deserialize)]
-pub struct UpdateForm {
-    _method: String,
-    password: String,
-}
-
-pub fn update(
-    (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<UpdateForm>),
+pub fn passd(
+    (req, j) : (HttpRequest<AppState>, Json<PassdJ>),
 ) -> FutureResponse<HttpResponse> {
-    match form._method.as_ref() {
-        "put" => toggle(req, params, &form.password),
-        "delete" => delete(req, params, &form.password),
+    //println!("{:?} {:?}", req, j );
+    let id = j.taskid.parse::<i32>().unwrap();
+    match j.method.as_ref() {
+        "put" => toggle(req, &id, &j.passwd),
+        "delete" => delete(req, &id, &j.passwd),
         unsupported_method => {
             let msg = format!("Unsupported HTTP method: {}", unsupported_method);
             future::err(error::ErrorBadRequest(msg)).responder()
@@ -163,12 +161,12 @@ pub fn update(
 
 fn toggle(
     req: HttpRequest<AppState>,
-    params: Path<UpdateParams>,
+    id: &i32,
     mypw: &String,
 ) -> FutureResponse<HttpResponse> {
     req.state()
         .db
-        .send(ToggleTask { id: params.id, pw: mypw.to_string() })
+        .send(ToggleTask { id: *id, pw: mypw.to_string() })
         .from_err()
         .and_then(move |res| match res {
             Ok(0) => {
@@ -186,12 +184,12 @@ fn toggle(
 
 fn delete(
     req: HttpRequest<AppState>,
-    params: Path<UpdateParams>,
+    id: &i32,
     mypw: &String,
 ) -> FutureResponse<HttpResponse> {
     req.state()
         .db
-        .send(DeleteTask { id: params.id, pw: mypw.to_string() })
+        .send(DeleteTask { id: *id, pw: mypw.to_string() })
         .from_err()
         .and_then(move |res| match res {
             Ok(0) => {
@@ -205,6 +203,11 @@ fn delete(
             Err(e) => Err(e),
         })
         .responder()
+}
+
+#[derive(Deserialize)]
+pub struct UpdateParams {
+    id: i32,
 }
 
 #[derive(Deserialize)]
