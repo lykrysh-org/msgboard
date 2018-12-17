@@ -1,5 +1,10 @@
+:root {
+ --bsod: #001b58;
+ --dots: #a6afc5;
+}
+
 body {
- background: #001b58; 
+ background: var(--bsod); 
 }
 .bbk { color: #000; }
 
@@ -10,7 +15,7 @@ body {
 }
 
 #nav .but, #vol .but {
- color: #001b58;
+ color: var(--bsod); 
  background: #8c98b4;
 }
 #nav .but:hover, #vol .but:hover {
@@ -18,7 +23,6 @@ body {
 }
 
 #tweet {
- display: none;
  z-index: 990;
  right: 2rem;
 }
@@ -31,12 +35,10 @@ body {
  color: white;
 }
 #newblk {
- display: none;
  z-index: 5;
  background: rgba(0,27,88,0.8);
 }
 #guard {
- display: none;
  position: fixed;
  z-index: 6;
  margin-top: 9.3rem;
@@ -47,9 +49,7 @@ body {
  background-size: 100% 100%;
  background-image: url('../pics/blue.png');
 }
-
 .dark {
- display: none;
  max-width: 42rem;
  width: calc(80% + 4rem - 8px);
  height: 2.4rem; 
@@ -62,17 +62,19 @@ body {
  height: 1.8rem;
  margin-left: 9.0rem;
  margin-top: 0.1rem;
- display: inline;
 }
 .dark .link1 img {
  width: 1.6rem; height: 1.6rem;
  margin: 0.1rem;
 }
-.dark .linkinput {
+.dark .link1, .dark .linkinput {
  display: inline;
 }
 .dark .linky {
  width: 50%;
+}
+#tweet, #newblk, #guard, .dark {
+ display: none;
 }
 
 #dummy {
@@ -120,7 +122,6 @@ form textarea {
  border: none;
  font-family: vt;
 }
-
 .abv, .btm {
  display: none;
 }
@@ -136,7 +137,7 @@ form textarea {
  padding-bottom: 1.8rem;
  padding-left: 1.5rem;
  padding-right: 1.5rem;
- border: 2px dashed #d9dde6;
+ border: 2px dashed var(--dots); 
  background: none;
  -webkit-transition: background 0.6s ease-out; 
  transition: background 0.6s ease-out;
@@ -158,14 +159,18 @@ form textarea {
  padding: 0;
  list-style-type: none;
 }
-#notes .together {
+
+#notes .rpf, #notes .edf {
  display: none;
+}
+#notes .edf {
+ position: relative;
 }
 #notes .one {
  padding: 0rem 1.5rem;
  text-align: left;
- border-left: 2px dashed #d9dde6;
- border-right: 2px solid #001b58;
+ border-left: 2px dashed var(--dots); 
+ border-right: 2px solid var(--bsod); 
 }
 #notes .one p {
  margin-bottom: 0.6rem;
@@ -181,11 +186,11 @@ form textarea {
  max-height: 320px;
 }
 #notes .one .bksm a {
- color: #001b58;
+ color: var(--bsod); 
  background: rgba(255, 255, 51, 0.7);
 }
 #notes .one .bksm a:hover {
- color: #001b58;
+ color: var(--bsod); 
  background: rgba(255, 255, 51, 1.0);
 }
 #notes .bbox .good {
@@ -207,34 +212,7 @@ form textarea {
 #notes .tbox.top06 {
  margin-top: 0.6rem;
 }
-
-.relative {
- position: relative;
-}
-
-.cancelform {
- position: absolute;
- z-index: 1;
- top: 9.8rem; left: 50%;
- max-width: 16.4rem;
- width: calc(40% - 3rem);
- text-align: right;
- background: none;
-}
-
-.cancelform button {
- height: 1.8rem;
- vertical-align: -0.1rem;
- padding: 0px 12px; 
- color: #001b58;
- background: rgba(255,255,255,0.4);
-}
-.cancelform button:hover {
- background: rgba(255,255,255,1.0);
-}
-
-
-#notes .together .footer,  #notes #editable, .newchunk .footer {
+#notes .rpf .footer,  #notes #editable, .newchunk .footer {
  height: 2.0rem;
 }
 
@@ -249,7 +227,7 @@ form textarea {
  margin-left: 0.4rem;
  -webkit-transition: all 0.3s ease-out; 
  transition: all 0.3s ease-out;
- color: #001b58;
+ color: var(--bsod); 
  background: #fff;
 }
 .footer .but:hover {
@@ -283,7 +261,6 @@ form textarea {
  opacity: 1.0;
 }
 .footer .leftbut .yup {
- display: none;
  position: absolute;
  z-index: 3;
  left: 2rem; 
@@ -291,12 +268,10 @@ form textarea {
 .footer .leftbut .yup .zero {
  opacity: 0.0;
 }
-.footer .leftbut .ox {
+.footer .leftbut .yup, .footer .leftbut .ox, .yy .chs {
  display: none;
 }
-.yy .chs {
- display: none;
-}
+
 .footer .leftbut .ox .wrap {
  position: absolute;
  z-index: 4;
@@ -355,7 +330,7 @@ form textarea {
  display: inline-block;
 }
 
-.count { display: none; }
+.footer .count { display: none; }
 
 .footer .noout, .cancelform .noout {
  border: 0; outline: none;
@@ -377,7 +352,7 @@ form textarea {
  padding-left: 0.6rem;
  padding-right: 0.4rem;
  margin-right: 1rem;
- border-bottom: 2px solid #d9dde6;
+ border-bottom: 2px solid var(--dots); 
 }
 
 .dark small {
@@ -385,7 +360,7 @@ form textarea {
 }
 
 @media screen and (max-width: 20rem)  {
-form textarea, form input, .cancelform small {
+form textarea, form input {
  font-size: 1.375rem;
  line-height: 1.725rem;
 }
@@ -398,7 +373,7 @@ form textarea, form input, .cancelform small {
 }
 
 @media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
-form textarea, form input, .cancelform small {
+form textarea, form input {
  font-size: 1.4375rem;
  line-height: 1.7875rem;
 }
@@ -411,7 +386,7 @@ form textarea, form input, .cancelform small {
 }
 
 @media screen and (min-width: 42.5rem) {
-form textarea, form input, .cancelform small {
+form textarea, form input {
  font-size: 1.5rem;
  line-height: 1.85rem;
 }

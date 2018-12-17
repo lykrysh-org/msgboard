@@ -159,7 +159,6 @@
       <ul>{% for task in tasks %}
 
         <li class="li{{task.id}}">
-          {% if powerto and powerto == task.id %}{% set editable = true %}{% else %}{% set editable = false %}{% endif %}
           {% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
             <div class="lone"></div>
           {% else %}{% set_global NEW = false %}
@@ -167,15 +166,14 @@
           {% endif %}
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
-              {% if not editable %}
               <p><span class="dsc">{{ task.description }}</span> | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
               <!-- <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p> -->
               {% if task.attached %}<div class="pic"><img src="{{ task.attached }}"></div>{% endif %}
 
               <div class="footer n">
-                <small class="but pc edit op4">Edit</small>
-                <small class="but pc delete op4">Delete</small>
-                <small class="but pc reply op8">Reply</small>
+                <small class="but fb pc edit op4">Edit</small>
+                <small class="but fb pc delete op4">Delete</small>
+                <small class="but fb pc reply op8">Reply</small>
                 <div class="room bbk">
 
                   <form>
@@ -189,17 +187,15 @@
                 <span class="count">n</span>
               </div>
 
-              {% endif %}
-            </div>
+            </div>  <!-- end of one class -->
 
-            {% if editable %}
             <!-- EDIT form -->
 
-            <div class="relative">
+            <div class="edf">
               <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
                 <input type="hidden" name="hasimg" value="{% if task.attached %}4{% endif %}" />
-                <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
-                <div class="tbox me bbk">
+                <div class="bbox n abv top06"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+                <div class="tbox me bbk top06">
                   <p>
                     <textarea class="dsc" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description">{{ task.description }}</textarea>
                   </p>
@@ -232,20 +228,15 @@
 
               </form>
 
-              <form action="/todo/{{task.id}}/cancel" method="post">
-                <div class="cancelform"><button type="submit" class="cancel noout pc"><small>Cancel Editing</small></button></div>
-              </form>
-
               <form class="f21 yy"  action="/todo/save" target="hiddenform" method="post" enctype="multipart/form-data">
                 <input id="chs{{task.id}}e" class="chs" type="file" name="file" accept="image/*, video/*" />
               </form>
 
             </div>
 
-            {% else %}
             <!-- REPLY form -->
 
-            <div class="together">
+            <div class="rpf">
               <form class="f30 xx" action="/todo" method="post">
                 <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
                 <input type="hidden" name="hasimg" value="0" />
@@ -295,7 +286,6 @@
               </form>
 
             </div>
-            {% endif %}
 
           </li>
           {% endfor %}

@@ -311,14 +311,6 @@ pub fn edit(
     }
 }
 
-pub fn cancel(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
-    if let Some(_) = session::get_powerto(&req).unwrap() {
-        session::clear_powerto(&req)
-    };
-    future::ok(redirect_to("/"))
-        .responder()
-}
-
 fn redirect_to(location: &str) -> HttpResponse {
     HttpResponse::Found()
         .header(http::header::LOCATION, location)

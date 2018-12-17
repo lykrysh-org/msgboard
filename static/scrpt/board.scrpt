@@ -26,8 +26,7 @@ $(document).ready(function() {
     sety();
   });
 
-  $(window).on("unload", function() {
-    
+  $(window).on("unload", function() {   
     sety();
   });
 
@@ -298,7 +297,8 @@ $(document).ready(function() {
 
   $('.room form input[name=password]').keypress(function(event) {
     if ( event.which == 13 ) {
-      var r = $(this).parent().parent();
+      var r = $(this).parent().parent().parent();
+      var c = r.next(".count");
       var taskid = r.find("input:hidden[name=taskid]").val();
       var method = r.find("input:hidden[name=_method]").val();
       var passwd = $(this).val();
@@ -321,15 +321,14 @@ $(document).ready(function() {
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
               ll.text("");
             } else if (state == "correct") {
-              var one = r.parent().parent().parent();
-              var dsc = one.find(".dsc").text();
-              var pic = null;
-              if (one.find(".pic").length) { 
-                pic = one.find(".pic").children("img").attr("src");
-                //alert(pic);
-              }
+              // show Edit Form
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
-              ll.text(dsc);
+              var rl = ll.children(".edf");
+              rl.show(); r.hide(); c.text("o");
+              ll.children(".one").children("p").addClass("op2");
+              ll.children(".one").children(".pic").addClass("op2");
+            } else {
+              $('#dummy #bugbug').text("weird");
             }
           },
           error: function(e){
@@ -341,12 +340,21 @@ $(document).ready(function() {
     }
   });
 
+  $('.one .footer .fb').click(function() {
+    if ($(this).siblings(".count").text() == "o") {
+      var one = $(this).parent().parent();
+      one.siblings(".edf").hide();
+      one.children("p").removeClass("op2");
+      one.children(".pic").removeClass("op2"); 
+    }
+  });
+
   $('.edit').click(function() {
     var p = $(this).parent();
     var r = p.children(".room");
     var c = p.children(".count");
-    p.parent().next(".together").hide();
-    if( c.text() == "e" ) {
+    p.parent().siblings(".rpf").hide();
+    if( (c.text() == "o") || (c.text() == "e") ) {
       r.hide();
       c.text("n");
       $(this).removeClass("bbk");
@@ -367,7 +375,7 @@ $(document).ready(function() {
     var p = $(this).parent();
     var r = p.children(".room");
     var c = p.children(".count");
-    p.parent().next(".together").hide();
+    p.parent().siblings(".rpf").hide();
     if( c.text() == "d" ) {
       r.hide();
       c.text("n");
@@ -391,12 +399,12 @@ $(document).ready(function() {
     var c = p.children(".count");
     r.hide();
     if( c.text() == "r" ) {
-      p.parent().next(".together").hide();
+      p.parent().siblings(".rpf").hide();
       c.text("n");
       $(this).removeClass("bbk");
     } else {
       $(this).siblings(".but").each(function() { $(this).removeClass("bbk"); });
-      p.parent().next(".together").show();
+      p.parent().siblings(".rpf").show();
       c.text("r");
       $(this).addClass("bbk");
       sety();

@@ -52,7 +52,7 @@ p {
 
 .tbox {
  display:block;
- max-width: calc(38rem + 8px);
+ max-width: calc(38rem + 6px);
  margin: 0 auto;
  width: 80%;
 }
@@ -91,7 +91,7 @@ p {
  display:block;
  max-width: 42rem;
  margin: 0 auto; 
- width: calc(80% + 4rem - 8px);
+ width: calc(80% + 4rem - 6px);
 }
 .bbox.top12 {
  margin-top: 1.2rem;
