@@ -306,11 +306,10 @@ $(document).ready(function() {
             method: method,
             passwd: passwd,
           }),
-          type : "POST",
+          method : "POST",
           contentType: "application/json",
-          processData: false,
-          success: function(s){
-            //alert(s);
+          success: function(response){
+            alert(response);
           },
           error: function(e){
             //alert(e);

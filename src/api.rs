@@ -144,17 +144,22 @@ pub struct PassdJ {
     passwd: String,
 }
 
+#[derive(Serialize)]
+pub struct SendnJ {
+    name: String,
+}
+
 pub fn passd(
     (req, j) : (HttpRequest<AppState>, Json<PassdJ>),
-) -> FutureResponse<HttpResponse> {
-    //println!("{:?} {:?}", req, j );
+) -> FutureResponse<String> {
+    println!("{:?} {:?}", req, j );
     let id = j.taskid.parse::<i32>().unwrap();
     match j.method.as_ref() {
         "put" => toggle(req, &id, &j.passwd),
         "delete" => delete(req, &id, &j.passwd),
         unsupported_method => {
             let msg = format!("Unsupported HTTP method: {}", unsupported_method);
-            future::err(error::ErrorBadRequest(msg)).responder()
+            future::ok("hello".to_string()).responder()
         }
     }
 }
@@ -163,7 +168,7 @@ fn toggle(
     req: HttpRequest<AppState>,
     id: &i32,
     mypw: &String,
-) -> FutureResponse<HttpResponse> {
+) -> FutureResponse<String> {
     req.state()
         .db
         .send(ToggleTask { id: *id, pw: mypw.to_string() })
@@ -171,11 +176,11 @@ fn toggle(
         .and_then(move |res| match res {
             Ok(0) => {
                 session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                Ok(redirect_to("/"))
+                Ok("hello".to_string())
             },
             Ok(taskid) => {
                 session::set_powerto(&req, PowerTo::add(taskid))?;
-                Ok(redirect_to("/"))
+                Ok("hello".to_string())
             }
             Err(e) => Err(e),
         })
@@ -186,7 +191,7 @@ fn delete(
     req: HttpRequest<AppState>,
     id: &i32,
     mypw: &String,
-) -> FutureResponse<HttpResponse> {
+) -> FutureResponse<String> {
     req.state()
         .db
         .send(DeleteTask { id: *id, pw: mypw.to_string() })
@@ -194,11 +199,11 @@ fn delete(
         .and_then(move |res| match res {
             Ok(0) => {
                 session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                Ok(redirect_to("/"))
+                Ok("hello".to_string())
             },
             Ok(_) => {
                 session::set_flash(&req, FlashMessage::success("Deleted."))?;
-                Ok(redirect_to("/"))
+                Ok("hello".to_string())
             },
             Err(e) => Err(e),
         })
