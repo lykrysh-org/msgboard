@@ -3,8 +3,9 @@ use actix_web::middleware::Response;
 use actix_web::middleware::identity::RequestIdentity;
 use actix_web::{
     error, fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
-    HttpResponse, Path, Responder, Result, HttpMessage, Json,
+    HttpResponse, Path, Responder, Result, HttpMessage, Json, Error, 
 };
+use actix_web::error::ErrorInternalServerError;
 use futures::{future, Future, Stream};
 use tera::{Context, Tera};
 
@@ -46,7 +47,7 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
                     .template
                     .render("index.tera", &context)
                     .map_err(|e| {
-                        error::ErrorInternalServerError(e.description().to_owned())
+                        ErrorInternalServerError(e.description().to_owned())
                     })?;
 
                 Ok(HttpResponse::Ok().body(rendered))
@@ -60,7 +61,7 @@ pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
     println!("{:?}", req);
     Box::new(
         req.multipart()
-            .map_err(error::ErrorInternalServerError)
+            .map_err(ErrorInternalServerError)
             .map(handle_multipart_item)
             .flatten()
             .collect()
@@ -143,24 +144,22 @@ pub struct PassdJ {
     method: String,
     passwd: String,
 }
-
-#[derive(Serialize)]
-pub struct SendnJ {
-    name: String,
+#[derive(Serialize, Deserialize)]
+struct Address {
+    street: String,
+    city: String,
 }
+
 
 pub fn passd(
     (req, j) : (HttpRequest<AppState>, Json<PassdJ>),
-) -> FutureResponse<String> {
+) -> Box<dyn Future<Item = HttpResponse, Error = Error>> {
     println!("{:?} {:?}", req, j );
     let id = j.taskid.parse::<i32>().unwrap();
     match j.method.as_ref() {
-        "put" => toggle(req, &id, &j.passwd),
-        "delete" => delete(req, &id, &j.passwd),
-        unsupported_method => {
-            let msg = format!("Unsupported HTTP method: {}", unsupported_method);
-            future::ok("hello".to_string()).responder()
-        }
+        "put" => Box::new(toggle(req, &id, &j.passwd)),
+        "delete" => Box::new(delete(req, &id, &j.passwd)),
+        _ => Box::new(future::ok(HttpResponse::Ok().finish())),
     }
 }
 
@@ -168,7 +167,7 @@ fn toggle(
     req: HttpRequest<AppState>,
     id: &i32,
     mypw: &String,
-) -> FutureResponse<String> {
+) -> impl Future<Item = HttpResponse, Error = Error> {
     req.state()
         .db
         .send(ToggleTask { id: *id, pw: mypw.to_string() })
@@ -176,11 +175,29 @@ fn toggle(
         .and_then(move |res| match res {
             Ok(0) => {
                 session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                Ok("hello".to_string())
+                let address = Address {
+                    street: "10 Dowing Street".to_owned(),
+                    city: "London".to_owned(),
+                };
+                // Serialize it to a JSON string.
+                let j = serde_json::to_string(&address)?;
+                Ok(HttpResponse::Ok()
+                    .content_type("application/json")
+                    .body(j)
+                    .into())
             },
             Ok(taskid) => {
                 session::set_powerto(&req, PowerTo::add(taskid))?;
-                Ok("hello".to_string())
+                let address = Address {
+                    street: "10 Dowing Street".to_owned(),
+                    city: "London".to_owned(),
+                };
+                // Serialize it to a JSON string.
+                let j = serde_json::to_string(&address)?;
+                Ok(HttpResponse::Ok()
+                    .content_type("application/json")
+                    .body(j)
+                    .into())
             }
             Err(e) => Err(e),
         })
@@ -191,7 +208,7 @@ fn delete(
     req: HttpRequest<AppState>,
     id: &i32,
     mypw: &String,
-) -> FutureResponse<String> {
+) -> impl Future<Item = HttpResponse, Error = Error> {
     req.state()
         .db
         .send(DeleteTask { id: *id, pw: mypw.to_string() })
@@ -199,11 +216,29 @@ fn delete(
         .and_then(move |res| match res {
             Ok(0) => {
                 session::set_flash(&req, FlashMessage::error("Wrong password."))?;
-                Ok("hello".to_string())
+                let address = Address {
+                    street: "10 Dowing Street".to_owned(),
+                    city: "London".to_owned(),
+                };
+                // Serialize it to a JSON string.
+                let j = serde_json::to_string(&address)?;
+                Ok(HttpResponse::Ok()
+                    .content_type("application/json")
+                    .body(j)
+                    .into())
             },
             Ok(_) => {
                 session::set_flash(&req, FlashMessage::success("Deleted."))?;
-                Ok("hello".to_string())
+                let address = Address {
+                    street: "10 Dowing Street".to_owned(),
+                    city: "London".to_owned(),
+                };
+                // Serialize it to a JSON string.
+                let j = serde_json::to_string(&address)?;
+                Ok(HttpResponse::Ok()
+                    .content_type("application/json")
+                    .body(j)
+                    .into())
             },
             Err(e) => Err(e),
         })

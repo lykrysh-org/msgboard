@@ -88,7 +88,7 @@ fn main() {
             .route("/", http::Method::GET, api::index)
             .route("/todo", http::Method::POST, api::create)
             .route("/todo/save", http::Method::POST, api::save)
-            .resource("/passd/{id}", |r: &mut Resource<_>| { r.post().with(api::passd) })
+            .resource("/passd/{id}", |r| { r.method(http::Method::POST).with_async(api::passd) })
             .resource("/todo/{id}/edit", |r: &mut Resource<_>| { r.post().with(api::edit) })
             .resource("/todo/{id}/cancel", |r: &mut Resource<_>| { r.post().with(api::cancel) })
             .handler("/static", static_files)

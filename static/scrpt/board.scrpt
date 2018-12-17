@@ -308,8 +308,9 @@ $(document).ready(function() {
           }),
           method : "POST",
           contentType: "application/json",
+          dataType: "json",
           success: function(response){
-            alert(response);
+            alert(response.street);
           },
           error: function(e){
             //alert(e);

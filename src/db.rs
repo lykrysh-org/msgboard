@@ -1,7 +1,7 @@
 use std::ops::Deref;
 
 use actix::prelude::{Actor, Handler, Message, SyncContext};
-use actix_web::{error, Error};
+use actix_web::{error, Error,};
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool, PoolError, PooledConnection};
 use model::{NewTask, Task, NewSecret, EditTask};
