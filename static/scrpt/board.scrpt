@@ -157,35 +157,54 @@ $(document).ready(function() {
 
   // top form
 
-  $('.f10').bind('submit',function(e){
+  (function ($) {
+    $.fn.serializeFormJSON = function () {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function () {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+  })(jQuery);
+
+  $('.f10 .busy .footer .comment').click(function(e){
     var th = $(this);
-    var hi = th.children("input[name=hasimg]");
+    var xx = th.parent().parent().parent();
+    var hi = xx.children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
-    if (hinum != 1) {
+    if (hinum != 1) { // not yet ready for sending xx
       var trouble = false;
       var msg = '';
-      if ($.trim(th.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
-      if ($.trim(th.find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
-      if ($.trim(th.find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
+      if ($.trim(xx.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim(xx.find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+      if ($.trim(xx.find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
         e.preventDefault();
         return false; 
       }
 
-      if (hinum == 3) { // there is img to upload
-        var yy = th.siblings(".yy");
+      if (hinum == 3) { // saving img multipart
+        var yy = xx.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
-          url: "/todo/save",
+          url: "/multipart",
           data : dataObject,
           type : "POST",
           contentType: false,
           processData: false,
           success: function(data){
             hi.val("1");
-            yy.siblings(".xx").submit(); 
+            sendXx(); 
           },
           error: function(e){
             alert(e);
@@ -198,6 +217,28 @@ $(document).ready(function() {
         return false;
       }
     }
+    sendXx(); 
+    function sendXx() {
+      var dataXx = xx.serializeFormJSON();
+
+      $.ajax({
+          url: "/create",
+          data : JSON.stringify(dataXx),
+          method : "POST",
+          contentType: "application/json",
+          dataType: "json",
+          success: function(response){
+            var state = response.state;
+            alert(state);
+          },
+          error: function(e){
+            //alert(e);
+          }
+      });
+
+    }
+    e.preventDefault(); 
+    return false;
   });
 
   // reply form
@@ -323,7 +364,7 @@ $(document).ready(function() {
             if (state == "wrong") {
               dbb.text("Wrong Password");
             } else if (state == "deleted") {
-              dbb.text("Deleted");
+              //dbb.text("Deleted");
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
               ll.text("");
             } else if (state == "correct") {

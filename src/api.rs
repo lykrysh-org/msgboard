@@ -54,7 +54,7 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
         .responder()
 }
 
-pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
+pub fn multipart(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
     println!("{:?}", req);
     Box::new(
         req.multipart()
@@ -77,20 +77,27 @@ pub fn save(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
     )
 }
 
-#[derive(Deserialize)]
-pub struct CreateForm {
+#[derive(Debug, Deserialize)]
+pub struct CreateJ {
     inheritedid: String,
     hasimg: String,
     secret: String,
     whosent: String,
-    linky: Option<String>,
+    linky: String,
     description: String,
 }
 
+#[derive(Serialize)]
+struct OutJ {
+    state: String,
+}
+
 pub fn create(
-    (req, params): (HttpRequest<AppState>, Form<CreateForm>),
-) -> FutureResponse<HttpResponse> {
-    let lnk: Option<String> = match params.hasimg.parse().unwrap_or(0) {
+    (req, j): (HttpRequest<AppState>, Json<CreateJ>),
+) -> impl Future<Item = HttpResponse, Error = Error> {
+    println!("{:?} {:?}", req, j );
+
+    let lnk: Option<String> = match j.hasimg.parse().unwrap_or(0) {
         1 => {
                 let up = match session::get_uploaded(&req).unwrap() {
                     Some(up) => Some(up.uploaded),
@@ -99,36 +106,35 @@ pub fn create(
                 session::clear_uploaded(&req);
                 up           
              },
-        2 => params.linky.clone(),
+        2 => Some(j.linky.clone()),
         _ => None,
     };
 
-    let replyid: Option<i32> = match params.inheritedid.clone().as_ref() {
+    let replyid: Option<i32> = match j.inheritedid.clone().as_ref() {
         "none" => None,
         _whatever => {
             let i: i32 = _whatever.parse().unwrap_or(0);
             Some(i)
         },
     };
-    let name = params.whosent.clone();
+    let name = j.whosent.clone();
     req.state()
         .db
         .send(CreateTask {
             inheritedid: replyid,
-            secret: params.secret.clone(),
+            secret: j.secret.clone(),
             whosent: name.to_string(),
             linky: lnk,
-            description: params.description.clone().trim().to_string(),
+            description: j.description.clone().trim().to_string(),
         })
         .from_err()
         .and_then(move |res| match res {
             Ok(_) => {
-                session::set_flash(
-                    &req,
-                    FlashMessage::success(&format!("Thanks {}!", name)),
-                )?;
-                &req.remember(name.to_owned());
-                Ok(redirect_to("/"))
+                let out = OutJ {
+                    state: "sure".to_owned(),
+                };
+                let o = serde_json::to_string(&out)?;
+                Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
             }
             Err(e) => Err(e),
         })
@@ -140,11 +146,6 @@ pub struct PassdJ {
     taskid: String,
     method: String,
     passwd: String,
-}
-
-#[derive(Serialize)]
-struct OutJ {
-    state: String,
 }
 
 pub fn passd(

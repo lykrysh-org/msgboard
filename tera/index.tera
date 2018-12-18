@@ -100,7 +100,7 @@
   <div class="b1">
 
     <div class="newchunk">
-      <form class="f10 xx" action="/todo" method="post">
+      <form class="f10 xx">
         <input type="hidden" name="inheritedid" value="none" />
         <input type="hidden" name="hasimg" value="0" />
 
@@ -135,7 +135,7 @@
               <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
             </div>
 
-            <button type="submit" class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
+            <button class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
           </div>
         </div>
 
