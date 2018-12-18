@@ -159,7 +159,7 @@ form textarea {
  list-style-type: none;
 }
 
-#notes .rpf, #notes .edf {
+#notes .rpf, #notes .edf, #notes .edf form .passid {
  display: none;
 }
 #notes .edf {
@@ -211,7 +211,7 @@ form textarea {
 #notes .tbox.top06 {
  margin-top: 0.6rem;
 }
-#notes .rpf .footer,  #notes #editable, .newchunk .footer {
+#notes .rpf .footer, .busy .footer, .newchunk .footer {
  height: 2.0rem;
 }
 

@@ -180,8 +180,7 @@ $(document).ready(function() {
     var xx = th.parent().parent().parent();
     var hi = xx.children("input[name=hasimg]");
     var hinum = Number(hi.val());
-
-    if (hinum != 1) { // not yet ready for sending xx
+    if (hinum != 1) {
       var trouble = false;
       var msg = '';
       if ($.trim(xx.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
@@ -205,8 +204,7 @@ $(document).ready(function() {
           }
         }
       }
-
-      if (hinum == 3) { // saving img multipart
+      if (hinum == 3) {
         var yy = xx.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
@@ -241,7 +239,9 @@ $(document).ready(function() {
           dataType: "json",
           success: function(response){
             var id = response.state;
+
             // TODO: where to place the post/reply
+
             $('#notes .sneak').html(id + '<br>' + dataXx.description);
             if (th.hasClass("ovly")) {
               $('#tweet').hide();
@@ -261,33 +261,33 @@ $(document).ready(function() {
 
   // edit form
 
-  $('.f20').bind('submit',function(e){
+  $('.f20 .busy .footer .comment').click(function(e){
     var th = $(this);
-    var hi = th.children("input[name=hasimg]");
+    var xx = th.parent().parent().parent();
+    var hi = xx.children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
     if (hinum != 1) {
       var trouble = false;
       var msg = '';
-      if ($.trim(th.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim(xx.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
         e.preventDefault(); 
         return false;
       }
-
-      if (hinum == 3) { // there is new img to upload
-        var yy = th.siblings(".yy");
+      if (hinum == 3) { 
+        var yy = xx.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
-          url: "/todo/save",
+          url: "/multipart",
           data : dataObject,
           type : "POST",
           contentType: false,
           processData: false,
           success: function(data){
             hi.val("1");
-            yy.siblings(".xx").submit(); 
+            sendEe();
           },
           error: function(e){
             alert(e);
@@ -300,6 +300,29 @@ $(document).ready(function() {
         return false;
       }
     }
+    sendEe(); 
+    function sendEe() {
+      var pid = xx.children(".passid").text();
+      var dataXx = xx.serializeFormJSON();
+      $.ajax({
+          url: "/passd/" + pid + "/edit",
+          data : JSON.stringify(dataXx),
+          method : "POST",
+          contentType: "application/json",
+          dataType: "json",
+          success: function(response){
+            var id = response.state;
+            // TODO: where to place the post/reply
+            $('#notes .sneak').html(id + '<br>' + dataXx.description);
+
+          },
+          error: function(e){
+            //alert(e);
+          }
+      });
+    }
+    e.preventDefault(); 
+    return false;
   });
 
   $('.room form input[name=password]').keypress(function(event) {

@@ -89,7 +89,7 @@ fn main() {
             .route("/multipart", http::Method::POST, api::multipart)
             .resource("/create", |r| { r.method(http::Method::POST).with_async(api::create) })
             .resource("/passd/{id}", |r| { r.method(http::Method::POST).with_async(api::passd) })
-            .resource("/passd/{id}/edit", |r: &mut Resource<_>| { r.post().with(api::edit) })
+            .resource("/passd/{id}/edit", |r| { r.method(http::Method::POST).with_async(api::edit) })
             .handler("/static", static_files)
             .handler("/bin", bin)
     };

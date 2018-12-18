@@ -223,17 +223,19 @@ pub struct UpdateParams {
     id: i32,
 }
 
-#[derive(Deserialize)]
-pub struct EditForm {
+#[derive(Debug, Deserialize)]
+pub struct EditJ {
     hasimg: String,
-    linky: Option<String>,
+    linky: String,
     description: String,
 }
 
 pub fn edit(
-    (req, params, form): (HttpRequest<AppState>, Path<UpdateParams>, Form<EditForm>),
-) -> FutureResponse<HttpResponse> {
-    let hinum = form.hasimg.parse().unwrap_or(0);
+    (req, params, j): (HttpRequest<AppState>, Path<UpdateParams>, Json<EditJ>),
+) -> impl Future<Item = HttpResponse, Error = Error> {
+    println!("{:?} {:?}", req, j );
+
+    let hinum = j.hasimg.parse().unwrap_or(0);
     let lnk: Option<String> = match hinum {
         1 => {
                 let up = match session::get_uploaded(&req).unwrap() {
@@ -243,7 +245,7 @@ pub fn edit(
                 session::clear_uploaded(&req);
                 up
              },
-        2 => form.linky.clone(),
+        2 => Some(j.linky.clone()),
         _ => None,
     };
     if hinum == 4 {
@@ -252,13 +254,17 @@ pub fn edit(
             .send(EditTask {
                 id: params.id,
                 linky: lnk,
-                desc: form.description.trim().to_string(),
+                desc: j.description.trim().to_string(),
                 sameimg: true,
             })
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
-                    Ok(redirect_to("/"))
+                    let out = OutJ {
+                        state: "edited except img".to_owned(),
+                    };
+                    let o = serde_json::to_string(&out)?;
+                    Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
                 },
                 Err(e) => Err(e),
             })
@@ -269,13 +275,17 @@ pub fn edit(
             .send(EditTask {
                 id: params.id,
                 linky: lnk,
-                desc: form.description.trim().to_string(),
+                desc: j.description.trim().to_string(),
                 sameimg: false,
             })
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
-                    Ok(redirect_to("/"))
+                    let out = OutJ {
+                        state: "edited including img".to_owned(),
+                    };
+                    let o = serde_json::to_string(&out)?;
+                    Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
                 },
                 Err(e) => Err(e),
             })
