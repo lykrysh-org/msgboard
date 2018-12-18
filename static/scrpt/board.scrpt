@@ -7,13 +7,12 @@ $(document).ready(function() {
   function sety() {
     var st = $(document).scrollTop();
     document.cookie = "y" + "=" + st;
-    
     //$('#newpost').text(st);
-
+    var tw = $('#tweet');
     if (st < 200) {
-      $('#tweet').css('display', 'none');
+      tw.css('display', 'none');
     } else {
-      $('#tweet').css('display', 'block');
+      tw.css('display', 'block');
     }
   };
 
@@ -31,18 +30,21 @@ $(document).ready(function() {
   });
 
   $('.me').hover(function() {
-    $(this).prev(".abv").css('display', 'block'); 
-    $(this).next(".btm").css('display', 'block'); 
+    var th = $(this);
+    th.prev(".abv").css('display', 'block'); 
+    th.next(".btm").css('display', 'block'); 
   }, function() {
-    $(this).prev(".abv").css('display', 'none'); 
-    $(this).next(".btm").css('display', 'none'); 
+    var th = $(this);
+    th.prev(".abv").css('display', 'none'); 
+    th.next(".btm").css('display', 'none'); 
   });
 
   // file uploading and linking
 
   $('.leftbut .uploadpic').click(function() {
-    var dark = $(this).parent().parent().parent().parent().children(".dark");
-    var yup = $(this).siblings(".yup");
+    var th = $(this);
+    var dark = th.parent().parent().parent().parent().children(".dark");
+    var yup = th.siblings(".yup");
     if (dark.is(':visible')) {
       dark.children(".linkinput").children("input").val("");
       dark.hide();
@@ -54,12 +56,13 @@ $(document).ready(function() {
   });
 
   $('.leftbut .yup .link').click(function() {
-    var dark = $(this).parent().parent().parent().parent().parent().children(".dark");
+    var th = $(this);
+    var dark = th.parent().parent().parent().parent().parent().children(".dark");
     if (dark.is(':visible')) {
       // not implemented
     } else {
-      $(this).siblings("label").children(".upup").addClass("zero");
-      $(this).parent().css('pointer-events', 'none');
+      th.siblings("label").children(".upup").addClass("zero");
+      th.parent().css('pointer-events', 'none');
       dark.fadeIn();
       dark.find("input[name=linky]")[0].focus();
     }
@@ -130,7 +133,6 @@ $(document).ready(function() {
       var addr = $(this).val();
       var xx = $(this).parent().parent().parent();
 
-
       // Check if this img link exists
       objImg = new Image();
       objImg.src = addr;
@@ -156,15 +158,16 @@ $(document).ready(function() {
   // top form
 
   $('.f10').bind('submit',function(e){
-    var hi = $(this).children("input[name=hasimg]");
+    var th = $(this);
+    var hi = th.children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
     if (hinum != 1) {
       var trouble = false;
       var msg = '';
-      if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
-      if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
-      if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
+      if ($.trim(th.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim(th.find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+      if ($.trim(th.find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
         e.preventDefault();
@@ -172,7 +175,7 @@ $(document).ready(function() {
       }
 
       if (hinum == 3) { // there is img to upload
-        var yy = $(this).siblings(".yy");
+        var yy = th.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
           url: "/todo/save",
@@ -200,22 +203,23 @@ $(document).ready(function() {
   // reply form
 
   $('.f30').bind('submit',function(e){
-    var hi = $(this).children("input[name=hasimg]");
+    var th = $(this);
+    var hi = th.children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
     if (hinum != 1) {
       var trouble = false;
       var msg = '';
-      if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
-      if ($.trim($(this).find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
-      if ($.trim($(this).find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
+      if ($.trim(th.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim(th.find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+      if ($.trim(th.find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
         e.preventDefault();
         return false; 
 
       } else {
-        var p = $(this).parent();
+        var p = th.parent();
         p.hide();
         var one = p.prev(".one");
         var choice = one.find(".count").text();
@@ -228,7 +232,7 @@ $(document).ready(function() {
       }
 
       if (hinum == 3) { // there is img to upload
-        var yy = $(this).siblings(".yy");
+        var yy = th.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
           url: "/todo/save",
@@ -256,13 +260,14 @@ $(document).ready(function() {
   // edit form
 
   $('.f20').bind('submit',function(e){
-    var hi = $(this).children("input[name=hasimg]");
+    var th = $(this);
+    var hi = th.children("input[name=hasimg]");
     var hinum = Number(hi.val());
 
     if (hinum != 1) {
       var trouble = false;
       var msg = '';
-      if ($.trim($(this).find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim(th.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
       if (trouble) { 
         $('#bugbug').text(msg);
         e.preventDefault(); 
@@ -270,7 +275,7 @@ $(document).ready(function() {
       }
 
       if (hinum == 3) { // there is new img to upload
-        var yy = $(this).siblings(".yy");
+        var yy = th.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
           url: "/todo/save",
@@ -314,19 +319,21 @@ $(document).ready(function() {
           dataType: "json",
           success: function(response){
             var state = response.state;
+            var dbb = $('#dummy #bugbug');
             if (state == "wrong") {
-              $('#dummy #bugbug').text("Wrong Password");
+              dbb.text("Wrong Password");
             } else if (state == "deleted") {
-              $('#dummy #bugbug').text("Deleted");
+              dbb.text("Deleted");
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
               ll.text("");
             } else if (state == "correct") {
               // show Edit Form
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
               var rl = ll.children(".edf");
+              var one = ll.children(".one");
               rl.show(); r.hide(); c.text("o");
-              ll.children(".one").children("p").addClass("op2");
-              ll.children(".one").children(".pic").addClass("op2");
+              one.children("p").addClass("op2");
+              one.children(".pic").addClass("op2");
             } else {
               $('#dummy #bugbug').text("weird");
             }
@@ -341,8 +348,9 @@ $(document).ready(function() {
   });
 
   $('.one .footer .fb').click(function() {
-    if ($(this).siblings(".count").text() == "o") {
-      var one = $(this).parent().parent();
+    var th = $(this);
+    if (th.siblings(".count").text() == "o") {
+      var one = th.parent().parent();
       one.siblings(".edf").hide();
       one.children("p").removeClass("op2");
       one.children(".pic").removeClass("op2"); 
@@ -350,94 +358,99 @@ $(document).ready(function() {
   });
 
   $('.edit').click(function() {
-    var p = $(this).parent();
+    var th = $(this);
+    var p = th.parent();
     var r = p.children(".room");
     var c = p.children(".count");
     p.parent().siblings(".rpf").hide();
     if( (c.text() == "o") || (c.text() == "e") ) {
       r.hide();
       c.text("n");
-      $(this).removeClass("bbk");
+      th.removeClass("bbk");
     } else {
-      $(this).siblings(".but").each(function() {
-        $(this).removeClass("bbk");
+      th.siblings(".but").each(function() {
+        th.removeClass("bbk");
       });
       r.show();
       r.find("input[name=password]")[0].focus();
       c.text("e");
-      $(this).addClass("bbk");
+      th.addClass("bbk");
       sety();
     }
     r.find("input:hidden[name=_method]").val("put");
   });
 
   $('.delete').click(function() {
-    var p = $(this).parent();
+    var th = $(this);
+    var p = th.parent();
     var r = p.children(".room");
     var c = p.children(".count");
     p.parent().siblings(".rpf").hide();
     if( c.text() == "d" ) {
       r.hide();
       c.text("n");
-      $(this).removeClass("bbk");
+      th.removeClass("bbk");
     } else {
-      $(this).siblings(".but").each(function() {
-        $(this).removeClass("bbk");
+      th.siblings(".but").each(function() {
+        th.removeClass("bbk");
       });
       r.show();
       r.find("input[name=password]")[0].focus();
       c.text("d");
-      $(this).addClass("bbk");
+      th.addClass("bbk");
       r.find("input:hidden[name=_method]").val("delete");
       sety();
     }
   });
 
   $('.reply').click(function() {
-    var p = $(this).parent();
+    var th = $(this);
+    var p = th.parent();
     var r = p.children(".room");
     var c = p.children(".count");
     r.hide();
     if( c.text() == "r" ) {
       p.parent().siblings(".rpf").hide();
       c.text("n");
-      $(this).removeClass("bbk");
+      th.removeClass("bbk");
     } else {
-      $(this).siblings(".but").each(function() { $(this).removeClass("bbk"); });
+      th.siblings(".but").each(function() { $(this).removeClass("bbk"); });
       p.parent().siblings(".rpf").show();
       c.text("r");
-      $(this).addClass("bbk");
+      th.addClass("bbk");
       sety();
     }
   });
 
   $('#newpost').click(function() {
+    var np = $('#newpost');
+    var gr = $('#guard');
     $('#newblk').toggle();
-    $('#guard').toggle();
-    if ($('#guard').is(':visible')) {
-      $('#newpost').fadeOut("slow");
-      setTimeout(function(){$('#newpost').text('X')}, 600);
-      $('#newpost').fadeIn("slow");
+    gr.toggle();
+    if (gr.is(':visible')) {
+      np.fadeOut("slow");
+      setTimeout(function(){np.text('X')}, 600);
+      np.fadeIn("slow");
     } else {
-      $('#newpost').fadeOut("slow");
-      setTimeout(function(){$('#newpost').text('New')}, 600);
-      $('#newpost').fadeIn("slow");
+      np.fadeOut("slow");
+      setTimeout(function(){np.text('New')}, 600);
+      np.fadeIn("slow");
     }
   });
 
   $('#newblk').click(function() {
-      $("#guard").hide();
-      $('#newpost').fadeOut("slow");
-      setTimeout(function(){$('#newpost').text('New')}, 800);
-      $('#newpost').fadeIn("slow");
-      $(this).hide();
+    var np = $('#newpost');
+    $("#guard").hide();
+    np.fadeOut("slow");
+    setTimeout(function(){np.text('New')}, 800);
+    np.fadeIn("slow");
+    $(this).hide();
   });
 
   $(document).mousemove(function(e){
-    if (! $('#bugbug').is(':empty')) {
-      setTimeout(function(){
-        $('#dummy #bugbug').text("");
-      }, 800);
+    var bb = $('#dummy #bugbug');
+    if (! bb.is(':empty')) {
+      setTimeout(function(){bb.text("")}, 800);
     }
   });
 
