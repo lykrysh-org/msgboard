@@ -1,0 +1,51 @@
+    <div class="{% if WHICH == 3 %}rpf{% else %}newchunk{% endif %}">
+      <form class="{% if WHICH == 3 %}rrr{% else %} {% endif %} f10 xx">
+        <input type="hidden" name="inheritedid" value="{% if WHICH == 3 %}{{ ROOT }}{% else %}none{% endif %}" />
+        <input type="hidden" name="hasimg" value="0" />
+
+        <div class="bbox n abv {% if WHICH == 3 %}top06{% else %}{% endif %}"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
+        <div class="tbox me {% if WHICH == 3 %}top06{% else %}{% endif %}">
+          <p>
+            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="BSOD"></textarea>
+          </p>
+        </div>
+
+        <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
+
+        <div class="busy tbox top12">
+          <div class="footer n">
+
+            <div class="leftbut">
+              <div class="ox">
+                <div class="wrap"></div>
+                <div class="x pc"><img src="/static/pics/x.png"></div>
+              </div>
+              <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+              <div class="yup">
+                <label for="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% else %}{% endif %}"><small class="upup but pc op4">Upload</small></label><br>
+                <small class="link but pc op4">Link</small>
+              </div>
+            </div>
+
+            <div class="rightbut">
+              <img src="/static/pics/id.png">
+              <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
+              <img src="/static/pics/key.png">
+              <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
+            </div>
+
+            <button class="{% if WHICH == 1 %}ovly{% else %} {% endif %} comment noout pc"><img src="/static/pics/sendblue.png"></button>
+          </div>
+        </div>
+
+        <div class="dark">
+          <div class="link1"><img src="/static/pics/link1.png"></div>
+          <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
+        </div>
+
+      </form>
+
+      <form class="f11 yy" enctype="multipart/form-data">
+         <input id="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% else %}{% endif %}" class="chs" type="file" name="file" accept="image/*, video/*" />
+      </form>
+    </div>

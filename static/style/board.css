@@ -147,9 +147,6 @@ form textarea {
 .newchunk .me:hover, #notes .me:hover {
  background: rgba(0, 0, 0, 0.1);
 }
-.newchunk .post {
- padding-top: 1.2rem;
-}
 
 #notes {
  width: 100%;
@@ -200,15 +197,15 @@ form textarea {
  z-index: 3;
  left: 0;
 }
-#notes .bbox .reply {
+#notes .bbox .nw {
  top: -3px; 
  height: 58px; 
 }
-#notes .bbox .reply img {
+#notes .bbox .nw img {
  width: 32px;
  height: 58px;
 }
-#notes .tbox.top12 {
+#notes .tbox.top12, .busy.top12 {
  margin-top: 1.2rem;
 }
 #notes .tbox.top06 {

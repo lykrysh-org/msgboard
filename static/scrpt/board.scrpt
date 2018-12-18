@@ -155,7 +155,7 @@ $(document).ready(function() {
 
   // main buttons - edit, delete, reply
 
-  // top form
+  // top, overlay & reply forms
 
   (function ($) {
     $.fn.serializeFormJSON = function () {
@@ -191,6 +191,19 @@ $(document).ready(function() {
         $('#bugbug').text(msg);
         e.preventDefault();
         return false; 
+      } else {
+        if (xx.hasClass("rrr")) {
+          var p = xx.parent();
+          p.hide();
+          var one = p.prev(".one");
+          var choice = one.find(".count").text();
+          one.find(".count").text("n");
+          if (choice == "e") {
+            one.find(".edit").removeClass("bbk");
+          } else if (choice == "r") {
+            one.find(".reply").removeClass("bbk");
+          }
+        }
       }
 
       if (hinum == 3) { // saving img multipart
@@ -228,11 +241,13 @@ $(document).ready(function() {
           dataType: "json",
           success: function(response){
             var id = response.state;
+            // TODO: where to place the post/reply
             $('#notes .sneak').html(id + '<br>' + dataXx.description);
-            if (th.hasClass("OVLY")) {
+            if (th.hasClass("ovly")) {
+              $('#tweet').hide();
+              $('#newpost').hide();
               $('#guard').hide();
               $('#newblk').hide();
-              $('#tweet').hide();
             }
           },
           error: function(e){
@@ -242,63 +257,6 @@ $(document).ready(function() {
     }
     e.preventDefault(); 
     return false;
-  });
-
-  // reply form
-
-  $('.f30').bind('submit',function(e){
-    var th = $(this);
-    var hi = th.children("input[name=hasimg]");
-    var hinum = Number(hi.val());
-
-    if (hinum != 1) {
-      var trouble = false;
-      var msg = '';
-      if ($.trim(th.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
-      if ($.trim(th.find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
-      if ($.trim(th.find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
-      if (trouble) { 
-        $('#bugbug').text(msg);
-        e.preventDefault();
-        return false; 
-
-      } else {
-        var p = th.parent();
-        p.hide();
-        var one = p.prev(".one");
-        var choice = one.find(".count").text();
-        one.find(".count").text("n");
-        if (choice == "e") {
-          one.find(".edit").removeClass("bbk");
-        } else if (choice == "r") {
-          one.find(".reply").removeClass("bbk");
-        }
-      }
-
-      if (hinum == 3) { // there is img to upload
-        var yy = th.siblings(".yy");
-        var dataObject = new FormData(yy[0]);
-        $.ajax({
-          url: "/todo/save",
-          data : dataObject,
-          type : "POST",
-          contentType: false,
-          processData: false,
-          success: function(data){
-            hi.val("1");
-            yy.siblings(".xx").submit(); 
-          },
-          error: function(e){
-            alert(e);
-          }
-        });
-        // Flush the file input
-        yy.children("input[name=file]").val(null);
-        // Don't submit the fields
-        e.preventDefault(); 
-        return false;
-      }
-    } 
   });
 
   // edit form
@@ -459,7 +417,9 @@ $(document).ready(function() {
       th.removeClass("bbk");
     } else {
       th.siblings(".but").each(function() { $(this).removeClass("bbk"); });
-      p.parent().siblings(".rpf").show();
+      var rpf = p.parent().siblings(".rpf");
+      rpf.show();
+      rpf.children(".rrr").children(".me").find("textarea[name=description]")[0].focus();
       c.text("r");
       th.addClass("bbk");
       sety();
@@ -499,7 +459,6 @@ $(document).ready(function() {
   });
 
   $('.f10 textarea').focus().val('');
-  $('.f30 textarea').focus().val('');
 
 });
 

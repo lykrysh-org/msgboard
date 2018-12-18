@@ -39,121 +39,13 @@
   <div class="bgscreen" id="newblk"></div>
 
   <div id="guard">
-<!-- repeating code from here -->
-
-
-    <div class="newchunk">
-      <form class="f10 xx">
-        <input type="hidden" name="inheritedid" value="none" />
-        <input type="hidden" name="hasimg" value="0" />
-
-        <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
-        <div class="tbox me">
-          <p>
-            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="BSOD"></textarea>
-          </p>
-        </div>
-
-        <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
-
-        <div class="busy tbox post">
-          <div class="footer n">
-
-            <div class="leftbut">
-              <div class="ox">
-                <div class="wrap"></div>
-                <div class="x pc"><img src="/static/pics/x.png"></div>
-              </div>
-              <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
-              <div class="yup">
-                <label for="SOMETHINGUNIQUE"><small class="upup but pc op4">Upload</small></label><br>
-                <small class="link but pc op4">Link</small>
-              </div>
-            </div>
-
-            <div class="rightbut">
-              <img src="/static/pics/id.png">
-              <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
-              <img src="/static/pics/key.png">
-              <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
-            </div>
-
-            <button class="OVLY comment noout pc"><img src="/static/pics/sendblue.png"></button>
-          </div>
-        </div>
-
-        <div class="dark">
-          <div class="link1"><img src="/static/pics/link1.png"></div>
-          <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
-        </div>
-
-      </form>
-
-      <form class="f11 yy" enctype="multipart/form-data">
-         <input id="SOMETHINGUNIQUE" class="chs" type="file" name="file" accept="image/*, video/*" />
-      </form>
-    </div> <!-- end of the newchunk class -->
-
-<!-- repeating code until here -->
+    {% set WHICH = 1 %}
+    {% include "form.tera" %}
   </div>
 
-  <div class="b1"> <!-- the top form -->
-
-    <div class="newchunk">
-      <form class="f10 xx">
-        <input type="hidden" name="inheritedid" value="none" />
-        <input type="hidden" name="hasimg" value="0" />
-
-        <div class="bbox n abv"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
-        <div class="tbox me">
-          <p>
-            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value="" placeholder="BSOD"></textarea>
-          </p>
-        </div>
-
-        <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
-
-        <div class="busy tbox post">
-          <div class="footer n">
-
-            <div class="leftbut">
-              <div class="ox">
-                <div class="wrap"></div>
-                <div class="x pc"><img src="/static/pics/x.png"></div>
-              </div>
-              <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
-              <div class="yup">
-                <label for="DIFFERENT"><small class="upup but pc op4">Upload</small></label><br>
-                <small class="link but pc op4">Link</small>
-              </div>
-            </div>
-
-            <div class="rightbut">
-              <img src="/static/pics/id.png">
-              <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
-              <img src="/static/pics/key.png">
-              <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
-            </div>
-
-            <button class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
-          </div>
-        </div>
-
-        <div class="dark">
-          <div class="link1"><img src="/static/pics/link1.png"></div>
-          <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
-        </div>
-
-      </form>
-
-      <form class="f11 yy" enctype="multipart/form-data">
-         <input id="DIFFERENT" class="chs" type="file" name="file" accept="image/*, video/*" />
-      </form>
-    </div> <!-- end of the newchunk class -->
-
-
-
-
+  <div class="b1">
+    {% set WHICH = 2 %}
+    {% include "form.tera" %}
 
     <div id="notes">{% set_global ROOT = 0 %}{% set_global NEW = true %}
       <ul>
@@ -165,7 +57,7 @@
           {% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
             <div class="lone"></div>
           {% else %}{% set_global NEW = false %}
-            <div class="bbox n"><div class="reply l"><img src="/static/pics/a2.png"></div></div>
+            <div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>
           {% endif %}
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
@@ -195,7 +87,7 @@
             <!-- EDIT form -->
 
             <div class="edf">
-              <form class="f20 xx" action="/todo/{{task.id}}/edit" method="post">
+              <form class="f20 xx" action="/passd/{{task.id}}/edit" method="post">
                 <input type="hidden" name="hasimg" value="{% if task.attached %}4{% endif %}" />
                 <div class="bbox n abv top06"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
                 <div class="tbox me bbk top06">
@@ -238,57 +130,8 @@
             </div>
 
             <!-- REPLY form -->
-
-            <div class="rpf">
-              <form class="f30 xx" action="/todo" method="post">
-                <input type="hidden" name="inheritedid" value="{{ ROOT }}" />
-                <input type="hidden" name="hasimg" value="0" />
-                <div class="bbox n abv top06"><div class="cross l"><img src="/static/pics/a3.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
-                <div class="tbox me top06">
-                  <p>
-                    <textarea  class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" value=""></textarea>
-                  </p>
-                </div>
-                <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
-
-                <div class="busy tbox top12">
-                  <div class="footer n">
-
-                    <div class="leftbut">
-                      <div class="ox">
-                        <div class="wrap"></div>
-                        <div class="x pc"><img src="/static/pics/x.png"></div>
-                      </div>
-                      <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
-                      <div class="yup">
-                        <label for="chs{{task.id}}"><small class="upup but pc op4">Upload</small></label><br>
-                        <small class="link but pc op4">Link</small>
-                      </div>
-                    </div>
-
-                    <div class="rightbut">
-                      <img src="/static/pics/id.png">
-                      <small><input class="who" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 {% if welcomeback %} value="{{welcomeback}}" {% else %} value="" placeholder="any*****" {% endif %} name="whosent" /></small>
-                      <img src="/static/pics/key.png">
-                      <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>    
-                    </div>
-
-                    <button type="submit" class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
-                  </div>
-                </div>
-
-                <div class="dark">
-                  <div class="link1"><img src="/static/pics/link1.png"></div>
-                  <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
-                </div>
-
-              </form>
-
-              <form class="f31 yy"  action="/todo/save" target="hiddenform"  method="post" enctype="multipart/form-data">
-                <input id="chs{{task.id}}" class="chs" type="file" name="file" accept="image/*, video/*" />
-              </form>
-
-            </div>
+            {% set WHICH = 3 %}
+            {% include "form.tera" %}
 
           </li>
           {% endfor %}
