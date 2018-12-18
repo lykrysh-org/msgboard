@@ -220,7 +220,6 @@ $(document).ready(function() {
     sendXx(); 
     function sendXx() {
       var dataXx = xx.serializeFormJSON();
-
       $.ajax({
           url: "/create",
           data : JSON.stringify(dataXx),
@@ -228,14 +227,18 @@ $(document).ready(function() {
           contentType: "application/json",
           dataType: "json",
           success: function(response){
-            var state = response.state;
-            alert(state);
+            var id = response.state;
+            $('#notes .sneak').html(id + '<br>' + dataXx.description);
+            if (th.hasClass("OVLY")) {
+              $('#guard').hide();
+              $('#newblk').hide();
+              $('#tweet').hide();
+            }
           },
           error: function(e){
             //alert(e);
           }
       });
-
     }
     e.preventDefault(); 
     return false;

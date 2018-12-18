@@ -129,9 +129,9 @@ pub fn create(
         })
         .from_err()
         .and_then(move |res| match res {
-            Ok(_) => {
+            Ok(taskid) => {
                 let out = OutJ {
-                    state: "sure".to_owned(),
+                    state: taskid.to_owned().to_string(),
                 };
                 let o = serde_json::to_string(&out)?;
                 Ok(HttpResponse::Ok().content_type("application/json").body(o).into())

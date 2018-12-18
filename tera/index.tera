@@ -43,7 +43,7 @@
 
 
     <div class="newchunk">
-      <form class="f10 xx" action="/todo" method="post">
+      <form class="f10 xx">
         <input type="hidden" name="inheritedid" value="none" />
         <input type="hidden" name="hasimg" value="0" />
 
@@ -66,7 +66,7 @@
               </div>
               <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
               <div class="yup">
-                <label for="chsOverLay"><small class="upup but pc op4">Upload</small></label><br>
+                <label for="SOMETHINGUNIQUE"><small class="upup but pc op4">Upload</small></label><br>
                 <small class="link but pc op4">Link</small>
               </div>
             </div>
@@ -78,7 +78,7 @@
               <small><input class="scr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" size=8 maxlength=24 placeholder="make*one" name="secret" value="" /></small>
             </div>
 
-            <button type="submit" class="comment noout pc"><img src="/static/pics/sendblue.png"></button>
+            <button class="OVLY comment noout pc"><img src="/static/pics/sendblue.png"></button>
           </div>
         </div>
 
@@ -89,15 +89,15 @@
 
       </form>
 
-      <form class="f11 yy"  action="/todo/save" target="hiddenform" method="post" enctype="multipart/form-data">
-         <input id="chsOverLay" class="chs" type="file" name="file" accept="image/*, video/*" />
+      <form class="f11 yy" enctype="multipart/form-data">
+         <input id="SOMETHINGUNIQUE" class="chs" type="file" name="file" accept="image/*, video/*" />
       </form>
     </div> <!-- end of the newchunk class -->
 
 <!-- repeating code until here -->
   </div>
 
-  <div class="b1">
+  <div class="b1"> <!-- the top form -->
 
     <div class="newchunk">
       <form class="f10 xx">
@@ -123,7 +123,7 @@
               </div>
               <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
               <div class="yup">
-                <label for="chs0"><small class="upup but pc op4">Upload</small></label><br>
+                <label for="DIFFERENT"><small class="upup but pc op4">Upload</small></label><br>
                 <small class="link but pc op4">Link</small>
               </div>
             </div>
@@ -146,8 +146,8 @@
 
       </form>
 
-      <form class="f11 yy"  action="/todo/save" target="hiddenform" method="post" enctype="multipart/form-data">
-         <input id="chs0" class="chs" type="file" name="file" accept="image/*, video/*" />
+      <form class="f11 yy" enctype="multipart/form-data">
+         <input id="DIFFERENT" class="chs" type="file" name="file" accept="image/*, video/*" />
       </form>
     </div> <!-- end of the newchunk class -->
 
@@ -156,7 +156,10 @@
 
 
     <div id="notes">{% set_global ROOT = 0 %}{% set_global NEW = true %}
-      <ul>{% for task in tasks %}
+      <ul>
+        <span class="sneak"></span>
+
+        {% for task in tasks %}
 
         <li class="li{{task.id}}">
           {% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
@@ -289,6 +292,7 @@
 
           </li>
           {% endfor %}
+
         </ul>
       </div>
     </div>

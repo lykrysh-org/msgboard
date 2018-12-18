@@ -50,11 +50,11 @@ pub struct CreateTask {
 }
 
 impl Message for CreateTask {
-    type Result = Result<(), Error>;
+    type Result = Result<i32, Error>;
 }
 
 impl Handler<CreateTask> for DbExecutor {
-    type Result = Result<(), Error>;
+    type Result = Result<i32, Error>;
 
     fn handle(&mut self, todo: CreateTask, _: &mut Self::Context) -> Self::Result {
         let new_task = NewTask {
@@ -87,9 +87,10 @@ impl Handler<CreateTask> for DbExecutor {
             secret: todo.secret,
             taskid: tid,
         };
-        Task::insertsecret(new_secret, self.get_conn()?.deref())
+        let _ = Task::insertsecret(new_secret, self.get_conn()?.deref())
             .map(|_| ())
-            .map_err(|_| error::ErrorInternalServerError("Error inserting secret"))
+            .map_err(|_| error::ErrorInternalServerError("Error inserting secret"));
+        Ok(tid)
     }
 }
 
