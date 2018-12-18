@@ -40,25 +40,26 @@
 
   <div id="guard">
     {% set WHICH = 1 %}
-    {% include "form.tera" %}
+    {% include "fm.tera" %}
   </div>
 
   <div class="b1">
     {% set WHICH = 2 %}
-    {% include "form.tera" %}
+    {% include "fm.tera" %}
 
     <div id="notes">{% set_global ROOT = 0 %}{% set_global NEW = true %}
       <ul>
-        <span class="sneak"></span>
 
         {% for task in tasks %}
 
         <li class="li{{task.id}}">
+
           {% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
             <div class="lone"></div>
           {% else %}{% set_global NEW = false %}
             <div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>
           {% endif %}
+
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
               <p><span class="dsc">{{ task.description }}</span> | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
@@ -86,11 +87,11 @@
 
             <!-- EDIT form -->
             {% set WHICH = 4 %}
-            {% include "form.tera" %}
+            {% include "fm.tera" %}
 
             <!-- REPLY form -->
             {% set WHICH = 3 %}
-            {% include "form.tera" %}
+            {% include "fm.tera" %}
 
           </li>
           {% endfor %}

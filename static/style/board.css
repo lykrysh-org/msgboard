@@ -329,7 +329,7 @@ form textarea {
  display: inline-block;
 }
 
-.footer .count { display: none; }
+.footer .count { display: block; }
 
 .footer .noout, .cancelform .noout {
  border: 0; outline: none;
