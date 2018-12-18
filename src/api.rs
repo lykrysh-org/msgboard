@@ -11,7 +11,7 @@ use tera::{Context, Tera};
 
 use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, FindTask };
 use model::{EditTask};
-use session::{self, FlashMessage, UpLoaded, PowerTo};
+use session::{self, FlashMessage, UpLoaded, };
 use multipart::*;
 
 pub struct AppState {
@@ -33,9 +33,6 @@ pub fn index(req: HttpRequest<AppState>) -> FutureResponse<HttpResponse> {
                 if let Some(flash) = session::get_flash(&req)? {
                     context.insert("msg", &(flash.kind, flash.message));
                     session::clear_flash(&req);
-                }
-                if let Some(pt) = session::get_powerto(&req)? {
-                    context.insert("powerto", &pt.powerto)
                 }
 
                 //Identity
@@ -148,10 +145,6 @@ pub struct PassdJ {
 #[derive(Serialize)]
 struct OutJ {
     state: String,
-    posted: String,
-    whosent: String,
-    attd: String,
-    desc: String,
 }
 
 pub fn passd(
@@ -179,10 +172,6 @@ fn toggle(
             Ok(0) => {
                 let out = OutJ {
                     state: "wrong".to_owned(),
-                    posted: "".to_owned(),
-                    whosent: "".to_owned(),
-                    attd: "".to_owned(),
-                    desc: "".to_owned(),
                 };
                 let o = serde_json::to_string(&out)?;
                 Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
@@ -190,10 +179,6 @@ fn toggle(
             Ok(_taskid) => {
                 let out = OutJ {
                     state: "correct".to_owned(),
-                    posted: "".to_owned(),
-                    whosent: "".to_owned(),
-                    attd: "".to_owned(),
-                    desc: "".to_owned(),
                 };
                 let o = serde_json::to_string(&out)?;
                 Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
@@ -216,10 +201,6 @@ fn delete(
             Ok(0) => {
                 let out = OutJ {
                     state: "wrong".to_owned(),
-                    posted: "".to_owned(),
-                    whosent: "".to_owned(),
-                    attd: "".to_owned(),
-                    desc: "".to_owned(),
                 };
                 let o = serde_json::to_string(&out)?;
                 Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
@@ -227,10 +208,6 @@ fn delete(
             Ok(_) => {
                 let out = OutJ {
                     state: "deleted".to_owned(),
-                    posted: "".to_owned(),
-                    whosent: "".to_owned(),
-                    attd: "".to_owned(),
-                    desc: "".to_owned(),
                 };
                 let o = serde_json::to_string(&out)?;
                 Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
@@ -280,9 +257,6 @@ pub fn edit(
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
-                    if let Some(_) = session::get_powerto(&req).unwrap() {
-                        session::clear_powerto(&req)
-                    };
                     Ok(redirect_to("/"))
                 },
                 Err(e) => Err(e),
@@ -300,9 +274,6 @@ pub fn edit(
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
-                    if let Some(_) = session::get_powerto(&req).unwrap() {
-                        session::clear_powerto(&req)
-                    };
                     Ok(redirect_to("/"))
                 },
                 Err(e) => Err(e),
