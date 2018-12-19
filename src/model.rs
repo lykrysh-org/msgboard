@@ -60,12 +60,10 @@ impl Task {
             .load::<Task>(conn)
     }
 
-    pub fn inserttask(todo: NewTask, conn: &PgConnection) -> i32 {
-        let row_inserted = diesel::insert_into(tasks::table)
+    pub fn inserttask(todo: NewTask, conn: &PgConnection) -> QueryResult<Task> {
+        diesel::insert_into(tasks::table)
             .values(&todo)
             .get_result::<Task>(conn)
-            .unwrap();
-        return row_inserted.id
     }
 
     pub fn set_as_root(idd: i32, conn: &PgConnection) -> QueryResult<usize> {

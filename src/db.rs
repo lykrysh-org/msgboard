@@ -50,11 +50,11 @@ pub struct CreateTask {
 }
 
 impl Message for CreateTask {
-    type Result = Result<i32, Error>;
+    type Result = Result<Task, Error>;
 }
 
 impl Handler<CreateTask> for DbExecutor {
-    type Result = Result<i32, Error>;
+    type Result = Result<Task, Error>;
 
     fn handle(&mut self, todo: CreateTask, _: &mut Self::Context) -> Self::Result {
         let new_task = NewTask {
@@ -62,35 +62,41 @@ impl Handler<CreateTask> for DbExecutor {
             attached: todo.linky,
             description: todo.description,
         };
-        let tid = Task::inserttask(new_task, self.get_conn()?.deref());
-        let _ = match todo.inheritedid.as_ref() {
-            Some(parentid) => {
-                let replnum = Task::get_max_replnum(*parentid, self.get_conn()?.deref())
-                    .map_err(|_| error::ErrorInternalServerError("Error get_max_replynum"));
-                match replnum {
-                    Ok(num) => {
-                        let new: i32 = num + 1;
-                        let _ = Task::set_as_repl(tid, *parentid, new, self.get_conn()?.deref())
-                            .map(|_| ())
-                            .map_err(|_| error::ErrorInternalServerError("Error set_as_repl"));
+        let ins = Task::inserttask(new_task, self.get_conn()?.deref())
+           .map_err(|_| error::ErrorInternalServerError("Error insert"));
+        match ins {
+            Ok(task) => {
+                let _ = match todo.inheritedid.as_ref() {
+                    Some(parentid) => {
+                        let replnum = Task::get_max_replnum(*parentid, self.get_conn()?.deref())
+                            .map_err(|_| error::ErrorInternalServerError("Error get_max_replynum"));
+                        match replnum {
+                            Ok(num) => {
+                                let new: i32 = num + 1;
+                                let _ = Task::set_as_repl(task.id, *parentid, new, self.get_conn()?.deref())
+                                    .map(|_| ())
+                                    .map_err(|_| error::ErrorInternalServerError("Error set_as_repl"));
+                            },
+                            Err(_) => (),
+                        };
                     },
-                    Err(_) => (),
+                    None => {
+                        let _ = Task::set_as_root(task.id, self.get_conn()?.deref())
+                            .map(|_| ())
+                            .map_err(|_| error::ErrorInternalServerError("Error set_as_root"));
+                    }
                 };
-            },
-            None => {
-                let _ = Task::set_as_root(tid, self.get_conn()?.deref())
+                let new_secret = NewSecret {
+                    secret: todo.secret,
+                    taskid: task.id,
+                };
+                let _ = Task::insertsecret(new_secret, self.get_conn()?.deref())
                     .map(|_| ())
-                    .map_err(|_| error::ErrorInternalServerError("Error set_as_root"));
-            }
-        };
-        let new_secret = NewSecret {
-            secret: todo.secret,
-            taskid: tid,
-        };
-        let _ = Task::insertsecret(new_secret, self.get_conn()?.deref())
-            .map(|_| ())
-            .map_err(|_| error::ErrorInternalServerError("Error inserting secret"));
-        Ok(tid)
+                    .map_err(|_| error::ErrorInternalServerError("Error inserting secret"));
+                Ok(task)
+            },
+            Err(e) => Err(e),
+        }
     }
 }
 

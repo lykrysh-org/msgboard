@@ -3,8 +3,8 @@
             <div class="lone"></div>
             <div class="tbox one">
 
-              <p><span class="dsc">BRBR</span> | <span class="op4">WHENEVER</span> | <span class="op6">WHOEVER</span></p>
-              <div class="pic">NO PIC</div>
+              <p><span class="brbr">BRBR</span> | <span class="whenposted op4">WHENEVER</span> | <span class="person op6">WHOEVER</span></p>
+              <div class="pic"></div>
 
               <div class="footer n">
                 <small class="but fb pc edit op4">Edit</small>
