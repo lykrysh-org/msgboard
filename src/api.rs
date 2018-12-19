@@ -92,6 +92,13 @@ struct OutJ {
     state: String,
 }
 
+#[derive(Serialize)]
+struct TempJ {
+    id: String,
+    posted: String,
+    attached: String,   
+}
+
 pub fn create(
     (req, j): (HttpRequest<AppState>, Json<CreateJ>),
 ) -> impl Future<Item = HttpResponse, Error = Error> {
@@ -129,13 +136,19 @@ pub fn create(
         })
         .from_err()
         .and_then(move |res| match res {
-            Ok(taskid) => {
-                let out = OutJ {
-                    state: taskid.to_owned().to_string(),
+            Ok(t) => {
+                let att: String = match t.attached {
+                    Some(link) => link.to_string(),
+                    None => "none".to_string(),
+                };
+                let out = TempJ {
+                    id: t.id.to_owned().to_string(),
+                    posted: t.posted.to_owned().to_string(),
+                    attached: att,
                 };
                 let o = serde_json::to_string(&out)?;
                 Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
-            }
+            },
             Err(e) => Err(e),
         })
         .responder()

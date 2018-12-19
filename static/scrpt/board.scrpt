@@ -238,24 +238,46 @@ $(document).ready(function() {
           method : "POST",
           contentType: "application/json",
           dataType: "json",
-          success: function(response){
-            var id = response.state;
+          success: function(rs){
 
-            // TODO: where to place the post/reply
+            var id = rs.id;
             var ul = $('#notes').children("ul");
-            var newclassname = "li" + id;
-            ul.prepend('<li class=' + newclassname + '></li>');
-            var li = $('#notes').children("ul").children('.' + newclassname);
+            var nc = "li" + id;
+            ul.prepend('<li class=' + nc + '></li>');
+            var li = ul.children('.' + nc);
             li.load('/static/scrpt/temp.scrpt', function() {
-              li.children(".one").children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
+              var oe = li.children(".one");
+              oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
               li.find(".passid").text(id);
+              oe.children("p").children(".brbr").text(dataXx.description);
+              oe.children("p").children(".whenposted").text(rs.posted);
+              oe.children("p").children(".person").text(dataXx.whosent);
+              if (rs.attached != "none") {
+                oe.children(".pic").html("<img src=" + rs.attached + ">");
+              }
             });
-
             li.show();
 
             if (th.hasClass("ovly")) {
-              $('#tweet').hide();$('#newpost').hide();$('#guard').hide();$('#newblk').hide();
-            }
+              $('#tweet').hide();$('#guard').hide();$('#newblk').hide();
+              var np = $('#newpost');
+              np.fadeOut("slow");
+              setTimeout(function(){np.text('New')}, 600);
+              np.fadeIn("slow");
+            };
+
+            xx.each(function(){this.reset()});
+
+            var dark = xx.children(".dark");
+            dark.children(".linkinput").children("input").val("");
+            dark.hide();
+
+            var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
+            ox.children(".wrap").css('background-image', 'none');
+            ox.hide();
+
+            var yup = ox.siblings(".yup");
+            yup.hide();
           },
           error: function(e){
             //alert(e);
@@ -333,11 +355,12 @@ $(document).ready(function() {
 
   $('ul').on('keypress', 'form input[name=password]', function(event) {
     if ( event.which == 13 ) {
-      var r = $(this).parent().parent().parent();
+      var th = $(this);
+      var r = th.parent().parent().parent();
       var c = r.next(".count");
       var taskid = r.find("input:hidden[name=taskid]").val(); 
       var method = r.find("input:hidden[name=_method]").val();
-      var passwd = $(this).val();
+      var passwd = th.val();
       $.ajax({
           url: "/passd/" + taskid,
           data : JSON.stringify({
@@ -353,6 +376,7 @@ $(document).ready(function() {
             var dbb = $('#dummy #bugbug');
             if (state == "wrong") {
               dbb.text("Wrong Password");
+              th.val("");
             } else if (state == "deleted") {
               //dbb.text("Deleted");
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
@@ -399,9 +423,7 @@ $(document).ready(function() {
       c.text("n");
       th.removeClass("bbk");
     } else {
-      th.siblings(".but").each(function() {
-        th.removeClass("bbk");
-      });
+      th.siblings(".but").each(function() { $(this).removeClass("bbk"); });
       r.show();
       r.find("input[name=password]")[0].focus();
       c.text("e");
@@ -422,9 +444,7 @@ $(document).ready(function() {
       c.text("n");
       th.removeClass("bbk");
     } else {
-      th.siblings(".but").each(function() {
-        th.removeClass("bbk");
-      });
+      th.siblings(".but").each(function() { $(this).removeClass("bbk"); });
       r.show();
       r.find("input[name=password]")[0].focus();
       c.text("d");
