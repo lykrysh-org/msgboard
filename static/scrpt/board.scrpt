@@ -323,8 +323,8 @@ $(document).ready(function() {
         return false;
       }
     }
-    sendXx();
-    function sendXx() {
+    sendZz();
+    function sendZz() {
       var dataXx = xx.serializeFormJSON();
       $.ajax({
           url: "/create",
@@ -339,7 +339,7 @@ $(document).ready(function() {
             var nc = "li" + id;
 
             var fromli = xx.parent().parent();
-            $( '<li class=' + nc + '>HOORAY</li>' ).insertAfter(fromli);
+            $( '<li class=' + nc + '></li>' ).insertAfter(fromli);
             var li = fromli.next('.' + nc);
 
             li.load('/static/scrpt/temp.scrpt', function() {
@@ -367,7 +367,7 @@ $(document).ready(function() {
             f.children(".count").text("n");
             f.find(".reply").removeClass("bbk");
 
-            xx.each(function(){this.reset()});
+            //xx.each(function(){this.reset()});
 
             var dark = xx.children(".dark");
             dark.children(".linkinput").children("input").val("");
@@ -610,6 +610,7 @@ $(document).ready(function() {
   });
 
   $('.f10 textarea').focus().val('');
+  $('.f30 textarea').focus().val('');
 
 });
 
