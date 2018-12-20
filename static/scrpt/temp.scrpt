@@ -12,7 +12,7 @@
                 <small class="but fb pc reply op8">Reply</small>
                 <div class="room bbk">
 
-                  <form>
+                  <form method="post">
                     <input type="hidden" name="taskid" value="" />
                     <input type="hidden" name="_method" value="" />
                     <img src="/static/pics/key.png"><small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
@@ -27,7 +27,7 @@
             <!-- EDIT form -->
 
             <div class="edf">
-              <form class="f20 xx">
+              <form class="f20 xx" method="post">
                 <input type="hidden" name="hasimg" value="0" />
                 <div class="bbox n abv top06"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
 
@@ -73,7 +73,7 @@
             <!-- REPLY form -->
 
             <div class="rpf">
-              <form class="f30 xx">
+              <form class="f30 xx" method="post">
                 <input type="hidden" name="inheritedid" value="" />
                 <input type="hidden" name="hasimg" value="0" />
 
@@ -119,7 +119,7 @@
 
               </form>
 
-              <form class="f31 yy" enctype="multipart/form-data">
+              <form class="f31 yy" method="post" enctype="multipart/form-data">
                 <input id="chs" class="chs" type="file" name="file" accept="image/*, video/*" />
               </form>
 

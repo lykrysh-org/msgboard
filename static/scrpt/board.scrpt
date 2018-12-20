@@ -285,7 +285,8 @@ $(document).ready(function() {
 
   // reply form
 
-  $('ul').on('click', '.f30 .busy .footer .comment', function() {
+  $('ul').on('click', '.f30 .busy .footer .comment', function(e) {
+  //$('.f30 .busy .footer .comment').click(function(e){
     var th = $(this);
     var xx = th.parent().parent().parent();
     var hi = xx.children("input[name=hasimg]");
@@ -367,7 +368,7 @@ $(document).ready(function() {
             f.children(".count").text("n");
             f.find(".reply").removeClass("bbk");
 
-            //xx.each(function(){this.reset()});
+            xx.each(function(){this.reset()});
 
             var dark = xx.children(".dark");
             dark.children(".linkinput").children("input").val("");
