@@ -1,5 +1,5 @@
     <div class="{% if WHICH == 3 %}rpf{% elif WHICH == 4 %}edf{% else %}newchunk{% endif %}">
-      <form class="{% if WHICH == 3 %}rrr{% else %} {% endif %} {% if WHICH == 4 %}f20{% else %}f10{% endif %} xx">
+      <form class="{% if WHICH == 3 %}f30{% elif WHICH == 4 %}f20{% else %}f10{% endif %} xx">
 
         {% if WHICH == 4 %}
         <span class="passid">{{ task.id }}</span>
@@ -61,7 +61,7 @@
 
       </form>
 
-      <form class="f11 yy" enctype="multipart/form-data">
+      <form class="{% if WHICH == 3 %}f31{% elif WHICH == 4 %}f21{% else %}f11{% endif %} yy" enctype="multipart/form-data">
          <input id="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% elif WHICH == 4 %}chE{{task.id}}{% else %}{% endif %}" class="chs" type="file" name="file" accept="image/*, video/*" />
       </form>
     </div>

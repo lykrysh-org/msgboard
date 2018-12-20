@@ -176,12 +176,11 @@ $(document).ready(function() {
     };
   })(jQuery);
 
-  // top, overlay & reply forms
+  // top, overlay forms
 
   $('.f10 .busy .footer .comment').click(function(e){
     var th = $(this);
     var xx = th.parent().parent().parent();
-    var isR = (xx.hasClass("rrr")) ? true : false;
     var hi = xx.children("input[name=hasimg]");
     var hinum = Number(hi.val());
     if (hinum != 1) {
@@ -232,25 +231,13 @@ $(document).ready(function() {
             var ul = $('#notes').children("ul");
             var nc = "li" + id;
 
-            var li;
-            if (isR) {
-              var fromli = xx.parent().parent();
-              $( '<li class=' + nc + '>HOORAY</li>' ).insertAfter(fromli);
-              li = fromli.next('.' + nc);
-            } else {
-              ul.prepend('<li class=' + nc + '></li>');
-              li = ul.children('.' + nc);
-            };
+            ul.prepend('<li class=' + nc + '></li>');
+            var li = ul.children('.' + nc);
 
             li.load('/static/scrpt/temp.scrpt', function() {
               var oe = li.children(".one");
-              if (isR) {
-                li.prepend('<div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>');
-                oe.addClass("space");
-              } else {
-                li.prepend('<div class="lone"></div>');
-              };
-              li.children(".rpf").children(".rrr").find("input:hidden[name=inheritedid]").val(rs.rootnum);
+              li.prepend('<div class="lone"></div>');
+              li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
               oe.children("p").children(".brbr").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
@@ -265,19 +252,120 @@ $(document).ready(function() {
 
             // cleaning after
 
-            if (isR) {
-              var p = xx.parent();
-              p.hide();
-              var f = p.siblings(".one").children(".footer");
-              f.children(".count").text("n");
-              f.find(".reply").removeClass("bbk");
-            } else if (th.hasClass("ovly")) { // overlay #2
+            if (th.hasClass("ovly")) { // overlay #2
               $('#tweet').hide();$('#guard').hide();$('#newblk').hide();
               var np = $('#newpost');
               np.fadeOut("slow");
               setTimeout(function(){np.text('New')}, 600);
               np.fadeIn("slow");
             };
+
+            xx.each(function(){this.reset()});
+
+            var dark = xx.children(".dark");
+            dark.children(".linkinput").children("input").val("");
+            dark.hide();
+
+            var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
+            ox.children(".wrap").css('background-image', 'none');
+            ox.hide();
+
+            var yup = ox.siblings(".yup");
+            yup.hide();
+
+          },
+          error: function(e){
+            //alert(e);
+          }
+      });
+    }
+    e.preventDefault(); 
+    return false;
+  });
+
+  // reply form
+
+  $('ul').on('click', '.f30 .busy .footer .comment', function() {
+    var th = $(this);
+    var xx = th.parent().parent().parent();
+    var hi = xx.children("input[name=hasimg]");
+    var hinum = Number(hi.val());
+    if (hinum != 1) {
+      var trouble = false;
+      var msg = '';
+      if ($.trim(xx.find(".dsc").val()) === '') { msg += 'Any text? '; trouble = true; };
+      if ($.trim(xx.find(".who").val()) === '') { msg += 'Your name? '; trouble = true; };
+      if ($.trim(xx.find(".scr").val()) === '') { msg += 'Secret key? '; trouble = true; };
+      if (trouble) {
+        $('#bugbug').text(msg);
+        e.preventDefault();
+        return false;
+      }
+      if (hinum == 3) {
+        var yy = xx.siblings(".yy");
+        var dataObject = new FormData(yy[0]);
+        $.ajax({
+          url: "/multipart",
+          data : dataObject,
+          type : "POST",
+          contentType: false,
+          processData: false,
+          success: function(data){
+            hi.val("1");
+            sendXx();
+          },
+          error: function(e){
+            alert(e);
+          }
+        });
+        yy.children("input[name=file]").val(null);
+        e.preventDefault();
+        return false;
+      }
+    }
+    sendXx();
+    function sendXx() {
+      var dataXx = xx.serializeFormJSON();
+      $.ajax({
+          url: "/create",
+          data : JSON.stringify(dataXx),
+          method : "POST",
+          contentType: "application/json",
+          dataType: "json",
+          success: function(rs){
+
+            var id = rs.id;
+            var ul = $('#notes').children("ul");
+            var nc = "li" + id;
+
+            var fromli = xx.parent().parent();
+            $( '<li class=' + nc + '>HOORAY</li>' ).insertAfter(fromli);
+            var li = fromli.next('.' + nc);
+
+            li.load('/static/scrpt/temp.scrpt', function() {
+              var oe = li.children(".one");
+              li.prepend('<div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>');
+              oe.addClass("space");
+              li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
+              oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
+              oe.children("p").children(".brbr").text(dataXx.description);
+              oe.children("p").children(".whenposted").text(rs.posted);
+              oe.children("p").children(".person").text(dataXx.whosent);
+              oe.children("p").children(".rootnum").text(rs.rootnum);
+              oe.children("p").children(".replnum").text(rs.replnum);
+              if (rs.attached != "none") {
+                oe.children(".pic").html("<img src=" + rs.attached + ">");
+              }
+            });
+            li.show();
+
+            // cleaning after
+
+            var p = xx.parent();
+            p.hide();
+            var f = p.siblings(".one").children(".footer");
+            f.children(".count").text("n");
+            f.find(".reply").removeClass("bbk");
 
             xx.each(function(){this.reset()});
 
@@ -482,7 +570,7 @@ $(document).ready(function() {
       th.siblings(".but").each(function() { $(this).removeClass("bbk"); });
       var rpf = p.parent().siblings(".rpf");
       rpf.show();
-      rpf.children(".rrr").children(".me").find("textarea[name=description]")[0].focus();
+      rpf.children(".f30").children(".me").find("textarea[name=description]")[0].focus();
       c.text("r");
       th.addClass("bbk");
       sety();
