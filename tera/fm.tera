@@ -54,7 +54,7 @@
           </div>
         </div>
 
-        <div class="dark">
+        <div class="dark n">
           <div class="link1"><img src="/static/pics/link1.png"></div>
           <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
         </div>

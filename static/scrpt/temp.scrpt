@@ -1,10 +1,10 @@
 <!-- only for top posting 1 2 -->
 
-            <div class="lone"></div>
             <div class="tbox one">
 
               <p><span class="brbr">BRBR</span> | <span class="whenposted op4">WHENEVER</span> | <span class="person op6">WHOEVER</span></p>
-              <div class="pic"></div>
+              <p>Root: <span class="rootnum"></span> Repl: <span class="replnum"></span></p>
+              <div class="pic n"></div>
 
               <div class="footer n">
                 <small class="but fb pc edit op4">Edit</small>
@@ -15,8 +15,7 @@
                   <form>
                     <input type="hidden" name="taskid" value="" />
                     <input type="hidden" name="_method" value="" />
-                    <img src="/static/pics/key.png">
-                    <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
+                    <img src="/static/pics/key.png"><small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
                   </form>
 
                 </div>
@@ -58,7 +57,7 @@
                   </div>
                 </div>
 
-                <div class="dark">
+                <div class="dark n">
                   <div class="link1"><img src="/static/pics/link1.png"></div>
                   <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
                 </div>
