@@ -234,7 +234,7 @@ $(document).ready(function() {
 
             var li;
             if (isR) {
-              fromli = xx.parent().parent();
+              var fromli = xx.parent().parent();
               $( '<li class=' + nc + '>HOORAY</li>' ).insertAfter(fromli);
               li = fromli.next('.' + nc);
             } else {
@@ -250,8 +250,8 @@ $(document).ready(function() {
               } else {
                 li.prepend('<div class="lone"></div>');
               };
+              li.children(".rpf").children(".rrr").find("input:hidden[name=inheritedid]").val(rs.rootnum);
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
-              li.find(".passid").text(id);
               oe.children("p").children(".brbr").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);

@@ -74,7 +74,7 @@
 
             <div class="rpf">
               <form class="rrr f10 xx">
-                <input type="hidden" name="inheritedid" value="888" />
+                <input type="hidden" name="inheritedid" value="" />
                 <input type="hidden" name="hasimg" value="0" />
 
                 <div class="bbox n abv top06"><div class="cross l"><img src="/static/pics/a3.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
