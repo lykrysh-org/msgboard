@@ -93,7 +93,8 @@ impl Handler<CreateTask> for DbExecutor {
                 let _ = Task::insertsecret(new_secret, self.get_conn()?.deref())
                     .map(|_| ())
                     .map_err(|_| error::ErrorInternalServerError("Error inserting secret"));
-                Ok(task)
+                Task::get_task(task.id, self.get_conn()?.deref())
+                    .map_err(|_| error::ErrorInternalServerError("Error set_as_root"))
             },
             Err(e) => Err(e),
         }

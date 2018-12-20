@@ -63,8 +63,9 @@
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
               <p><span class="dsc">{{ task.description }}</span> | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
-              <!-- <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p> -->
-              {% if task.attached %}<div class="pic"><img src="{{ task.attached }}"></div>{% endif %}
+
+              <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p>
+              {% if task.attached %}<div class="pic n"><img src="{{ task.attached }}"></div>{% endif %}
 
               <div class="footer n">
                 <small class="but fb pc edit op4">Edit</small>
@@ -75,8 +76,7 @@
                   <form>
                     <input type="hidden" name="taskid" value="{{ task.id }}" />
                     <input type="hidden" name="_method" value="" />
-                    <img src="/static/pics/key.png">
-                    <small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
+                    <img src="/static/pics/key.png"><small><input class="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="password" size=8 maxlength=24 placeholder="****" name="password" value="" /></small>
                   </form>
 
                 </div>

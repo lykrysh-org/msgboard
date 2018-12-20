@@ -95,6 +95,8 @@ struct OutJ {
 #[derive(Serialize)]
 struct TempJ {
     id: String,
+    rootnum: String,
+    replnum: String,
     posted: String,
     attached: String,   
 }
@@ -143,6 +145,8 @@ pub fn create(
                 };
                 let out = TempJ {
                     id: t.id.to_owned().to_string(),
+                    rootnum: t.rootnum.to_owned().to_string(),
+                    replnum: t.replnum.to_owned().to_string(),
                     posted: t.posted.to_owned().to_string(),
                     attached: att,
                 };

@@ -309,7 +309,7 @@ form textarea {
 
 .footer .rightbut img {
  opacity: 1.0;
- margin-right:0.3rem;
+ margin-right: 0.3rem;
 }
 
 .footer .comment {
@@ -342,8 +342,8 @@ form textarea {
  margin-top: 0rem;
  text-align: left;
 }
-#notes .one .room img {
- margin-right: 0.3rem;
+#notes .one .room form img {
+ margin-right: 0.5rem;
 }
 
 .footer .rightbut small, #notes .one .room small, .dark small {
