@@ -232,7 +232,6 @@ $(document).ready(function() {
             var ul = $('#notes').children("ul");
             var nc = "li" + id;
 
-<<<<<<< HEAD
             ul.prepend('<li class=' + nc + '></li>');
             var li = ul.children('.' + nc);
 
@@ -241,28 +240,7 @@ $(document).ready(function() {
               li.prepend('<div class="lone"></div>');
               li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
-=======
-            var li;
-            if (isR) {
-              fromli = xx.parent().parent();
-              $( '<li class=' + nc + '>HOORAY</li>' ).insertAfter(fromli);
-              li = fromli.next('.' + nc);
-            } else {
-              ul.prepend('<li class=' + nc + '></li>');
-              li = ul.children('.' + nc);
-            };
 
-            li.load('/static/scrpt/temp.scrpt', function() {
-              var oe = li.children(".one");
-              if (isR) {
-                li.prepend('<div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>');
-                oe.addClass("space");
-              } else {
-                li.prepend('<div class="lone"></div>');
-              };
-              oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
-              li.find(".passid").text(id);
->>>>>>> 14d44f3d1435347bc1b802b9baed9f74e846168c
               oe.children("p").children(".brbr").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);
@@ -272,7 +250,6 @@ $(document).ready(function() {
                 oe.children(".pic").html("<img src=" + rs.attached + ">");
               }
             });
-<<<<<<< HEAD
             li.show();
 
             // cleaning after
@@ -383,33 +360,16 @@ $(document).ready(function() {
                 oe.children(".pic").html("<img src=" + rs.attached + ">");
               }
             });
-=======
->>>>>>> 14d44f3d1435347bc1b802b9baed9f74e846168c
+
             li.show();
 
             // cleaning after
 
-<<<<<<< HEAD
             var p = xx.parent();
             p.hide();
             var f = p.siblings(".one").children(".footer");
             f.children(".count").text("n");
             f.find(".reply").removeClass("bbk");
-=======
-            if (isR) {
-              var p = xx.parent();
-              p.hide();
-              var f = p.siblings(".one").children(".footer");
-              f.children(".count").text("n");
-              f.find(".reply").removeClass("bbk");
-            } else if (th.hasClass("ovly")) { // overlay #2
-              $('#tweet').hide();$('#guard').hide();$('#newblk').hide();
-              var np = $('#newpost');
-              np.fadeOut("slow");
-              setTimeout(function(){np.text('New')}, 600);
-              np.fadeIn("slow");
-            };
->>>>>>> 14d44f3d1435347bc1b802b9baed9f74e846168c
 
             xx.each(function(){this.reset()});
 
