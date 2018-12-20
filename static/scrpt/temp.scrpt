@@ -39,17 +39,17 @@
                 <div class="bbox n btm"><div class="last l lftbm"><img src="/static/pics/a1.png"></div><div class="last r"><img src="/static/pics/a1.png"></div></div>
 
                 <div class="busy tbox top12">
-                  <div class="footer n" id="editable">
+                  <div class="footer n">
 
                     <div class="leftbut">
                       <div class="ox">
                         <div class="wrap"></div>
-                        <div class="x pc"><img src="/static/pics/x.png"></div>
+                        <div class="x34 x pc"><img src="/static/pics/x.png"></div>
                       </div>
-                      <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+                      <div class="uploadpic pc up34"><img src="/static/pics/pic.png"></div>
                       <div class="yup">
-                        <label for="chsXXXe"><small class="upup but pc op4">Upload</small></label><br>
-                        <small class="link but pc op4">Link</small>
+                        <label for="chEXXX"><small class="uup34 upup but pc op4">Upload</small></label><br>
+                        <small class="lkk34 link but pc op4">Link</small>
                       </div>
                     </div>
 
@@ -59,13 +59,13 @@
 
                 <div class="dark n">
                   <div class="link1"><img src="/static/pics/link1.png"></div>
-                  <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
+                  <small class="lip34 linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
                 </div>
 
               </form>
 
-              <form class="f21 yy" enctype="multipart/form-data">
-                <input id="chsXXXe" class="chs" type="file" name="file" accept="image/*, video/*" />
+              <form class="f21 yy" method="post" enctype="multipart/form-data">
+                <input id="chEXXX" class="shc34 chs" type="file" name="file" accept="image/*, video/*" />
               </form>
 
             </div>
@@ -92,12 +92,12 @@
                     <div class="leftbut">
                       <div class="ox">
                         <div class="wrap"></div>
-                        <div class="x pc"><img src="/static/pics/x.png"></div>
+                        <div class="x34 x pc"><img src="/static/pics/x.png"></div>
                       </div>
-                      <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+                      <div class="uploadpic pc up34"><img src="/static/pics/pic.png"></div>
                       <div class="yup">
-                        <label for="chsXXX"><small class="upup but pc op4">Upload</small></label><br>
-                        <small class="link but pc op4">Link</small>
+                        <label for="chsXXX"><small class="uup34 upup but pc op4">Upload</small></label><br>
+                        <small class="lkk34 link but pc op4">Link</small>
                       </div>
                     </div>
 
@@ -114,13 +114,13 @@
 
                 <div class="dark">
                   <div class="link1"><img src="/static/pics/link1.png"></div>
-                  <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
+                  <small class="lip34 linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
                 </div>
 
               </form>
 
               <form class="f31 yy" method="post" enctype="multipart/form-data">
-                <input id="chs" class="chs" type="file" name="file" accept="image/*, video/*" />
+                <input id="chsXXX" class="shc34 chs" type="file" name="file" accept="image/*, video/*" />
               </form>
 
             </div>

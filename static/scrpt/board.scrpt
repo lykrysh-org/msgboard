@@ -43,7 +43,7 @@ $(document).ready(function() {
 
   // file uploading and linking
 
-  $('.leftbut .uploadpic').click(function() {
+  $('.leftbut .up12').click(function() {
     var th = $(this);
     var dark = th.parent().parent().parent().parent().children(".dark");
     var yup = th.siblings(".yup");
@@ -57,7 +57,21 @@ $(document).ready(function() {
     yup.toggle();
   });
 
-  $('.leftbut .yup .link').click(function() {
+  $('ul').on('click', '.leftbut .up34', function() {
+    var th = $(this);
+    var dark = th.parent().parent().parent().parent().children(".dark");
+    var yup = th.siblings(".yup");
+    if (dark.is(':visible')) {
+      dark.children(".linkinput").children("input").val("");
+      dark.hide();
+    } else {
+      yup.children("label").children(".upup").removeClass("zero");
+      yup.css('pointer-events', 'auto');
+    }
+    yup.toggle();
+  });
+
+  $('ul').on('click', '.leftbut .yup .lkk34', function() {
     var th = $(this);
     var dark = th.parent().parent().parent().parent().parent().children(".dark");
     if (dark.is(':visible')) {
@@ -70,19 +84,38 @@ $(document).ready(function() {
     }
   });
 
-  $('.leftbut .yup label .upup').click(function() {
+  $('.leftbut .yup .lkk12').click(function() {
+    var th = $(this);
+    var dark = th.parent().parent().parent().parent().parent().children(".dark");
+    if (dark.is(':visible')) {
+      // not implemented
+    } else {
+      th.siblings("label").children(".upup").addClass("zero");
+      th.parent().css('pointer-events', 'none');
+      dark.fadeIn();
+      dark.find("input[name=linky]")[0].focus();
+    }
+  });
+
+  $('.leftbut .yup label .uup12').click(function() {
     var pp = $(this).parent().parent();
     pp.hide();
   });
 
+  $('ul').on('click', '.leftbut .yup label .uup34', function() {
+    var pp = $(this).parent().parent();
+    pp.hide();
+  });
+
+
   // the file input button to UPLOAD
 
-  $(".yy .chs").change(function(){
+  $(".yy .shc12").change(function(){
 
     function makeThumbnail(input, place, hi) {
       var reader = new FileReader();
       reader.onload = function (e) {
-        // Check if this img link exists
+
         objImg = new Image();
         objImg.src = e.target.result;
         objImg.onload = function() { 
@@ -117,7 +150,47 @@ $(document).ready(function() {
     }
   });
 
-  $('.leftbut .ox .x').click(function() {
+  $('ul').on('change', '.yy .shc34', function() {
+
+    function makeThumbnail(input, place, hi) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+
+        objImg = new Image();
+        objImg.src = e.target.result;
+        objImg.onload = function() { 
+          $(this).remove(); // preventing mem leak
+          hi.val("3");
+        };
+        objImg.onerror = function() { 
+          // alert("error");
+          // just black .wrap
+        };
+        var url = "url('" + e.target.result + "')";
+        place.css('background-image', url);
+      };
+      reader.readAsDataURL(input.files[0]);
+    };
+
+    if (this.files && this.files[0]) {
+      if (typeof FileReader !== "undefined") {
+        var size = this.files[0].size;
+        if (size > 500000) {
+
+          // TODO: detect big file
+          alert("wow");
+
+        } else {
+          var xx = $(this).parent().siblings(".xx");
+          var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
+          makeThumbnail(this, ox.children(".wrap"), xx.children("input[name=hasimg]"));
+          ox.show();
+        }
+      }
+    }
+  });
+
+  $('.leftbut .ox .x12').click(function() {
     $(this).parent().hide();
     var f = $(this).parent().parent().parent().parent().parent();
     var dark = f.children(".dark");
@@ -126,14 +199,49 @@ $(document).ready(function() {
     } else { 
       f.siblings(".yy").children(".chs").val(""); // upload: flush FileReader
     };
-    if (f.hasClass("f20")) {
-      f.children("input[name=hasimg]").val("0");
-    }
+    f.children("input[name=hasimg]").val("0");
+  });
+
+  $('ul').on('click', '.leftbut .ox .x34', function() {
+    $(this).parent().hide();
+    var f = $(this).parent().parent().parent().parent().parent();
+    var dark = f.children(".dark");
+    if (dark.is(':visible')) {
+      dark.children(".linkinput").children("input").val(""); // link
+    } else { 
+      f.siblings(".yy").children(".chs").val(""); // upload: flush FileReader
+    };
+    f.children("input[name=hasimg]").val("0");
   });
 
   // the input field to LINK addr
 
-  $('.linkinput input').keypress(function(event) {
+  $('.lip12 input').keypress(function(event) {
+    if ( event.which == 13 ) {
+      var addr = $(this).val();
+      var xx = $(this).parent().parent().parent();
+
+      // Check if this img link exists
+      objImg = new Image();
+      objImg.src = addr;
+      objImg.onload = function() {
+        $(this).remove();
+        xx.children("input[name=hasimg]").val("2");
+      };
+      objImg.onerror = function() {
+        //alert("error");
+        // just black .wrap
+      };
+
+      var full = "url('" + addr + "')";
+      var ox = xx.children(".busy").find(".ox");
+      ox.children(".wrap").css('background-image', full);
+      ox.show();
+      event.preventDefault(); // don't submit the entire form
+    }
+  });
+
+  $('ul').on('keypress', '.lip34 input', function() {
     if ( event.which == 13 ) {
       var addr = $(this).val();
       var xx = $(this).parent().parent().parent();
@@ -181,6 +289,7 @@ $(document).ready(function() {
   $('.f10 .busy .footer .comment').click(function(e){
     var th = $(this);
     var xx = th.parent().parent().parent();
+    var yy = xx.siblings(".yy");
     var isR = (xx.hasClass("rrr")) ? true : false;
     var hi = xx.children("input[name=hasimg]");
     var hinum = Number(hi.val());
@@ -196,7 +305,6 @@ $(document).ready(function() {
         return false;
       }
       if (hinum == 3) {
-        var yy = xx.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
           url: "/multipart",
@@ -236,11 +344,10 @@ $(document).ready(function() {
             var li = ul.children('.' + nc);
 
             li.load('/static/scrpt/temp.scrpt', function() {
-              var oe = li.children(".one");
               li.prepend('<div class="lone"></div>');
               li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
+              var oe = li.children(".one");
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
-
               oe.children("p").children(".brbr").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);
@@ -248,13 +355,18 @@ $(document).ready(function() {
               oe.children("p").children(".replnum").text(rs.replnum);
               if (rs.attached != "none") {
                 oe.children(".pic").html("<img src=" + rs.attached + ">");
-              }
+              };
+              var chs = "chs" + id;
+              var chE = "chE" + id;
+              li.children(".epf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chs);
+              li.children(".epf").find(".f21 input[name=file]").attr('id', chs);
+
             });
             li.show();
 
             // cleaning after
 
-            if (th.hasClass("ovly")) { // overlay #2
+            if (th.hasClass("ovly")) { // overlay #1
               $('#tweet').hide();$('#guard').hide();$('#newblk').hide();
               var np = $('#newpost');
               np.fadeOut("slow");
@@ -291,6 +403,7 @@ $(document).ready(function() {
   //$('.f30 .busy .footer .comment').click(function(e){
     var th = $(this);
     var xx = th.parent().parent().parent();
+    var yy = xx.siblings(".yy");
     var hi = xx.children("input[name=hasimg]");
     var hinum = Number(hi.val());
     if (hinum != 1) {
@@ -305,7 +418,6 @@ $(document).ready(function() {
         return false;
       }
       if (hinum == 3) {
-        var yy = xx.siblings(".yy");
         var dataObject = new FormData(yy[0]);
         $.ajax({
           url: "/multipart",
@@ -315,7 +427,7 @@ $(document).ready(function() {
           processData: false,
           success: function(data){
             hi.val("1");
-            sendXx();
+            sendZz();
           },
           error: function(e){
             alert(e);
@@ -358,7 +470,12 @@ $(document).ready(function() {
               oe.children("p").children(".replnum").text(rs.replnum);
               if (rs.attached != "none") {
                 oe.children(".pic").html("<img src=" + rs.attached + ">");
-              }
+              };
+              var chs = "chs" + id;
+              var chE = "chE" + id;
+              li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
+              li.children(".rpf").find(".f31 input[name=file]").attr('id', chs);
+ 
             });
 
             li.show();

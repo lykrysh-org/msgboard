@@ -32,12 +32,12 @@
             <div class="leftbut">
               <div class="ox" {% if WHICH == 4 %}{% if task.attached %}style="display: block"{% endif %}{% else %}{% endif %}>
                 <div class="wrap" {% if WHICH == 4 %}style="background-image: url({{ task.attached }})"{% else %}{% endif %}></div>
-                <div class="x pc"><img src="/static/pics/x.png"></div>
+                <div class="{% if WHICH > 2 %}x34{% else %}x12{% endif %} x pc"><img src="/static/pics/x.png"></div>
               </div>
-              <div class="uploadpic pc"><img src="/static/pics/pic.png"></div>
+              <div class="uploadpic pc {% if WHICH > 2 %}up34{% else %}up12{% endif %}"><img src="/static/pics/pic.png"></div>
               <div class="yup">
-                <label for="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% elif WHICH == 4 %}chE{{task.id}}{% else %}{% endif %}"><small class="upup but pc op4">Upload</small></label><br>
-                <small class="link but pc op4">Link</small>
+                <label for="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% elif WHICH == 4 %}chE{{task.id}}{% else %}{% endif %}"><small class="{% if WHICH > 2 %}uup34{% else %}uup12{% endif %} upup but pc op4">Upload</small></label><br>
+                <small class="{% if WHICH > 2 %}lkk34{% else %}lkk12{% endif %} link but pc op4">Link</small>
               </div>
             </div>
 
@@ -56,12 +56,12 @@
 
         <div class="dark n">
           <div class="link1"><img src="/static/pics/link1.png"></div>
-          <small class="linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
+          <small class="{% if WHICH > 2 %}lip34{% else %}lip12{% endif %} linkinput"><input class="linky" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" type="text" maxlength=240 placeholder="https://...(then enter)" name="linky" value="" onkeypress="return noenter()" /></small>
         </div>
 
       </form>
 
       <form class="{% if WHICH == 3 %}f31{% elif WHICH == 4 %}f21{% else %}f11{% endif %} yy" enctype="multipart/form-data">
-         <input id="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% elif WHICH == 4 %}chE{{task.id}}{% else %}{% endif %}" class="chs" type="file" name="file" accept="image/*, video/*" />
+         <input id="{% if WHICH == 1 %}OV{% elif WHICH == 2 %}TP{% elif WHICH == 3 %}chs{{task.id}}{% elif WHICH == 4 %}chE{{task.id}}{% else %}{% endif %}" class="{% if WHICH > 2 %}shc34{% else %}shc12{% endif %} chs" type="file" name="file" accept="image/*, video/*" />
       </form>
     </div>
