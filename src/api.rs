@@ -278,7 +278,7 @@ pub fn edit(
             .and_then(move |res| match res {
                 Ok(_) => {
                     let out = OutJ {
-                        state: "edited except img".to_owned(),
+                        state: "same".to_owned(),
                     };
                     let o = serde_json::to_string(&out)?;
                     Ok(HttpResponse::Ok().content_type("application/json").body(o).into())
@@ -291,15 +291,19 @@ pub fn edit(
             .db
             .send(EditTask {
                 id: params.id,
-                linky: lnk,
+                linky: lnk.clone(),
                 desc: j.description.trim().to_string(),
                 sameimg: false,
             })
             .from_err()
             .and_then(move |res| match res {
                 Ok(_) => {
+                    let s: String = match lnk {
+                        Some(word) => word,
+                        None => "none".to_string(),
+                    };
                     let out = OutJ {
-                        state: "edited including img".to_owned(),
+                        state: s.to_owned(),
                     };
                     let o = serde_json::to_string(&out)?;
                     Ok(HttpResponse::Ok().content_type("application/json").body(o).into())

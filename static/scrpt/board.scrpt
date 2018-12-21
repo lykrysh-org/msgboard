@@ -348,7 +348,7 @@ $(document).ready(function() {
               li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
               var oe = li.children(".one");
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
-              oe.children("p").children(".brbr").text(dataXx.description);
+              oe.children("p").children(".dsc").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);
               oe.children("p").children(".rootnum").text(rs.rootnum);
@@ -358,8 +358,10 @@ $(document).ready(function() {
               };
               var chs = "chs" + id;
               var chE = "chE" + id;
-              li.children(".epf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chs);
-              li.children(".epf").find(".f21 input[name=file]").attr('id', chs);
+              li.children(".epf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
+              li.children(".epf").find(".f21 input[name=file]").attr('id', chE);
+              li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
+              li.children(".rpf").find(".f31 input[name=file]").attr('id', chs);
 
             });
             li.show();
@@ -463,7 +465,7 @@ $(document).ready(function() {
               oe.addClass("space");
               li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
-              oe.children("p").children(".brbr").text(dataXx.description);
+              oe.children("p").children(".dsc").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);
               oe.children("p").children(".rootnum").text(rs.rootnum);
@@ -473,9 +475,10 @@ $(document).ready(function() {
               };
               var chs = "chs" + id;
               var chE = "chE" + id;
+              li.children(".epf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
+              li.children(".epf").find(".f21 input[name=file]").attr('id', chE);
               li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
               li.children(".rpf").find(".f31 input[name=file]").attr('id', chs);
- 
             });
 
             li.show();
@@ -513,7 +516,8 @@ $(document).ready(function() {
 
   // edit form
 
-  $('.f20 .busy .footer .comment').click(function(e){
+  $('ul').on('click', '.f20 .busy .footer .comment', function(e) {
+  //$('.f20 .busy .footer .comment').click(function(e){
     var th = $(this);
     var xx = th.parent().parent().parent();
     var hi = xx.children("input[name=hasimg]");
@@ -560,11 +564,18 @@ $(document).ready(function() {
           method : "POST",
           contentType: "application/json",
           dataType: "json",
-          success: function(response){
-            var id = response.state;
+          success: function(rs){
 
-            // TODO: where to place the post/reply
-            //$('#notes ul .hoy').show();
+            var oe = xx.parent().prev(".one");
+            oe.children("p").children(".dsc").text(dataXx.description);
+
+            var lk = rs.state; // same, none, or url
+alert(lk);
+            if (lk == "none") {
+              oe.children(".pic").html("");
+            } else if (lk != "same") {
+              oe.children(".pic").html("<img src=" + lk + ">");
+            };
 
           },
           error: function(e){
