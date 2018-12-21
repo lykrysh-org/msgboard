@@ -28,6 +28,7 @@
 
             <div class="edf">
               <form class="f20 xx" method="post">
+                <span class="passid"></span>
                 <input type="hidden" name="hasimg" value="0" />
                 <div class="bbox n abv top06"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
 

@@ -65,7 +65,7 @@
               <p><span class="dsc">{{ task.description }}</span> | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
 
               <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p>
-              {% if task.attached %}<div class="pic n"><img src="{{ task.attached }}"></div>{% endif %}
+              <div class="pic n">{% if task.attached %}<img src="{{ task.attached }}">{% endif %}</div>
 
               <div class="footer n">
                 <small class="but fb pc edit op4">Edit</small>

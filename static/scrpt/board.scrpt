@@ -345,7 +345,7 @@ $(document).ready(function() {
 
             li.load('/static/scrpt/temp.scrpt', function() {
               li.prepend('<div class="lone"></div>');
-              li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
+
               var oe = li.children(".one");
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
               oe.children("p").children(".dsc").text(dataXx.description);
@@ -358,10 +358,12 @@ $(document).ready(function() {
               };
               var chs = "chs" + id;
               var chE = "chE" + id;
-              li.children(".epf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
-              li.children(".epf").find(".f21 input[name=file]").attr('id', chE);
+              li.children(".edf").children(".f20").children(".passid").text(id);
+              li.children(".edf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
+              li.children(".edf").find(".f21 input[name=file]").attr('id', chE);
               li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
               li.children(".rpf").find(".f31 input[name=file]").attr('id', chs);
+              li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
 
             });
             li.show();
@@ -463,7 +465,6 @@ $(document).ready(function() {
               var oe = li.children(".one");
               li.prepend('<div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>');
               oe.addClass("space");
-              li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
               oe.children("p").children(".dsc").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
@@ -475,10 +476,12 @@ $(document).ready(function() {
               };
               var chs = "chs" + id;
               var chE = "chE" + id;
-              li.children(".epf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
-              li.children(".epf").find(".f21 input[name=file]").attr('id', chE);
+              li.children(".edf").children(".f20").children(".passid").text(id);
+              li.children(".edf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
+              li.children(".edf").find(".f21 input[name=file]").attr('id', chE);
               li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
               li.children(".rpf").find(".f31 input[name=file]").attr('id', chs);
+              li.children(".rpf").children(".f30").find("input:hidden[name=inheritedid]").val(rs.rootnum);
             });
 
             li.show();
@@ -568,14 +571,38 @@ $(document).ready(function() {
 
             var oe = xx.parent().prev(".one");
             oe.children("p").children(".dsc").text(dataXx.description);
+            oe.children("p").removeClass("op2");
+            oe.children(".pic").removeClass("op2");
 
             var lk = rs.state; // same, none, or url
-alert(lk);
+//alert(lk);
             if (lk == "none") {
               oe.children(".pic").html("");
             } else if (lk != "same") {
               oe.children(".pic").html("<img src=" + lk + ">");
             };
+
+            // cleaning after
+
+            var p = xx.parent();
+            p.hide();
+            var f = p.siblings(".one").children(".footer");
+            f.children(".count").text("n");
+            f.find(".edit").removeClass("bbk");
+
+            xx.each(function(){this.reset()});
+            xx.find(".me p .dsc").val(dataXx.description);
+
+            var dark = xx.children(".dark");
+            dark.children(".linkinput").children("input").val("");
+            dark.hide();
+
+            var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
+            ox.children(".wrap").css('background-image', 'none');
+            ox.hide();
+
+            var yup = ox.siblings(".yup");
+            yup.hide();
 
           },
           error: function(e){
