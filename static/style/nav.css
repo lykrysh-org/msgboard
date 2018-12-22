@@ -2,6 +2,9 @@
  z-index: 1000;
  left: 2rem;
 }
+#logo:hover {
+ opacity: 0.8;
+}
 #logo .but {
  width: 2rem;
  outline: none; border: none;

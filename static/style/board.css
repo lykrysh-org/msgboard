@@ -31,14 +31,17 @@ body {
 }
 #tweet .but {
  color: var(--bsod); 
- background: var(--licorice); 
+ background: var(--red); 
 }
 #tweet .but:hover {
- color: white;
+ background: var(--licorice);
+}
+#tweet .bbk {
+ text-decoration: line-through;
 }
 #newblk {
  z-index: 5;
- background: rgba(8,8,8,0.6);
+ background: rgba(8,8,8,0.9);
 }
 #guard {
  position: fixed;

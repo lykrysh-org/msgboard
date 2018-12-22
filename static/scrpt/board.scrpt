@@ -373,9 +373,7 @@ $(document).ready(function() {
             if (th.hasClass("ovly")) { // overlay #1
               $('#tweet').hide();$('#guard').hide();$('#newblk').hide();
               var np = $('#newpost');
-              np.fadeOut("slow");
-              setTimeout(function(){np.text('New')}, 600);
-              np.fadeIn("slow");
+              np.removeClass("bbk");
             };
 
             xx.each(function(){this.reset()});
@@ -652,17 +650,18 @@ $(document).ready(function() {
                 if (nll.children(".rootn").text() == curroot) {
                   nll.prepend('<div class="lone"></div>');
                 };
+              } else if (pll.children(".rootn").text() == curroot) {
+                if (nll.children(".rootn").text() == curroot) {
+                  // nothing needs
+                } else {
+                  // nothing needs
+                }
               } else if (pll.children(".rootn").text() != curroot) {
-                  nll.children(".one").removeClass("space");
+                nll.children(".one").removeClass("space");
                 if (nll.children(".rootn").text() == curroot) {
                   nll.children(".brdg").remove();
                   nll.prepend('<div class="lone"></div>');
                 };
-              } else if (pll.children(".rootn").text() == curroot) {
-                if (nll.children(".rootn").text() == curroot) {
-                  if (nll.children(".lone").length) 
-                    nll.children(".lone").remove();
-                }
               };
 
               ll.text("");
@@ -766,22 +765,17 @@ $(document).ready(function() {
     $('#newblk').toggle();
     gr.toggle();
     if (gr.is(':visible')) {
-      np.fadeOut("slow");
-      setTimeout(function(){np.text('X')}, 600);
-      np.fadeIn("slow");
+      np.addClass("bbk");
+      gr.children(".newchunk").children(".xx").children(".me").find("textarea[name=description]")[0].focus();
     } else {
-      np.fadeOut("slow");
-      setTimeout(function(){np.text('New')}, 600);
-      np.fadeIn("slow");
+      np.removeClass("bbk");
     }
   });
 
   $('#newblk').click(function() {
     var np = $('#newpost');
     $("#guard").hide();
-    np.fadeOut("slow");
-    setTimeout(function(){np.text('New')}, 800);
-    np.fadeIn("slow");
+    np.removeClass("bbk");
     $(this).hide();
   });
 
