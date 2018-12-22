@@ -6,7 +6,7 @@
 
               <p>
               <span class="dsc">BRBR</span><br>
-              <span class="whenposted op4">WHENEVER</span> | <span class="person op6">WHOEVER
+              <span class="whenposted op4">WHENEVER</span> | <span class="person op6">WHOEVER</span>
               | Root: <span class="rootnum"></span> Repl: <span class="replnum"></span>
               </p>
 
@@ -36,8 +36,7 @@
               <form class="f20 xx" method="post">
                 <span class="passid"></span>
                 <input type="hidden" name="hasimg" value="0" />
-                <div class="bbox n abv top06"><div class="short l"><img src="/static/pics/a1.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
-
+                <div class="bbox n abv top06"><div class="cross l"><img src="/static/pics/a3.png"></div><div class="short r rgttp"><img src="/static/pics/a1.png"></div></div>
                 <div class="tbox me bbk top06">
                   <p>
                     <textarea class="dsc" rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description"></textarea>

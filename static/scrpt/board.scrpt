@@ -351,14 +351,21 @@ $(document).ready(function() {
               oe.children("p").children(".dsc").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);
-              oe.children("p").children(".rootnum").text(rs.rootnum);
-              oe.children("p").children(".replnum").text(rs.replnum);
+              oe.children("p").children(".rootnum").text(rs.rootnum); // rm later
+              oe.children("p").children(".replnum").text(rs.replnum); // rm later
+              li.children(".rootn").text(rs.rootnum);
+              li.children(".repln").text(rs.replnum);
               if (rs.attached != "none") {
                 oe.children(".pic").html("<img src=" + rs.attached + ">");
+                var bg = "url(" +  rs.attached + ")";
+                li.children(".edf").children(".f20").children(".busy").children(".footer").children(".leftbut").children(".ox").children(".wrap").css('background-image', bg);
+                li.children(".edf").children(".f20").children(".busy").children(".footer").children(".leftbut").children(".ox").css('display', 'block');
+                li.children(".edf").children(".f20").find("input:hidden[name=hasimg]").val("4");
               };
               var chs = "chs" + id;
               var chE = "chE" + id;
               li.children(".edf").children(".f20").children(".passid").text(id);
+              li.children(".edf").children(".f20").children(".me").find("textarea[name=description]").val(dataXx.description);
               li.children(".edf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
               li.children(".edf").find(".f21 input[name=file]").attr('id', chE);
               li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
@@ -467,14 +474,21 @@ $(document).ready(function() {
               oe.children("p").children(".dsc").text(dataXx.description);
               oe.children("p").children(".whenposted").text(rs.posted);
               oe.children("p").children(".person").text(dataXx.whosent);
-              oe.children("p").children(".rootnum").text(rs.rootnum);
-              oe.children("p").children(".replnum").text(rs.replnum);
+              oe.children("p").children(".rootnum").text(rs.rootnum); // rm later
+              oe.children("p").children(".replnum").text(rs.replnum); // rm later
+              li.children(".rootn").text(rs.rootnum);
+              li.children(".repln").text(rs.replnum);
               if (rs.attached != "none") {
                 oe.children(".pic").html("<img src=" + rs.attached + ">");
+                var bg = "url(" +  rs.attached + ")";
+                li.children(".edf").children(".f20").children(".busy").children(".footer").children(".leftbut").children(".ox").children(".wrap").css('background-image', bg);
+                li.children(".edf").children(".f20").children(".busy").children(".footer").children(".leftbut").children(".ox").css('display', 'block');
+                li.children(".edf").children(".f20").find("input:hidden[name=hasimg]").val("4");
               };
               var chs = "chs" + id;
               var chE = "chE" + id;
               li.children(".edf").children(".f20").children(".passid").text(id);
+              li.children(".edf").children(".f20").children(".me").find("textarea[name=description]").val(dataXx.description);
               li.children(".edf").find(".f20 .busy .footer .leftbut .yup label").attr('for', chE);
               li.children(".edf").find(".f21 input[name=file]").attr('id', chE);
               li.children(".rpf").find(".f30 .busy .footer .leftbut .yup label").attr('for', chs);
@@ -572,12 +586,25 @@ $(document).ready(function() {
             oe.children("p").removeClass("op2");
             oe.children(".pic").removeClass("op2");
 
+            var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
             var lk = rs.state; // same, none, or url
-//alert(lk);
+
             if (lk == "none") {
               oe.children(".pic").html("");
-            } else if (lk != "same") {
-              oe.children(".pic").html("<img src=" + lk + ">");
+            } else {
+
+                var bg;
+                if (lk == "same") {
+                  var url = oe.children(".pic").children("img").attr('src');
+                  bg = "url(" +  url + ")";
+// why img disappear? 
+                } else {
+                  oe.children(".pic").html("<img src=" + lk + ">");
+                  bg = "url(" +  lk + ")";   
+                }
+                hi.val("4");
+                ox.children(".wrap").css('background-image', bg);
+                ox.show();     
             };
 
             // cleaning after
@@ -588,16 +615,9 @@ $(document).ready(function() {
             f.children(".count").text("n");
             f.find(".edit").removeClass("bbk");
 
-            xx.each(function(){this.reset()});
-            xx.find(".me p .dsc").val(dataXx.description);
-
             var dark = xx.children(".dark");
             dark.children(".linkinput").children("input").val("");
             dark.hide();
-
-            var ox = xx.children(".busy").children(".footer").children(".leftbut").children(".ox");
-            ox.children(".wrap").css('background-image', 'none');
-            ox.hide();
 
             var yup = ox.siblings(".yup");
             yup.hide();
@@ -645,16 +665,10 @@ $(document).ready(function() {
               var curroot = ll.children(".rootn").text();
 
               if (pll.length <= 0) {
-                  nll.children(".one").removeClass("space");
-                  nll.children(".brdg").remove();
+                nll.children(".one").removeClass("space");
+                nll.children(".brdg").remove();
                 if (nll.children(".rootn").text() == curroot) {
                   nll.prepend('<div class="lone"></div>');
-                };
-              } else if (pll.children(".rootn").text() == curroot) {
-                if (nll.children(".rootn").text() == curroot) {
-                  // nothing needs
-                } else {
-                  // nothing needs
                 }
               } else if (pll.children(".rootn").text() != curroot) {
                 nll.children(".one").removeClass("space");
