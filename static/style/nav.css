@@ -1,24 +1,19 @@
-.logo {
- position: fixed;
+#logo {
  z-index: 1000;
- width: 6.4rem;
- top: 0; left: 0;
- text-align: right;
+ left: 2rem;
 }
-.logo img {
- width: 5.4rem;
- height: 5.4rem;
- margin-top: 0.4rem;
-  opacity: 0.9;
+#logo .but {
+ width: 2rem;
+ outline: none; border: none;
+ background-repeat: no-repeat;
+ background-position: center;
+ background-size: 100% 100%;
+ background-image: url('../pics/licorice.png');
+ background-color: none;
 }
-.logo:hover img{
-  opacity: 1.0;
-}
-
 .lykryshbar {
  position: fixed;
- top: 0;
- padding-top: 2.2rem;
+ top: 1.4rem; 
 }
 
 #titl {
@@ -28,7 +23,7 @@
 #nav {
  display: none;
  z-index: 999;
- left:3rem;
+ left: 2rem; top: 1.4rem;
  -webkit-animation: slide 0.5s forwards;
  animation: slide 0.5s forwards;
 }
@@ -40,8 +35,8 @@
  -webkit-transition: all 0.3s ease-out; 
  transition: all 0.3s ease-out;
 }
-.lykryshbar .but, .lykryshbar .notbut {
- display: inline-block;
+.logo .but, .lykryshbar .but, .lykryshbar .notbut {
+ display: inline;
 }
 .lykryshbar .disappr {
  opacity: 0;
@@ -51,32 +46,32 @@
 }
 
 @-webkit-keyframes slide {
-    100% { left: 7.0rem; }
+    100% { left: 6.0rem; }
 }
 @keyframes slide {
-    100% { left: 7.0rem; }
+    100% { left: 6.0rem; }
 }
 
 #vol {
  display: none;
  position: fixed;
  z-index: 998;
- left: 7.0rem; top: 4.0rem;
+ left: 6.0rem; top: 3rem;
  padding-top: 0.8rem;
 }
 
 @media screen and (max-width: 20rem)  {
-#nav small {
+.lykryshba small {
  font-size: 1.375rem;
 }
 }
-@media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
-#nav small {
- font-size: 1.4375rem;
+@media screen and (max-width: 40rem) and (min-width: 20rem)  {
+.lykryshba small {
+ font-size: 18px;
 }
 }
-@media screen and (min-width: 42.5rem) {
-#nav small {
- font-size: 1.5rem;
+@media screen and (min-width: 40rem) {
+.lykryshba small {
+ font-size: 21px;
 }
 }

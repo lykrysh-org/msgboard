@@ -37,6 +37,8 @@ p {
 .right { text-align: right; }
 .left { text-align: left; }
 
+
+
 .twelve { height: 13rem; }
 .top34 { margin-top: 3.4rem; }
 
@@ -44,7 +46,7 @@ p {
 .b1 {
  width: 100%;
  text-align: center;
- padding-top: 8.2rem;
+ padding-top: 9.2rem;
  min-height: 100vh;
 }
 
@@ -140,34 +142,34 @@ small {
  font-size: 3.2rem;
 }
 p, .lykryshbar small, .footer small {
- font-size: 21px;
- line-height: 28px;
+ font-size: 1.375rem;
+ line-height: 1.725rem;
 }
 .tbox .bksm a {
  padding-top: 0px;
  padding-bottom: 2px;
 }
 }
-@media screen and (max-width: 40rem) and (min-width: 20rem)  {
+@media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
 small {
  font-size: 3.4rem;
 }
 p, .lykryshbar small, .footer small {
- font-size: 18px;
- line-height: 24px;
+ font-size: 1.4375rem;
+ line-height: 1.7875rem;
 }
 .tbox .bksm a {
  padding-top: 0px;
  padding-bottom: 2px;
 }
 }
-@media screen and (min-width: 40rem) {
+@media screen and (min-width: 42.5rem) {
 small {
  font-size: 3.6rem;
 }
 p, .lykryshbar small, .footer small {
- font-size: 21px;
- line-height: 28px;
+ font-size: 1.5rem;
+ line-height: 1.85rem;
 }
 .tbox .bksm a {
  padding-top: 1px;

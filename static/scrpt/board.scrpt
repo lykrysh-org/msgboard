@@ -463,7 +463,7 @@ $(document).ready(function() {
 
             li.load('/static/scrpt/temp.scrpt', function() {
               var oe = li.children(".one");
-              li.prepend('<div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>');
+              li.prepend('<div class="brdg bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>');
               oe.addClass("space");
               oe.children(".footer").children(".room").find("input:hidden[name=taskid]").val(id);
               oe.children("p").children(".dsc").text(dataXx.description);
@@ -641,6 +641,30 @@ $(document).ready(function() {
             } else if (state == "deleted") {
               //dbb.text("Deleted");
               var ll = r.parent().parent().parent().parent().parent().find(".li" + taskid);
+
+              var pll = ll.prev("li");
+              var nll = ll.next("li");
+              var curroot = ll.children(".rootn").text();
+
+              if (pll.length <= 0) {
+                  nll.children(".one").removeClass("space");
+                  nll.children(".brdg").remove();
+                if (nll.children(".rootn").text() == curroot) {
+                  nll.prepend('<div class="lone"></div>');
+                };
+              } else if (pll.children(".rootn").text() != curroot) {
+                  nll.children(".one").removeClass("space");
+                if (nll.children(".rootn").text() == curroot) {
+                  nll.children(".brdg").remove();
+                  nll.prepend('<div class="lone"></div>');
+                };
+              } else if (pll.children(".rootn").text() == curroot) {
+                if (nll.children(".rootn").text() == curroot) {
+                  if (nll.children(".lone").length) 
+                    nll.children(".lone").remove();
+                }
+              };
+
               ll.text("");
             } else if (state == "correct") {
               // show Edit Form

@@ -20,7 +20,7 @@
         </div>
         <div class="tbox me {% if WHICH > 2 %}top06{% else %}{% endif %}">
           <p>
-            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" placeholder="BSOD">{% if WHICH == 4 %}{{ task.description }}{% else %}{% endif %}</textarea>
+            <textarea class="dsc" autofocus rows="3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-gramm="false" name="description" placeholder="">{% if WHICH == 4 %}{{ task.description }}{% else %}{% endif %}</textarea>
           </p>
         </div>
 

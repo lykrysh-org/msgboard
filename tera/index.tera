@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lykrysh</title>
-    <link rel="icon" type="image/png" href="/static/pics/icon.png" />
+    <link rel="icon" type="image/png" href="/static/pics/licorice.png" />
     <link rel="stylesheet" href="/static/style/common.css">
     <link rel="stylesheet" href="/static/style/nav.css">
     <link rel="stylesheet" href="/static/style/board.css">
@@ -15,15 +15,18 @@
 </head>
 <body>
   <IFRAME style="display:none" name="hiddenform"></IFRAME> 
+  <div class="bgscreen n" id="dummy"><small id="bugbug">{% if msg %}{{ msg.1 }}{% endif %}</small></div>
 
-    <div class="logo pc n" id="logo">
-      <img src="/static/pics/logoblue.png">
+    <div class="lykryshbar n"  id="logo">
+      <small>
+        <div class="but pc"></div>
+      </small>
     </div>
     <div class="lykryshbar n" id="nav">
       <small>
         <div class="but pc" id="openvol">Issues</div>
         <div class="but pc">About</div>
-        <a href="contact.html"><div class="but pc">Contact</div></a>
+        <div class="but pc">Contact</div>
       </small>
     </div>
     <div class="n" id="vol">
@@ -34,7 +37,6 @@
       </small>
     </div>
 
-  <div class="bgscreen n" id="dummy"><p id="bugbug">{% if msg %}{{ msg.1 }}{% endif %}</p></div>
   <div class="lykryshbar n" id="tweet"><small><div class="but pc" id="newpost">New</div></small></div>
   <div class="bgscreen" id="newblk"></div>
 
@@ -54,17 +56,21 @@
 
         <li class="li{{task.id}}">
 
+            <span class="rootn">{{ task.rootnum }}</span>
+            <span class="repln">{{ task.replnum }}</span>
+
           {% if task.rootnum != ROOT %}{% set_global NEW = true %}{% set_global ROOT = task.rootnum %}
             <div class="lone"></div>
           {% else %}{% set_global NEW = false %}
-            <div class="bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>
+            <div class="brdg bbox n"><div class="nw l"><img src="/static/pics/a2.png"></div></div>
           {% endif %}
 
             <div class="tbox one {% if NEW == false %} space {% endif %}">
 
-              <p><span class="dsc">{{ task.description }}</span> | <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }}</span></p>
-
-              <p>Root: {{ ROOT }} Repl: {{ task.replnum }}</p>
+              <p>
+              <span class="dsc">{{ task.description }}</span><br>
+              <span class="op4">{{ task.posted | truncate(length=10, end="") }}</span> | <span class="op6">{{ task.whosent }} | Root: {{ ROOT }} Repl: {{ task.replnum }}</span>
+              </p>
               <div class="pic n">{% if task.attached %}<img src="{{ task.attached }}">{% endif %}</div>
 
               <div class="footer n">

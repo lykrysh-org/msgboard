@@ -1,6 +1,9 @@
 :root {
- --bsod: #001b58;
- --dots: #a6afc5;
+ --bsod: #080808;
+ --dots: #aaaaaa;
+ --hold: #333;
+ --licorice: #f3cacb;
+ --red: #d16d76;
 }
 
 body {
@@ -14,12 +17,12 @@ body {
  height: 100vh;
 }
 
-#nav .but, #vol .but {
+.lykryshbar .but, #vol .but {
  color: var(--bsod); 
- background: #8c98b4;
+ background: var(--dots); 
 }
-#nav .but:hover, #vol .but:hover {
- background: #ccd1de;
+.lykryshbar .but:hover, #vol .but:hover {
+ background: #ddd;
 }
 
 #tweet {
@@ -27,22 +30,21 @@ body {
  right: 2rem;
 }
 #tweet .but {
- color: #8c98b4;
- background: black;
- border: 1px solid black;
+ color: var(--bsod); 
+ background: var(--licorice); 
 }
 #tweet .but:hover {
  color: white;
 }
 #newblk {
  z-index: 5;
- background: rgba(0,27,88,0.8);
+ background: rgba(8,8,8,0.6);
 }
 #guard {
  position: fixed;
  z-index: 6;
- margin-top: 9.3rem;
- padding-bottom: 7rem;
+ margin-top: 8.2rem;
+ padding-bottom: 4rem;
  width: 100%;
  background-repeat: no-repeat;
  background-position: top;
@@ -80,21 +82,23 @@ body {
 #dummy {
  pointer-events:none; 
  z-index: 995;
- display: flex;
- align-items: center;
- justify-content: center;
 }
 #dummy #bugbug {
  background-repeat: no-repeat;
- background-position: 50% calc(50% - 130px);
- background-size: 200px 200px;
- background-color: rgba(0,27,88,0.8);
- background-image: url('../pics/flash.png');
+ background-position: bottom right;
+ background-size: 100%;
+ background-color: rgba(0,0,0,0.6);
+ background-image: url('../pics/bg2.png');
  -webkit-transition: background-color 0.3s ease-out; 
  transition: background-color 0.3s ease-out;
+ color: var(--red);
+ height: 100vh; 
+ width: calc(100% - 4rem);
+ display: flex;
+ align-items: center;
+ justify-content: center;
  text-align: center;
- color: yellow;
- line-height: 100vh; width: 100%;
+ padding: 0 2rem;
 }
 #dummy #bugbug:empty {
  background: none;
@@ -108,10 +112,10 @@ form input[type="text"], form input[type="password"] {
  font-family: vt;
 }
 
-::-webkit-input-placeholder { color: black }
-::-moz-placeholder { color: black }
-:-ms-input-placeholder { color: black }
-:-moz-placeholder { color: black }
+::-webkit-input-placeholder { color: var(--hold) }
+::-moz-placeholder { color: var(--hold) }
+:-ms-input-placeholder { color: var(--hold) }
+:-moz-placeholder { color: var(--hold) }
 
 form textarea {
  resize: vertical;
@@ -145,9 +149,14 @@ form textarea {
  transition: background 0.6s ease-out;
 }
 .newchunk .me:hover, #notes .me:hover {
- background: rgba(0, 0, 0, 0.1);
+ background: black;
 }
 
+.b1 {
+ background-repeat: no-repeat;
+ background-position: left top;
+ background-image: url('../pics/bg1.png');
+}
 #notes {
  width: 100%;
  text-align: center;
@@ -159,7 +168,8 @@ form textarea {
  list-style-type: none;
 }
 
-#notes .rpf, #notes .edf, #notes .edf form .passid {
+#notes .rpf, #notes .edf, #notes .edf form .passid,
+#notes li .rootn, #notes li .repln {
  display: none;
 }
 #notes .edf {
@@ -316,20 +326,19 @@ form textarea {
  position: absolute;
  z-index: 3;
  display: inline-block;
- top: 0.2rem; right: 0; height: 1.8rem;
- vertical-align: -0.1rem;
+ top: 0.1rem; right: 0; height: 1.7rem;
  padding: 0px 12px; 
  background: white;
 }
 .footer .comment:hover {
- background: #ffff33;
+ background: var(--licorice); 
 }
 
 .footer .leftbut *, .footer .rightbut * {
  display: inline-block;
 }
 
-.footer .count { display: block; }
+.footer .count { display: none; }
 
 .footer .noout, .cancelform .noout {
  border: 0; outline: none;
@@ -371,28 +380,34 @@ form textarea, form input {
 }
 }
 
-@media screen and (max-width: 42.5rem) and (min-width: 20rem)  {
+@media screen and (max-width: 40rem) and (min-width: 20rem)  {
+.b1 {
+ background-size: 17rem;
+}
 form textarea, form input {
- font-size: 1.4375rem;
- line-height: 1.7875rem;
+ font-size: 18px;
+ line-height: 24px;
 }
 .lone {
- height:calc(1.6875rem * 3); 
+ height: 48px; 
 }
 #notes .one.space {
- padding-top: calc(1.6875rem * 2);
+ padding-top: 48px;
 }
 }
 
-@media screen and (min-width: 42.5rem) {
+@media screen and (min-width: 40rem) {
+.b1 {
+ background-size: 18rem;
+}
 form textarea, form input {
- font-size: 1.5rem;
- line-height: 1.85rem;
+ font-size: 21px;
+ line-height: 28px;
 }
 .lone {
- height: calc(1.75rem * 3);
+ height: 56px;
 }
 #notes .one.space {
- padding-top: calc(1.75rem * 2);
+ padding-top: 56px;
 }
 }
