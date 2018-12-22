@@ -371,15 +371,18 @@ form textarea {
 }
 
 @media screen and (max-width: 20rem)  {
+.b1 {
+ background-size: 12rem;
+}
 form textarea, form input {
- font-size: 1.375rem;
- line-height: 1.725rem;
+ font-size: 15px;
+ line-height: 20px;
 }
 .lone {
- height: calc(1.625rem * 3);
+ height: 36px;
 }
 #notes .one.space {
- padding-top: calc(1.625rem * 2);
+ padding-top: 36px;
 }
 }
 
