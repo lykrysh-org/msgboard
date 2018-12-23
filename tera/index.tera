@@ -4,46 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Lykrysh</title>
-    <link rel="icon" type="image/png" href="/static/pics/licorice.png" />
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
     <link rel="stylesheet" href="/static/style/common.css">
-    <link rel="stylesheet" href="/static/style/nav.css">
     <link rel="stylesheet" href="/static/style/board.css">
-    <script type="text/javascript" defer src="/static/scrpt/j.scrpt"></script>
-    <script type="text/javascript" defer src="/static/scrpt/nav.scrpt"></script>
+    <script type="text/javascript" defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" defer src="/static/scrpt/board.scrpt"></script>
 </head>
 <body>
   <IFRAME style="display:none" name="hiddenform"></IFRAME> 
   <div class="bgscreen n" id="dummy"><small id="bugbug">{% if msg %}{{ msg.1 }}{% endif %}</small></div>
-
-    <div class="lykryshbar n"  id="logo">
-      <small>
-        <div class="but pc"></div>
-      </small>
-    </div>
-    <div class="lykryshbar n" id="nav">
-      <small>
-        <div class="but pc" id="openvol">Issues</div>
-        <div class="but pc">About</div>
-        <div class="but pc">Contact</div>
-      </small>
-    </div>
-    <div class="n" id="vol">
-      <small>
-        <div class="but pc">#3</div>
-        <div class="but pc">#2</div>
-        <div class="but pc">#1</div>
-      </small>
-    </div>
-
-  <div class="lykryshbar n" id="tweet"><small><div class="but pc" id="newpost">New</div></small></div>
-  <div class="bgscreen" id="newblk"></div>
-
-  <div id="guard">
-    {% set WHICH = 1 %}
-    {% include "fm.tera" %}
-  </div>
 
   <div class="b1">
     {% set WHICH = 2 %}
