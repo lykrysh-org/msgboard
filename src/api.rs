@@ -2,16 +2,16 @@ use actix::prelude::Addr;
 use actix_web::middleware::Response;
 use actix_web::middleware::identity::RequestIdentity;
 use actix_web::{
-    fs::NamedFile, http, AsyncResponder, Form, FutureResponse, HttpRequest,
+    fs::NamedFile, http, AsyncResponder, FutureResponse, HttpRequest,
     HttpResponse, Path, Responder, Result, HttpMessage, Json, Error, 
 };
 use actix_web::error::ErrorInternalServerError;
 use futures::{future, Future, Stream};
 use tera::{Context, Tera};
 
-use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask, FindTask };
+use db::{AllTasks, CreateTask, DbExecutor, DeleteTask, ToggleTask };
 use model::{EditTask};
-use session::{self, FlashMessage, UpLoaded, };
+use session::{self, UpLoaded, };
 use multipart::*;
 
 pub struct AppState {

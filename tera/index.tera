@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/style/common.css">
     <link rel="stylesheet" href="/static/style/board.css">
     <script type="text/javascript" defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" defer src="/static/scrpt/board.scrpt"></script>
+    <script type="text/javascript" defer src="/static/scrpt/board.js"></script>
 </head>
 <body>
   <IFRAME style="display:none" name="hiddenform"></IFRAME> 

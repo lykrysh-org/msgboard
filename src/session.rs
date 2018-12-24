@@ -24,19 +24,7 @@ pub struct FlashMessage {
 }
 
 impl FlashMessage {
-    pub fn success(message: &str) -> Self {
-        Self {
-            kind: "success".to_owned(),
-            message: message.to_owned(),
-        }
-    }
 
-    pub fn error(message: &str) -> Self {
-        Self {
-            kind: "error".to_owned(),
-            message: message.to_owned(),
-        }
-    }
 }
 
 pub fn set_uploaded<T>(req: &HttpRequest<T>, uploaded: UpLoaded) -> Result<()> {

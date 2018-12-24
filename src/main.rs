@@ -20,7 +20,7 @@ use actix::prelude::SyncArbiter;
 use actix_web::middleware::session::{CookieSessionBackend, SessionStorage};
 use actix_web::middleware::identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::middleware::{ErrorHandlers, Logger};
-use actix_web::{dev::Resource, fs, http, server, App};
+use actix_web::{fs, http, server, App};
 use dotenv::dotenv;
 use std::env;
 use tera::Tera;
